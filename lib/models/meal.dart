@@ -115,6 +115,9 @@ class Meal extends HiveObject {
   @HiveField(8)
   bool isFavorite; // Optional maybe later: mark favorite meals
 
+  @HiveField(9)
+  String? imagePath;
+
   Meal({
     required this.id,
     required this.name,
@@ -125,6 +128,7 @@ class Meal extends HiveObject {
     this.useCount = 0,
     this.category,
     this.isFavorite = false,
+    this.imagePath,
   });
 
   // Helper method to get total weight
@@ -185,6 +189,7 @@ class Meal extends HiveObject {
       useCount: 0,
       category: newCategory ?? category,
       isFavorite: false,
+      imagePath: null,
     );
   }
 }

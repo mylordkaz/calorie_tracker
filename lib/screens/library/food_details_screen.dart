@@ -257,11 +257,13 @@ class FoodDetailsScreen extends StatelessWidget {
           TextButton(
             onPressed: () async {
               await FoodDatabaseService.deleteFood(food.id);
-              Navigator.pop(context); // Close dialog
-              Navigator.pop(
-                context,
-                true,
-              ); // Return to library with refresh signal
+              if (context.mounted) {
+                Navigator.pop(context); // Close dialog
+                Navigator.pop(
+                  context,
+                  true,
+                ); // Return to library with refresh signal
+              }
             },
             child: Text('Delete', style: TextStyle(color: Colors.red)),
           ),

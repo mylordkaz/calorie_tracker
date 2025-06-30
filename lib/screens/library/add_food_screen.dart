@@ -83,7 +83,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
     }
 
     // For per_item, populate unit weight if available
-    if (food.unit == 'per_item' && food.unitWeight != null) {
+    if (food.unit == 'item' && food.unitWeight != null) {
       _unitWeightController.text = food.unitWeight!.toString();
     }
 
@@ -600,7 +600,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
     switch (_selectedUnit) {
       case '100g':
         return '100g';
-      case 'per_item':
+      case 'item':
         return 'Item';
       case 'serving':
         return 'Serving';
@@ -613,7 +613,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
     switch (_selectedUnit) {
       case '100g':
         return 'Standard nutrition information per 100 grams';
-      case 'per_item':
+      case 'item':
         return 'For foods like eggs, slices of bread, etc.';
       case 'serving':
         return 'US-style serving size (e.g., 1 cup, 2 slices)';

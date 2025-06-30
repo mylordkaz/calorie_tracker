@@ -92,7 +92,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
     String unitDisplay;
 
     switch (food.unit) {
-      case 'per_item':
+      case 'item':
         calorieDisplay = '${food.calories.toInt()} cal';
         proteinDisplay = '${food.protein.toStringAsFixed(1)}g protein';
         unitDisplay = 'per item';
@@ -257,7 +257,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
     Color color;
 
     switch (unit) {
-      case 'per_item':
+      case 'item':
         icon = Icons.egg;
         color = Colors.purple;
         break;

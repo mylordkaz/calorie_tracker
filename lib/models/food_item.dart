@@ -72,7 +72,7 @@ class FoodItem extends HiveObject {
     switch (unit) {
       case '100g':
         return 100.0;
-      case 'per_item':
+      case 'item':
         return unitWeight ?? 1.0; // Default to 1g if no weight specified
       case 'serving':
         return unitWeight ?? 1.0; // Default to 1g if no weight specified
@@ -114,7 +114,7 @@ class FoodItem extends HiveObject {
   // Display helpers
   String getDisplayUnit() {
     switch (unit) {
-      case 'per_item':
+      case 'item':
         return 'per item';
       case 'serving':
         return servingDescription != null

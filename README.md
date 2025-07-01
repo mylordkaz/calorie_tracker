@@ -47,9 +47,9 @@ This calorie tracking app prioritizes **privacy**, **speed**, and **customizatio
 - Image support for foods & meals
 - Basic UI components and screens
 - Meal library implementation
+- Daily calorie logging functionality
 
 ### 🚧 In Progress
-- Daily calorie logging functionality
 - Statistics and trends
 - Tooling
 - UI Improvement & final design

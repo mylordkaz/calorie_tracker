@@ -197,4 +197,43 @@ class DailyTrackingService {
     final yesterday = DateTime.now().subtract(Duration(days: 1));
     return getCaloriesForDate(yesterday);
   }
+
+  // Get food entries for a specific date
+  static List<DailyFoodEntry> getFoodEntriesForDate(DateTime date) {
+    final startOfDay = DateTime(date.year, date.month, date.day);
+    final endOfDay = startOfDay.add(Duration(days: 1));
+
+    return _foodEntriesBox.values
+        .where(
+          (entry) =>
+              entry.timestamp.isAfter(startOfDay) &&
+              entry.timestamp.isBefore(endOfDay),
+        )
+        .toList();
+  }
+
+  // Get meal entries for a specific date
+  static List<DailyMealEntry> getMealEntriesForDate(DateTime date) {
+    final startOfDay = DateTime(date.year, date.month, date.day);
+    final endOfDay = startOfDay.add(Duration(days: 1));
+
+    return _mealEntriesBox.values
+        .where(
+          (entry) =>
+              entry.timestamp.isAfter(startOfDay) &&
+              entry.timestamp.isBefore(endOfDay),
+        )
+        .toList();
+  }
+
+  // Get yesterday's entries
+  static List<DailyFoodEntry> getYesterdayFoodEntries() {
+    final yesterday = DateTime.now().subtract(Duration(days: 1));
+    return getFoodEntriesForDate(yesterday);
+  }
+
+  static List<DailyMealEntry> getYesterdayMealEntries() {
+    final yesterday = DateTime.now().subtract(Duration(days: 1));
+    return getMealEntriesForDate(yesterday);
+  }
 }

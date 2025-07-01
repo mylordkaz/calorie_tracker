@@ -44,13 +44,17 @@ This calorie tracking app prioritizes **privacy**, **speed**, and **customizatio
 - Food library management (CRUD operations)
 - Food creation with custom units and macros
 - Local database with Hive
-- Image support for foods
+- Image support for foods & meals
 - Basic UI components and screens
+- Meal library implementation
 
 ### 🚧 In Progress
 - Daily calorie logging functionality
-- Meal library implementation
 - Statistics and trends
+- Tooling
+- UI Improvement & final design
+- Trial systems
+- Purchase systems
 
 ### 📋 Planned
 - Weight tracking
@@ -63,7 +67,7 @@ This calorie tracking app prioritizes **privacy**, **speed**, and **customizatio
 
 - **Free Trial**: 2 weeks full access
 - **Basic Version**: $9.99 one-time purchase (core features)
-- **Pro Version**: $24.99 one-time purchase (advanced analytics, meal planning, enhanced tools)
+- **Pro Version**: $24.99 one-time purchase (advanced analytics, Data ex/im, Cloud sync)
 
 **No subscriptions. No recurring fees. Pay once, track forever.**
 

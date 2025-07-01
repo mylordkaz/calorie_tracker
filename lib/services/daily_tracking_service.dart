@@ -75,7 +75,7 @@ class DailyTrackingService {
 
     // Calculate calories from food entries
     for (var entry in _foodEntriesBox.values) {
-      if (entry.timestamp.isAfter(startOfDay) &&
+      if (!entry.timestamp.isBefore(startOfDay) &&
           entry.timestamp.isBefore(endOfDay)) {
         final food = FoodDatabaseService.getFood(entry.foodId);
         if (food != null) {
@@ -86,7 +86,7 @@ class DailyTrackingService {
 
     // Calculate calories from meal entries
     for (var entry in _mealEntriesBox.values) {
-      if (entry.timestamp.isAfter(startOfDay) &&
+      if (!entry.timestamp.isBefore(startOfDay) &&
           entry.timestamp.isBefore(endOfDay)) {
         final meal = FoodDatabaseService.getMeal(entry.mealId);
         if (meal != null) {
@@ -108,7 +108,7 @@ class DailyTrackingService {
 
     // Calculate calories from food entries
     for (var entry in _foodEntriesBox.values) {
-      if (entry.timestamp.isAfter(startOfDay) &&
+      if (!entry.timestamp.isBefore(startOfDay) &&
           entry.timestamp.isBefore(endOfDay)) {
         final food = FoodDatabaseService.getFood(entry.foodId);
         if (food != null) {
@@ -119,7 +119,7 @@ class DailyTrackingService {
 
     // Calculate calories from meal entries
     for (var entry in _mealEntriesBox.values) {
-      if (entry.timestamp.isAfter(startOfDay) &&
+      if (!entry.timestamp.isBefore(startOfDay) &&
           entry.timestamp.isBefore(endOfDay)) {
         final meal = FoodDatabaseService.getMeal(entry.mealId);
         if (meal != null) {
@@ -141,7 +141,7 @@ class DailyTrackingService {
     return _foodEntriesBox.values
         .where(
           (entry) =>
-              entry.timestamp.isAfter(startOfDay) &&
+              !entry.timestamp.isBefore(startOfDay) &&
               entry.timestamp.isBefore(endOfDay),
         )
         .toList()
@@ -156,7 +156,7 @@ class DailyTrackingService {
     return _mealEntriesBox.values
         .where(
           (entry) =>
-              entry.timestamp.isAfter(startOfDay) &&
+              !entry.timestamp.isBefore(startOfDay) &&
               entry.timestamp.isBefore(endOfDay),
         )
         .toList()
@@ -206,10 +206,11 @@ class DailyTrackingService {
     return _foodEntriesBox.values
         .where(
           (entry) =>
-              entry.timestamp.isAfter(startOfDay) &&
+              !entry.timestamp.isBefore(startOfDay) &&
               entry.timestamp.isBefore(endOfDay),
         )
-        .toList();
+        .toList()
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
   }
 
   // Get meal entries for a specific date
@@ -220,10 +221,11 @@ class DailyTrackingService {
     return _mealEntriesBox.values
         .where(
           (entry) =>
-              entry.timestamp.isAfter(startOfDay) &&
+              !entry.timestamp.isBefore(startOfDay) &&
               entry.timestamp.isBefore(endOfDay),
         )
-        .toList();
+        .toList()
+      ..sort((a, b) => a.timestamp.compareTo(b.timestamp));
   }
 
   // Get yesterday's entries
@@ -235,5 +237,224 @@ class DailyTrackingService {
   static List<DailyMealEntry> getYesterdayMealEntries() {
     final yesterday = DateTime.now().subtract(Duration(days: 1));
     return getMealEntriesForDate(yesterday);
+  }
+
+  // Get macros for a specific date
+  static Map<String, double> getMacrosForDate(DateTime date) {
+    final startOfDay = DateTime(date.year, date.month, date.day);
+    final endOfDay = startOfDay.add(Duration(days: 1));
+
+    Map<String, double> totalMacros = {
+      'calories': 0,
+      'protein': 0,
+      'carbs': 0,
+      'fat': 0,
+    };
+
+    // Calculate macros from food entries
+    for (var entry in _foodEntriesBox.values) {
+      if (!entry.timestamp.isBefore(startOfDay) &&
+          entry.timestamp.isBefore(endOfDay)) {
+        final food = FoodDatabaseService.getFood(entry.foodId);
+        if (food != null) {
+          final macros = food.getMacrosForGrams(entry.grams);
+          totalMacros['calories'] =
+              totalMacros['calories']! + macros['calories']!;
+          totalMacros['protein'] = totalMacros['protein']! + macros['protein']!;
+          totalMacros['carbs'] = totalMacros['carbs']! + macros['carbs']!;
+          totalMacros['fat'] = totalMacros['fat']! + macros['fat']!;
+        }
+      }
+    }
+
+    // Calculate macros from meal entries
+    for (var entry in _mealEntriesBox.values) {
+      if (!entry.timestamp.isBefore(startOfDay) &&
+          entry.timestamp.isBefore(endOfDay)) {
+        final meal = FoodDatabaseService.getMeal(entry.mealId);
+        if (meal != null) {
+          final mealMacros = FoodDatabaseService.calculateMealMacros(meal);
+          totalMacros['calories'] =
+              totalMacros['calories']! +
+              (mealMacros['calories'] ?? 0.0) * entry.multiplier;
+          totalMacros['protein'] =
+              totalMacros['protein']! +
+              (mealMacros['protein'] ?? 0.0) * entry.multiplier;
+          totalMacros['carbs'] =
+              totalMacros['carbs']! +
+              (mealMacros['carbs'] ?? 0.0) * entry.multiplier;
+          totalMacros['fat'] =
+              totalMacros['fat']! +
+              (mealMacros['fat'] ?? 0.0) * entry.multiplier;
+        }
+      }
+    }
+
+    return totalMacros;
+  }
+
+  // Get data for current week (Monday to Sunday)
+  static List<Map<String, dynamic>> getCurrentWeekData() {
+    final now = DateTime.now();
+    final mondayOfWeek = now.subtract(Duration(days: now.weekday - 1));
+
+    List<Map<String, dynamic>> weekData = [];
+
+    for (int i = 0; i < 7; i++) {
+      final date = mondayOfWeek.add(Duration(days: i));
+      final macros = getMacrosForDate(date);
+      weekData.add({'date': date, 'macros': macros});
+    }
+
+    return weekData;
+  }
+
+  // Get data for last N days
+  static List<Map<String, dynamic>> getLastNDaysData(int days) {
+    final now = DateTime.now();
+    List<Map<String, dynamic>> data = [];
+
+    for (int i = days - 1; i >= 0; i--) {
+      final date = now.subtract(Duration(days: i));
+      final macros = getMacrosForDate(date);
+      data.add({'date': date, 'macros': macros});
+    }
+
+    return data;
+  }
+
+  // Calculate average for a dataset
+  static double calculateAverage(
+    List<Map<String, dynamic>> data,
+    String macroType,
+  ) {
+    if (data.isEmpty) return 0.0;
+
+    double total = 0.0;
+    int validDays = 0;
+
+    for (var dayData in data) {
+      final value = dayData['macros'][macroType] as double;
+      if (value > 0) {
+        total += value;
+        validDays++;
+      }
+    }
+
+    return validDays > 0 ? total / validDays : 0.0;
+  }
+
+  // Check if a date has any entries
+  static bool hasEntriesForDate(DateTime date) {
+    final startOfDay = DateTime(date.year, date.month, date.day);
+    final endOfDay = startOfDay.add(Duration(days: 1));
+
+    // Check food entries
+    for (var entry in _foodEntriesBox.values) {
+      if (!entry.timestamp.isBefore(startOfDay) &&
+          entry.timestamp.isBefore(endOfDay)) {
+        return true;
+      }
+    }
+
+    // Check meal entries
+    for (var entry in _mealEntriesBox.values) {
+      if (!entry.timestamp.isBefore(startOfDay) &&
+          entry.timestamp.isBefore(endOfDay)) {
+        return true;
+      }
+    }
+
+    return false;
+  }
+
+  // Get all dates with entries for a specific month
+  static List<DateTime> getDatesWithEntriesForMonth(int year, int month) {
+    final startOfMonth = DateTime(year, month, 1);
+    final endOfMonth = DateTime(year, month + 1, 1);
+
+    Set<DateTime> datesWithEntries = <DateTime>{};
+
+    // Check food entries
+    for (var entry in _foodEntriesBox.values) {
+      if (!entry.timestamp.isBefore(startOfMonth) &&
+          entry.timestamp.isBefore(endOfMonth)) {
+        final dateOnly = DateTime(
+          entry.timestamp.year,
+          entry.timestamp.month,
+          entry.timestamp.day,
+        );
+        datesWithEntries.add(dateOnly);
+      }
+    }
+
+    // Check meal entries
+    for (var entry in _mealEntriesBox.values) {
+      if (!entry.timestamp.isBefore(startOfMonth) &&
+          entry.timestamp.isBefore(endOfMonth)) {
+        final dateOnly = DateTime(
+          entry.timestamp.year,
+          entry.timestamp.month,
+          entry.timestamp.day,
+        );
+        datesWithEntries.add(dateOnly);
+      }
+    }
+
+    return datesWithEntries.toList();
+  }
+
+  // Add these methods to DailyTrackingService class
+
+  // Add food entry for a specific date
+  static Future<void> addFoodEntryForDate({
+    required String foodId,
+    required double grams,
+    required DateTime date,
+    double? originalQuantity,
+    String? originalUnit,
+  }) async {
+    final entry = DailyFoodEntry(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      foodId: foodId,
+      grams: grams,
+      timestamp: DateTime(
+        date.year,
+        date.month,
+        date.day,
+        DateTime.now().hour,
+        DateTime.now().minute,
+        DateTime.now().second,
+      ),
+      originalQuantity: originalQuantity,
+      originalUnit: originalUnit,
+    );
+
+    await _foodEntriesBox.put(entry.id, entry);
+    await FoodDatabaseService.markFoodAsUsed(foodId);
+  }
+
+  // Add meal entry for a specific date
+  static Future<void> addMealEntryForDate({
+    required String mealId,
+    required double multiplier,
+    required DateTime date,
+  }) async {
+    final entry = DailyMealEntry(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      mealId: mealId,
+      multiplier: multiplier,
+      timestamp: DateTime(
+        date.year,
+        date.month,
+        date.day,
+        DateTime.now().hour,
+        DateTime.now().minute,
+        DateTime.now().second,
+      ),
+    );
+
+    await _mealEntriesBox.put(entry.id, entry);
+    await FoodDatabaseService.markMealAsUsed(mealId);
   }
 }

@@ -12,7 +12,7 @@ void main() async {
   await Hive.initFlutter();
 
   // Clear settings box due to schema change (remove this line after first run)
-  await Hive.deleteBoxFromDisk('user_settings');
+  // await Hive.deleteBoxFromDisk('user_settings');
 
   // Initialize services
   await FoodDatabaseService.init();

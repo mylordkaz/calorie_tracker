@@ -11,9 +11,15 @@ class FoodDatabaseService {
 
   static Future<void> init() async {
     // Register adapters
-    Hive.registerAdapter(FoodItemAdapter());
-    Hive.registerAdapter(MealAdapter());
-    Hive.registerAdapter(MealIngredientAdapter());
+    if (!Hive.isAdapterRegistered(0)) {
+      Hive.registerAdapter(FoodItemAdapter());
+    }
+    if (!Hive.isAdapterRegistered(1)) {
+      Hive.registerAdapter(MealIngredientAdapter());
+    }
+    if (!Hive.isAdapterRegistered(2)) {
+      Hive.registerAdapter(MealAdapter());
+    }
 
     // Open boxes
     _foodBox = await Hive.openBox<FoodItem>(_foodBoxName);

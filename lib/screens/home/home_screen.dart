@@ -1,9 +1,64 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import '../../widgets/common/stat_card.dart';
+import '../../services/user_settings_service.dart';
+import '../../services/daily_tracking_service.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  double? _dailyTarget;
+  double _currentCalories = 0;
+  bool _isLoading = true;
+
+  @override
+  void initState() {
+    super.initState();
+    _loadData();
+  }
+
+  void _loadData() async {
+    try {
+      if (UserSettingsService.isInitialized) {
+        setState(() {
+          _dailyTarget = UserSettingsService.getDailyCalorieTarget();
+          _currentCalories = DailyTrackingService.getTodayCalories();
+          _isLoading = false;
+        });
+      } else {
+        await Future.delayed(Duration(milliseconds: 100));
+        _loadData();
+      }
+    } catch (e) {
+      print('Error loading daily target: $e');
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
+    if (_isLoading) {
+      return Scaffold(
+        backgroundColor: Colors.grey[50],
+        appBar: AppBar(
+          title: Text('Calorie Tracker'),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          foregroundColor: Colors.black,
+        ),
+        body: Center(child: CircularProgressIndicator(color: Colors.green)),
+      );
+    }
+
+    final progress = _dailyTarget != null
+        ? _currentCalories / _dailyTarget!
+        : 0.0;
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -11,21 +66,19 @@ class HomeScreen extends StatelessWidget {
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
+        actions: [
+          IconButton(icon: Icon(Icons.settings), onPressed: _showTargetDialog),
+        ],
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.all(16),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            // TOP SECTION - Date & Calorie Progress
-            _buildTopSection(),
+            _buildTopSection(progress),
             SizedBox(height: 24),
-            
-            // MIDDLE SECTION - Food Library & Actions
             _buildMiddleSection(context),
             SizedBox(height: 24),
-            
-            // BOTTOM SECTION - Quick Stats
             _buildBottomSection(),
           ],
         ),
@@ -33,7 +86,7 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildTopSection() {
+  Widget _buildTopSection(double progress) {
     return Container(
       padding: EdgeInsets.all(20),
       decoration: BoxDecoration(
@@ -50,18 +103,50 @@ class HomeScreen extends StatelessWidget {
       ),
       child: Column(
         children: [
-          // Today's Date
-          Text(
-            'Today - ${DateTime.now().toString().split(' ')[0]}',
-            style: TextStyle(
-              fontSize: 16,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                'Today - ${DateTime.now().toString().split(' ')[0]}',
+                style: TextStyle(
+                  fontSize: 16,
+                  color: Colors.grey[600],
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              GestureDetector(
+                onTap: _showTargetDialog,
+                child: Container(
+                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  decoration: BoxDecoration(
+                    color: _dailyTarget != null
+                        ? Colors.green.withOpacity(0.1)
+                        : Colors.orange.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(12),
+                    border: Border.all(
+                      color: _dailyTarget != null
+                          ? Colors.green.withOpacity(0.3)
+                          : Colors.orange.withOpacity(0.3),
+                    ),
+                  ),
+                  child: Text(
+                    _dailyTarget != null
+                        ? 'Target: ${_dailyTarget!.toInt()}'
+                        : 'Set Target',
+                    style: TextStyle(
+                      fontSize: 12,
+                      color: _dailyTarget != null
+                          ? Colors.green
+                          : Colors.orange,
+                      fontWeight: FontWeight.w500,
+                    ),
+                  ),
+                ),
+              ),
+            ],
           ),
           SizedBox(height: 16),
-          
-          // Calorie Progress Circle
+
           Container(
             width: 120,
             height: 120,
@@ -72,17 +157,21 @@ class HomeScreen extends StatelessWidget {
                   width: 120,
                   height: 120,
                   child: CircularProgressIndicator(
-                    value: 0.65, // 65% progress (mock data)
+                    value: progress.clamp(0.0, 1.0),
                     strokeWidth: 8,
                     backgroundColor: Colors.grey[200],
-                    valueColor: AlwaysStoppedAnimation<Color>(Colors.green),
+                    valueColor: AlwaysStoppedAnimation<Color>(
+                      _dailyTarget != null
+                          ? (progress <= 1.0 ? Colors.green : Colors.orange)
+                          : Colors.grey,
+                    ),
                   ),
                 ),
                 Column(
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Text(
-                      '1,300',
+                      '${_currentCalories.toInt()}',
                       style: TextStyle(
                         fontSize: 24,
                         fontWeight: FontWeight.bold,
@@ -90,32 +179,27 @@ class HomeScreen extends StatelessWidget {
                       ),
                     ),
                     Text(
-                      'of 2,000',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[600],
-                      ),
+                      _dailyTarget != null
+                          ? 'of ${_dailyTarget!.toInt()}'
+                          : 'calories',
+                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                     ),
-                    Text(
-                      'calories',
-                      style: TextStyle(
-                        fontSize: 12,
-                        color: Colors.grey[500],
+                    if (_dailyTarget != null)
+                      Text(
+                        'calories',
+                        style: TextStyle(fontSize: 12, color: Colors.grey[500]),
                       ),
-                    ),
                   ],
                 ),
               ],
             ),
           ),
           SizedBox(height: 16),
-          
-          // Add Food Button
+
           SizedBox(
             width: double.infinity,
             child: ElevatedButton(
               onPressed: () {
-                // TODO: Navigate to add food screen
                 print('Add Food pressed');
               },
               style: ElevatedButton.styleFrom(
@@ -128,10 +212,7 @@ class HomeScreen extends StatelessWidget {
               ),
               child: Text(
                 'Add Food',
-                style: TextStyle(
-                  fontSize: 16,
-                  fontWeight: FontWeight.w600,
-                ),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
             ),
           ),
@@ -153,8 +234,7 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
-        
-        // Search Bar
+
         Container(
           decoration: BoxDecoration(
             color: Colors.white,
@@ -173,13 +253,15 @@ class HomeScreen extends StatelessWidget {
               hintText: 'Search food library...',
               prefixIcon: Icon(Icons.search, color: Colors.grey),
               border: InputBorder.none,
-              contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 16),
+              contentPadding: EdgeInsets.symmetric(
+                horizontal: 16,
+                vertical: 16,
+              ),
             ),
           ),
         ),
         SizedBox(height: 16),
-        
-        // Recent Foods & Custom Meal Buttons
+
         Row(
           children: [
             Expanded(
@@ -205,7 +287,12 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildActionButton(String title, IconData icon, Color color, VoidCallback onPressed) {
+  Widget _buildActionButton(
+    String title,
+    IconData icon,
+    Color color,
+    VoidCallback onPressed,
+  ) {
     return Container(
       decoration: BoxDecoration(
         color: Colors.white,
@@ -248,6 +335,9 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget _buildBottomSection() {
+    final weeklyAverage = DailyTrackingService.getWeeklyAverageCalories();
+    final yesterdayCalories = DailyTrackingService.getYesterdayCalories();
+
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
@@ -260,13 +350,15 @@ class HomeScreen extends StatelessWidget {
           ),
         ),
         SizedBox(height: 16),
-        
+
         Row(
           children: [
             Expanded(
               child: StatCard(
                 title: 'Weekly Average',
-                value: '1,850',
+                value: weeklyAverage > 0
+                    ? weeklyAverage.toInt().toString()
+                    : '--',
                 unit: 'calories/day',
                 color: Colors.purple,
               ),
@@ -275,9 +367,37 @@ class HomeScreen extends StatelessWidget {
             Expanded(
               child: StatCard(
                 title: 'Yesterday',
-                value: '2,100',
+                value: yesterdayCalories > 0
+                    ? yesterdayCalories.toInt().toString()
+                    : '--',
                 unit: 'calories',
                 color: Colors.teal,
+              ),
+            ),
+          ],
+        ),
+        SizedBox(height: 12),
+        Row(
+          children: [
+            Expanded(
+              child: StatCard(
+                title: 'Remaining',
+                value: _dailyTarget != null
+                    ? '${(_dailyTarget! - _currentCalories).toInt()}'
+                    : '--',
+                unit: 'calories',
+                color: Colors.indigo,
+              ),
+            ),
+            SizedBox(width: 12),
+            Expanded(
+              child: StatCard(
+                title: 'Progress',
+                value: _dailyTarget != null
+                    ? '${((_currentCalories / _dailyTarget!) * 100).toInt()}'
+                    : '--',
+                unit: '%',
+                color: Colors.green,
               ),
             ),
           ],
@@ -286,4 +406,64 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-} 
+  void _showTargetDialog() {
+    final controller = TextEditingController(
+      text: _dailyTarget != null ? _dailyTarget!.toInt().toString() : '',
+    );
+
+    showDialog(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Text('Set Daily Calorie Target'),
+        content: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            TextField(
+              controller: controller,
+              keyboardType: TextInputType.number,
+              inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+              decoration: InputDecoration(
+                labelText: 'Daily Calorie Target',
+                suffixText: 'calories',
+                border: OutlineInputBorder(),
+              ),
+            ),
+            SizedBox(height: 8),
+          ],
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text('Cancel'),
+          ),
+          ElevatedButton(
+            onPressed: () async {
+              final target = double.tryParse(controller.text);
+              if (target != null && target > 0) {
+                await UserSettingsService.setDailyCalorieTarget(target);
+                setState(() {
+                  _dailyTarget = target;
+                });
+                if (context.mounted) {
+                  Navigator.pop(context);
+                  ScaffoldMessenger.of(context).showSnackBar(
+                    SnackBar(
+                      content: Text(
+                        'Daily target updated to ${target.toInt()} calories',
+                      ),
+                    ),
+                  );
+                }
+              }
+            },
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.green,
+              foregroundColor: Colors.white,
+            ),
+            child: Text('Save'),
+          ),
+        ],
+      ),
+    );
+  }
+}

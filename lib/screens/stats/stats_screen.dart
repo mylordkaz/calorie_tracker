@@ -184,13 +184,13 @@ class _StatsScreenState extends State<StatsScreen> {
         padding: EdgeInsets.only(bottom: 2),
         decoration: BoxDecoration(
           border: isSelected
-              ? Border(bottom: BorderSide(color: Colors.green, width: 2))
+              ? Border(bottom: BorderSide(color: Colors.blue, width: 2))
               : null,
         ),
         child: Text(
           title,
           style: TextStyle(
-            color: isSelected ? Colors.green : Colors.grey[600],
+            color: isSelected ? Colors.blue : Colors.grey[600],
             fontWeight: isSelected ? FontWeight.w600 : FontWeight.normal,
             fontSize: 12, // Reduced from 14 to 12
           ),
@@ -582,12 +582,41 @@ class _StatsScreenState extends State<StatsScreen> {
     if (_selectedDate == null) {
       return CustomCard(
         child: Container(
-          height: 120,
-          child: Center(
-            child: Text(
-              'Select a date to view details',
-              style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-            ),
+          width: double.infinity,
+          height: 160,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Container(
+                padding: EdgeInsets.all(16),
+                decoration: BoxDecoration(
+                  color: Colors.blue.withOpacity(0.1),
+                  shape: BoxShape.circle,
+                ),
+                child: Icon(
+                  Icons.calendar_today_outlined,
+                  size: 32,
+                  color: Colors.blue,
+                ),
+              ),
+              SizedBox(height: 16),
+              Text(
+                'Select a date to view details',
+                textAlign: TextAlign.center,
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[700],
+                ),
+              ),
+              SizedBox(height: 4),
+              Text(
+                'Tap on any day in the calendar above',
+                textAlign: TextAlign.center,
+                style: TextStyle(fontSize: 13, color: Colors.grey[500]),
+              ),
+            ],
           ),
         ),
       );
@@ -602,124 +631,172 @@ class _StatsScreenState extends State<StatsScreen> {
       _selectedDate!,
     );
 
-    return CustomCard(
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    return Column(
+      children: [
+        // Header Card
+        CustomCard(
+          child: Column(
             children: [
-              Text(
-                '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
-              ),
-              ElevatedButton.icon(
-                onPressed: () async {
-                  final result = await Navigator.push(
-                    context,
-                    MaterialPageRoute(
-                      builder: (context) =>
-                          AddEntryForDateScreen(selectedDate: _selectedDate!),
-                    ),
-                  );
-
-                  if (result == true) {
-                    _loadCalendarData();
-                    setState(() {});
-                  }
-                },
-                icon: Icon(Icons.add, size: 16),
-                label: Text('Add'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: Colors.green,
-                  foregroundColor: Colors.white,
-                  padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
-                  minimumSize: Size(0, 32),
-                ),
-              ),
-            ],
-          ),
-
-          SizedBox(height: 16),
-
-          if (hasEntries) ...[
-            // Macro summary row
-            Row(
-              children: [
-                Expanded(
-                  child: _buildMacroSummaryCard(
-                    'Calories',
-                    macros['calories']!,
-                    'kcal',
-                    Colors.orange,
-                  ),
-                ),
-                SizedBox(width: 6),
-                Expanded(
-                  child: _buildMacroSummaryCard(
-                    'Protein',
-                    macros['protein']!,
-                    'g',
-                    Colors.blue,
-                  ),
-                ),
-                SizedBox(width: 6),
-                Expanded(
-                  child: _buildMacroSummaryCard(
-                    'Carbs',
-                    macros['carbs']!,
-                    'g',
-                    Colors.green,
-                  ),
-                ),
-                SizedBox(width: 6),
-                Expanded(
-                  child: _buildMacroSummaryCard(
-                    'Fat',
-                    macros['fat']!,
-                    'g',
-                    Colors.red,
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 16),
-
-            Text(
-              'Entries',
-              style: TextStyle(
-                fontSize: 14,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey[700],
-              ),
-            ),
-            SizedBox(height: 8),
-
-            // Entries list
-            ...foodEntries.map((entry) => _buildFoodEntryCard(entry)).toList(),
-            ...mealEntries.map((entry) => _buildMealEntryCard(entry)).toList(),
-          ] else ...[
-            Container(
-              padding: EdgeInsets.all(24),
-              child: Column(
+              Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  Icon(
-                    Icons.restaurant_outlined,
-                    size: 48,
-                    color: Colors.grey[400],
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    children: [
+                      Text(
+                        '${_selectedDate!.day}/${_selectedDate!.month}/${_selectedDate!.year}',
+                        style: TextStyle(
+                          fontSize: 20,
+                          fontWeight: FontWeight.w600,
+                          color: Colors.black87,
+                        ),
+                      ),
+                      SizedBox(height: 4),
+                      Text(
+                        hasEntries
+                            ? '${foodEntries.length + mealEntries.length} entries logged'
+                            : 'No entries yet',
+                        style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                      ),
+                    ],
                   ),
-                  SizedBox(height: 8),
-                  Text(
-                    'No entries for this date',
-                    style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                  Container(
+                    decoration: BoxDecoration(
+                      color: Colors.blue,
+                      borderRadius: BorderRadius.circular(12),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.blue.withOpacity(0.3),
+                          spreadRadius: 0,
+                          blurRadius: 8,
+                          offset: Offset(0, 2),
+                        ),
+                      ],
+                    ),
+                    child: Material(
+                      color: Colors.transparent,
+                      child: InkWell(
+                        onTap: () async {
+                          final result = await Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) => AddEntryForDateScreen(
+                                selectedDate: _selectedDate!,
+                              ),
+                            ),
+                          );
+
+                          if (result == true) {
+                            _loadCalendarData();
+                            setState(() {});
+                          }
+                        },
+                        borderRadius: BorderRadius.circular(12),
+                        child: Padding(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 10,
+                          ),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Icon(Icons.add, size: 18, color: Colors.white),
+                              SizedBox(width: 6),
+                              Text(
+                                'Add Entry',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w600,
+                                  fontSize: 14,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ),
+                    ),
                   ),
                 ],
               ),
+
+              if (hasEntries) ...[
+                SizedBox(height: 20),
+                // Macro Cards Grid
+                Row(
+                  children: [
+                    Expanded(
+                      child: _buildModernMacroCard(
+                        'Calories',
+                        macros['calories']!,
+                        'kcal',
+                        Colors.orange,
+                        Icons.local_fire_department,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: _buildModernMacroCard(
+                        'Protein',
+                        macros['protein']!,
+                        'g',
+                        Colors.blue,
+                        Icons.fitness_center,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: _buildModernMacroCard(
+                        'Carbs',
+                        macros['carbs']!,
+                        'g',
+                        Colors.green,
+                        Icons.grass,
+                      ),
+                    ),
+                    SizedBox(width: 8),
+                    Expanded(
+                      child: _buildModernMacroCard(
+                        'Fat',
+                        macros['fat']!,
+                        'g',
+                        Colors.amber,
+                        Icons.opacity,
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ],
+          ),
+        ),
+
+        if (hasEntries) ...[
+          SizedBox(height: 16),
+          // Entries Card
+          CustomCard(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  'Food Log',
+                  style: TextStyle(
+                    fontSize: 16,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 12),
+                ...foodEntries
+                    .map((entry) => _buildModernFoodEntryCard(entry))
+                    .toList(),
+                ...mealEntries
+                    .map((entry) => _buildModernMealEntryCard(entry))
+                    .toList(),
+              ],
             ),
-          ],
+          ),
         ],
-      ),
+      ],
     );
   }
 
@@ -770,7 +847,145 @@ class _StatsScreenState extends State<StatsScreen> {
     );
   }
 
-  Widget _buildMealEntryCard(DailyMealEntry entry) {
+  Widget _buildModernMacroCard(
+    String label,
+    double value,
+    String unit,
+    Color color,
+    IconData icon,
+  ) {
+    return Container(
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topLeft,
+          end: Alignment.bottomRight,
+          colors: [color.withOpacity(0.1), color.withOpacity(0.05)],
+        ),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withOpacity(0.2)),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, size: 16, color: color),
+          SizedBox(height: 6),
+          Text(
+            '${value.toStringAsFixed(value % 1 == 0 ? 0 : 1)}',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: color,
+            ),
+          ),
+          Text(
+            unit,
+            style: TextStyle(fontSize: 10, color: color.withOpacity(0.8)),
+          ),
+          SizedBox(height: 2),
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: 10,
+              color: Colors.grey[600],
+              fontWeight: FontWeight.w500,
+            ),
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildModernFoodEntryCard(DailyFoodEntry entry) {
+    final food = FoodDatabaseService.getFood(entry.foodId);
+    if (food == null) return Container();
+
+    final macros = food.getMacrosForGrams(entry.grams);
+    final timeStr =
+        '${entry.timestamp.hour.toString().padLeft(2, '0')}:${entry.timestamp.minute.toString().padLeft(2, '0')}';
+
+    return Container(
+      margin: EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.all(12),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.05),
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
+      ),
+      child: Row(
+        children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.blue.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(Icons.restaurant, size: 18, color: Colors.blue),
+          ),
+          SizedBox(width: 12),
+          Expanded(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                Text(
+                  food.name,
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: Colors.black87,
+                  ),
+                ),
+                SizedBox(height: 2),
+                Text(
+                  '${entry.grams.toInt()}g • ${macros['calories']!.toInt()} cal',
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
+                ),
+              ],
+            ),
+          ),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                timeStr,
+                style: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 4),
+              GestureDetector(
+                onTap: () => _deleteEntry(entry.id, true),
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Icon(
+                    Icons.delete_outline,
+                    size: 14,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ],
+      ),
+    );
+  }
+
+  Widget _buildModernMealEntryCard(DailyMealEntry entry) {
     final meal = FoodDatabaseService.getMeal(entry.mealId);
     if (meal == null) return Container();
 
@@ -782,38 +997,81 @@ class _StatsScreenState extends State<StatsScreen> {
         '${entry.timestamp.hour.toString().padLeft(2, '0')}:${entry.timestamp.minute.toString().padLeft(2, '0')}';
 
     return Container(
-      margin: EdgeInsets.only(bottom: 6),
-      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(6),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey[200]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.05),
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
       ),
       child: Row(
         children: [
+          Container(
+            width: 40,
+            height: 40,
+            decoration: BoxDecoration(
+              color: Colors.orange.withOpacity(0.1),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Icon(Icons.local_dining, size: 18, color: Colors.orange),
+          ),
+          SizedBox(width: 12),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   meal.name,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+                  style: TextStyle(
+                    fontWeight: FontWeight.w600,
+                    fontSize: 14,
+                    color: Colors.black87,
+                  ),
                 ),
+                SizedBox(height: 2),
                 Text(
-                  '${entry.multiplier}x • ${macros['calories']!.toInt()} cal',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 10),
+                  '${entry.multiplier}x serving • ${macros['calories']!.toInt()} cal',
+                  style: TextStyle(color: Colors.grey[600], fontSize: 12),
                 ),
               ],
             ),
           ),
-          Text(
-            timeStr,
-            style: TextStyle(color: Colors.grey[500], fontSize: 10),
-          ),
-          SizedBox(width: 8),
-          GestureDetector(
-            onTap: () => _deleteEntry(entry.id, false),
-            child: Icon(Icons.delete, size: 16, color: Colors.red),
+          Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                timeStr,
+                style: TextStyle(
+                  color: Colors.grey[500],
+                  fontSize: 11,
+                  fontWeight: FontWeight.w500,
+                ),
+              ),
+              SizedBox(height: 4),
+              GestureDetector(
+                onTap: () => _deleteEntry(entry.id, false),
+                child: Container(
+                  padding: EdgeInsets.all(4),
+                  decoration: BoxDecoration(
+                    color: Colors.red.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(6),
+                  ),
+                  child: Icon(
+                    Icons.delete_outline,
+                    size: 14,
+                    color: Colors.red,
+                  ),
+                ),
+              ),
+            ],
           ),
         ],
       ),
@@ -848,44 +1106,6 @@ class _StatsScreenState extends State<StatsScreen> {
       _loadCalendarData();
       setState(() {});
     }
-  }
-
-  Widget _buildMacroSummaryCard(
-    String label,
-    double value,
-    String unit,
-    Color color,
-  ) {
-    return Container(
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: color.withOpacity(0.3)),
-      ),
-      child: Column(
-        children: [
-          Text(
-            label,
-            style: TextStyle(
-              fontSize: 11,
-              color: color,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(height: 2),
-          Text(
-            '${value.toStringAsFixed(value % 1 == 0 ? 0 : 1)}',
-            style: TextStyle(
-              fontSize: 14,
-              fontWeight: FontWeight.bold,
-              color: color,
-            ),
-          ),
-          Text(unit, style: TextStyle(fontSize: 9, color: color)),
-        ],
-      ),
-    );
   }
 
   List<Map<String, dynamic>> _getData() {

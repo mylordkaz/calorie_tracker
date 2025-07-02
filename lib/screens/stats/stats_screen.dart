@@ -310,33 +310,37 @@ class _StatsScreenState extends State<StatsScreen> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _currentCalendarMonth = DateTime(
-                      _currentCalendarMonth.year,
-                      _currentCalendarMonth.month - 1,
-                    );
-                  });
-                  _loadCalendarData();
-                },
-                icon: Icon(Icons.chevron_left),
-              ),
               Text(
                 '${_getMonthName(_currentCalendarMonth.month)} ${_currentCalendarMonth.year}',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
-              IconButton(
-                onPressed: () {
-                  setState(() {
-                    _currentCalendarMonth = DateTime(
-                      _currentCalendarMonth.year,
-                      _currentCalendarMonth.month + 1,
-                    );
-                  });
-                  _loadCalendarData();
-                },
-                icon: Icon(Icons.chevron_right),
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _currentCalendarMonth = DateTime(
+                          _currentCalendarMonth.year,
+                          _currentCalendarMonth.month - 1,
+                        );
+                      });
+                      _loadCalendarData();
+                    },
+                    icon: Icon(Icons.chevron_left),
+                  ),
+                  IconButton(
+                    onPressed: () {
+                      setState(() {
+                        _currentCalendarMonth = DateTime(
+                          _currentCalendarMonth.year,
+                          _currentCalendarMonth.month + 1,
+                        );
+                      });
+                      _loadCalendarData();
+                    },
+                    icon: Icon(Icons.chevron_right),
+                  ),
+                ],
               ),
             ],
           ),
@@ -348,13 +352,17 @@ class _StatsScreenState extends State<StatsScreen> {
             children: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
                 .map(
                   (day) => Expanded(
-                    child: Text(
-                      day,
-                      textAlign: TextAlign.center,
-                      style: TextStyle(
-                        fontSize: 12,
-                        fontWeight: FontWeight.w500,
-                        color: Colors.grey[600],
+                    child: Container(
+                      height: 32,
+                      child: Center(
+                        child: Text(
+                          day,
+                          style: TextStyle(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.grey[700],
+                          ),
+                        ),
                       ),
                     ),
                   ),
@@ -385,14 +393,41 @@ class _StatsScreenState extends State<StatsScreen> {
     final firstDayWeekday = firstDayOfMonth.weekday; // Monday = 1, Sunday = 7
     final daysInMonth = lastDayOfMonth.day;
 
+    // Calculate previous month info
+    final prevMonth = DateTime(
+      _currentCalendarMonth.year,
+      _currentCalendarMonth.month - 1,
+      1,
+    );
+    final lastDayOfPrevMonth = DateTime(
+      prevMonth.year,
+      prevMonth.month + 1,
+      0,
+    ).day;
+
     List<Widget> calendarDays = [];
 
-    // Add empty cells for days before the first day of the month
-    for (int i = 1; i < firstDayWeekday; i++) {
-      calendarDays.add(Container());
+    // Add gray days from previous month
+    for (int i = firstDayWeekday - 1; i > 0; i--) {
+      final day = lastDayOfPrevMonth - i + 1;
+      calendarDays.add(
+        Container(
+          margin: EdgeInsets.all(1),
+          child: Center(
+            child: Text(
+              day.toString(),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey[400],
+              ),
+            ),
+          ),
+        ),
+      );
     }
 
-    // Add days of the month
+    // Add days of current month
     for (int day = 1; day <= daysInMonth; day++) {
       final date = DateTime(
         _currentCalendarMonth.year,
@@ -421,16 +456,18 @@ class _StatsScreenState extends State<StatsScreen> {
             });
           },
           child: Container(
-            margin: EdgeInsets.all(2),
+            margin: EdgeInsets.all(1),
             decoration: BoxDecoration(
               color: isSelected
-                  ? Colors.green
+                  ? Colors.blue
                   : isToday
-                  ? Colors.green.withOpacity(0.2)
+                  ? Colors.blue.withOpacity(0.1)
                   : Colors.transparent,
-              borderRadius: BorderRadius.circular(8),
+              shape: (isSelected || isToday)
+                  ? BoxShape.circle
+                  : BoxShape.rectangle,
               border: isToday && !isSelected
-                  ? Border.all(color: Colors.green, width: 1)
+                  ? Border.all(color: Colors.blue, width: 1.0)
                   : null,
             ),
             child: Stack(
@@ -439,26 +476,29 @@ class _StatsScreenState extends State<StatsScreen> {
                   child: Text(
                     day.toString(),
                     style: TextStyle(
-                      fontSize: 14,
+                      fontSize: 16,
                       fontWeight: FontWeight.w500,
                       color: isSelected
                           ? Colors.white
                           : isToday
-                          ? Colors.green
-                          : Colors.black,
+                          ? Colors.blue
+                          : Colors.black87,
                     ),
                   ),
                 ),
                 if (hasEntries)
                   Positioned(
-                    top: 4,
-                    right: 4,
-                    child: Container(
-                      width: 6,
-                      height: 6,
-                      decoration: BoxDecoration(
-                        color: isSelected ? Colors.white : Colors.green,
-                        shape: BoxShape.circle,
+                    bottom: 6,
+                    left: 0,
+                    right: 0,
+                    child: Center(
+                      child: Container(
+                        width: 4,
+                        height: 4,
+                        decoration: BoxDecoration(
+                          color: isSelected ? Colors.white : Colors.blue,
+                          shape: BoxShape.circle,
+                        ),
                       ),
                     ),
                   ),
@@ -469,12 +509,33 @@ class _StatsScreenState extends State<StatsScreen> {
       );
     }
 
+    // Add gray days from next month to complete the grid
+    int nextMonthDay = 1;
+    while (calendarDays.length % 7 != 0) {
+      calendarDays.add(
+        Container(
+          margin: EdgeInsets.all(1),
+          child: Center(
+            child: Text(
+              nextMonthDay.toString(),
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.w400,
+                color: Colors.grey[400],
+              ),
+            ),
+          ),
+        ),
+      );
+      nextMonthDay++;
+    }
+
     // Organize into weeks (rows of 7)
     List<Widget> weeks = [];
     for (int i = 0; i < calendarDays.length; i += 7) {
       weeks.add(
         Container(
-          height: 40,
+          height: 44,
           child: Row(
             children: calendarDays
                 .skip(i)

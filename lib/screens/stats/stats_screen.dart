@@ -410,16 +410,27 @@ class _StatsScreenState extends State<StatsScreen> {
     // Add gray days from previous month
     for (int i = firstDayWeekday - 1; i > 0; i--) {
       final day = lastDayOfPrevMonth - i + 1;
+      final date = DateTime(prevMonth.year, prevMonth.month, day);
+
       calendarDays.add(
-        Container(
-          margin: EdgeInsets.all(1),
-          child: Center(
-            child: Text(
-              day.toString(),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey[400],
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _currentCalendarMonth = DateTime(prevMonth.year, prevMonth.month);
+              _selectedDate = date;
+            });
+            _loadCalendarData();
+          },
+          child: Container(
+            margin: EdgeInsets.all(1),
+            child: Center(
+              child: Text(
+                day.toString(),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey[400],
+                ),
               ),
             ),
           ),
@@ -467,7 +478,7 @@ class _StatsScreenState extends State<StatsScreen> {
                   ? BoxShape.circle
                   : BoxShape.rectangle,
               border: isToday && !isSelected
-                  ? Border.all(color: Colors.blue, width: 1.0)
+                  ? Border.all(color: Colors.blue, width: 1.5)
                   : null,
             ),
             child: Stack(
@@ -511,17 +522,34 @@ class _StatsScreenState extends State<StatsScreen> {
 
     // Add gray days from next month to complete the grid
     int nextMonthDay = 1;
+    final nextMonth = DateTime(
+      _currentCalendarMonth.year,
+      _currentCalendarMonth.month + 1,
+      1,
+    );
+
     while (calendarDays.length % 7 != 0) {
+      final date = DateTime(nextMonth.year, nextMonth.month, nextMonthDay);
+
       calendarDays.add(
-        Container(
-          margin: EdgeInsets.all(1),
-          child: Center(
-            child: Text(
-              nextMonthDay.toString(),
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w400,
-                color: Colors.grey[400],
+        GestureDetector(
+          onTap: () {
+            setState(() {
+              _currentCalendarMonth = DateTime(nextMonth.year, nextMonth.month);
+              _selectedDate = date;
+            });
+            _loadCalendarData();
+          },
+          child: Container(
+            margin: EdgeInsets.all(1),
+            child: Center(
+              child: Text(
+                nextMonthDay.toString(),
+                style: TextStyle(
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  color: Colors.grey[400],
+                ),
               ),
             ),
           ),

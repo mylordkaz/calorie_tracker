@@ -24,9 +24,9 @@ class _AddFoodEntryScreenState extends State<AddFoodEntryScreen> {
           elevation: 0,
           foregroundColor: Colors.black,
           bottom: TabBar(
-            labelColor: Colors.green,
+            labelColor: Colors.blue,
             unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.green,
+            indicatorColor: Colors.blue,
             tabs: [
               Tab(text: 'Foods'),
               Tab(text: 'Meals'),
@@ -77,16 +77,28 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(16),
-          child: CustomCard(
+          padding: EdgeInsets.all(12),
+          child: Container(
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search foods...',
-                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey[400],
+                  size: 18,
+                ),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(vertical: 12),
+                contentPadding: EdgeInsets.symmetric(vertical: 8),
               ),
+              style: TextStyle(fontSize: 14),
             ),
           ),
         ),
@@ -94,7 +106,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
           child: _filteredFoods.isEmpty
               ? Center(child: Text('No foods found'))
               : ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                   itemCount: _filteredFoods.length,
                   itemBuilder: (context, index) {
                     final food = _filteredFoods[index];
@@ -108,16 +120,60 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
 
   Widget _buildFoodCard(FoodItem food) {
     return Container(
-      margin: EdgeInsets.only(bottom: 8),
-      child: CustomCard(
-        padding: EdgeInsets.all(12),
-        child: ListTile(
-          dense: true,
-          title: Text(food.name, style: TextStyle(fontWeight: FontWeight.w600)),
-          subtitle: Text(
-            '${food.calories.toInt()} cal ${food.getDisplayUnit()}',
-          ),
+      margin: EdgeInsets.only(bottom: 6),
+      height: 56,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
           onTap: () => _showQuantityDialog(food),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        food.name,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (food.description.isNotEmpty)
+                        Text(
+                          food.description,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[600],
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${food.calories.toInt()} cal ${food.getDisplayUnit()}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -146,7 +202,18 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
       context: context,
       builder: (context) => StatefulBuilder(
         builder: (context, setDialogState) => AlertDialog(
-          title: Text('Add ${food.name}'),
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: Text(
+            'Add ${food.name}',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
           content: Column(
             mainAxisSize: MainAxisSize.min,
             children: [
@@ -158,7 +225,24 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
                 ],
                 decoration: InputDecoration(
                   labelText: 'Quantity',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                 ),
               ),
               SizedBox(height: 16),
@@ -169,7 +253,24 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
                     setDialogState(() => selectedUnit = value!),
                 decoration: InputDecoration(
                   labelText: 'Unit',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                 ),
               ),
             ],
@@ -177,13 +278,21 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
           actions: [
             TextButton(
               onPressed: () => Navigator.pop(context),
+              style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
               child: Text('Cancel'),
             ),
             ElevatedButton(
               onPressed: () =>
                   _addFoodEntry(food, quantityController.text, selectedUnit),
-              style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-              child: Text('Add', style: TextStyle(color: Colors.white)),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                elevation: 0,
+              ),
+              child: Text('Add'),
             ),
           ],
         ),
@@ -273,16 +382,28 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
     return Column(
       children: [
         Container(
-          padding: EdgeInsets.all(16),
-          child: CustomCard(
+          padding: EdgeInsets.all(12),
+          child: Container(
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search meals...',
-                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey[400],
+                  size: 18,
+                ),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(vertical: 12),
+                contentPadding: EdgeInsets.symmetric(vertical: 8),
               ),
+              style: TextStyle(fontSize: 14),
             ),
           ),
         ),
@@ -290,7 +411,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
           child: _filteredMeals.isEmpty
               ? Center(child: Text('No meals found'))
               : ListView.builder(
-                  padding: EdgeInsets.symmetric(horizontal: 16),
+                  padding: EdgeInsets.symmetric(horizontal: 12),
                   itemCount: _filteredMeals.length,
                   itemBuilder: (context, index) {
                     final meal = _filteredMeals[index];
@@ -306,16 +427,54 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
     final macros = FoodDatabaseService.calculateMealMacros(meal);
 
     return Container(
-      margin: EdgeInsets.only(bottom: 8),
-      child: CustomCard(
-        padding: EdgeInsets.all(12),
-        child: ListTile(
-          dense: true,
-          title: Text(meal.name, style: TextStyle(fontWeight: FontWeight.w600)),
-          subtitle: Text(
-            '${macros['calories']!.toInt()} cal • ${meal.getIngredientCount()} ingredients',
-          ),
+      margin: EdgeInsets.only(bottom: 6),
+      height: 56,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
           onTap: () => _showMealQuantityDialog(meal),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        meal.name,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        '${meal.getIngredientCount()} ingredients',
+                        style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${macros['calories']!.toInt()} cal',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
         ),
       ),
     );
@@ -327,7 +486,16 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add ${meal.name}'),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          'Add ${meal.name}',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -340,7 +508,24 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
               decoration: InputDecoration(
                 labelText: 'Servings',
                 helperText: '1.0 = full meal, 0.5 = half meal',
-                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.grey[50],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
               ),
             ),
           ],
@@ -348,12 +533,20 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
             child: Text('Cancel'),
           ),
           ElevatedButton(
             onPressed: () => _addMealEntry(meal, multiplierController.text),
-            style: ElevatedButton.styleFrom(backgroundColor: Colors.green),
-            child: Text('Add', style: TextStyle(color: Colors.white)),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 0,
+            ),
+            child: Text('Add'),
           ),
         ],
       ),
@@ -405,16 +598,22 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
   @override
   Widget build(BuildContext context) {
     return SingleChildScrollView(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       child: Form(
         key: _formKey,
-        child: CustomCard(
+        child: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.grey[200]!),
+          ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
                 'Quick Calorie Entry',
-                style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               SizedBox(height: 16),
 
@@ -426,7 +625,24 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                 decoration: InputDecoration(
                   labelText: 'Food/Meal Name',
                   hintText: 'e.g., Sandwich from café',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                 ),
               ),
               SizedBox(height: 16),
@@ -444,7 +660,24 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                 decoration: InputDecoration(
                   labelText: 'Calories *',
                   suffixText: 'kcal',
-                  border: OutlineInputBorder(),
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
                 ),
               ),
               SizedBox(height: 16),
@@ -478,7 +711,24 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                         labelText: 'Protein',
                         hintText: '0',
                         suffixText: 'g',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                       ),
                     ),
                   ),
@@ -498,7 +748,24 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                         labelText: 'Carbs',
                         hintText: '0',
                         suffixText: 'g',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                       ),
                     ),
                   ),
@@ -518,7 +785,24 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                         labelText: 'Fat',
                         hintText: '0',
                         suffixText: 'g',
-                        border: OutlineInputBorder(),
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
                       ),
                     ),
                   ),
@@ -538,19 +822,26 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
               SizedBox(height: 24),
 
               // Add button
-              SizedBox(
-                width: double.infinity,
-                child: ElevatedButton(
-                  onPressed: _addQuickEntry,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.green,
-                    padding: EdgeInsets.symmetric(vertical: 16),
-                  ),
-                  child: Text(
-                    'Add Quick Entry',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w600,
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: 40,
+                  child: ElevatedButton(
+                    onPressed: _addQuickEntry,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      'Add Quick Entry',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
                     ),
                   ),
                 ),

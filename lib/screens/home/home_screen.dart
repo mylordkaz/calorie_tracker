@@ -92,7 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
           elevation: 0,
           foregroundColor: Colors.black,
         ),
-        body: Center(child: CircularProgressIndicator(color: Colors.green)),
+        body: Center(child: CircularProgressIndicator(color: Colors.blue)),
       );
     }
 
@@ -112,14 +112,14 @@ class _HomeScreenState extends State<HomeScreen> {
         ],
       ),
       body: SingleChildScrollView(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(12),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             _buildTopSection(progress),
-            SizedBox(height: 24),
+            SizedBox(height: 16),
             _buildMiddleSection(context),
-            SizedBox(height: 24),
+            SizedBox(height: 16),
             _buildBottomSection(),
           ],
         ),
@@ -129,18 +129,11 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _buildTopSection(double progress) {
     return Container(
-      padding: EdgeInsets.all(20),
+      padding: EdgeInsets.all(16),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(12),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[200]!),
       ),
       child: Column(
         children: [
@@ -150,7 +143,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 'Today - ${DateTime.now().toString().split(' ')[0]}',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   color: Colors.grey[600],
                   fontWeight: FontWeight.w500,
                 ),
@@ -158,16 +151,16 @@ class _HomeScreenState extends State<HomeScreen> {
               GestureDetector(
                 onTap: _showTargetDialog,
                 child: Container(
-                  padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
                   decoration: BoxDecoration(
                     color: _dailyTarget != null
-                        ? Colors.green.withOpacity(0.1)
-                        : Colors.orange.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(12),
+                        ? Colors.blue.withOpacity(0.1)
+                        : Colors.grey.withOpacity(0.1),
+                    borderRadius: BorderRadius.circular(8),
                     border: Border.all(
                       color: _dailyTarget != null
-                          ? Colors.green.withOpacity(0.3)
-                          : Colors.orange.withOpacity(0.3),
+                          ? Colors.blue.withOpacity(0.3)
+                          : Colors.grey.withOpacity(0.3),
                     ),
                   ),
                   child: Text(
@@ -175,10 +168,10 @@ class _HomeScreenState extends State<HomeScreen> {
                         ? 'Target: ${_dailyTarget!.toInt()}'
                         : 'Set Target',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       color: _dailyTarget != null
-                          ? Colors.green
-                          : Colors.orange,
+                          ? Colors.blue
+                          : Colors.grey[600],
                       fontWeight: FontWeight.w500,
                     ),
                   ),
@@ -186,25 +179,25 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
             ],
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 14),
 
           Container(
-            width: 120,
-            height: 120,
+            width: 110,
+            height: 110,
             child: Stack(
               alignment: Alignment.center,
               children: [
                 SizedBox(
-                  width: 120,
-                  height: 120,
+                  width: 110,
+                  height: 110,
                   child: CircularProgressIndicator(
                     value: progress.clamp(0.0, 1.0),
                     strokeWidth: 8,
                     backgroundColor: Colors.grey[200],
                     valueColor: AlwaysStoppedAnimation<Color>(
                       _dailyTarget != null
-                          ? (progress <= 1.0 ? Colors.green : Colors.orange)
-                          : Colors.grey,
+                          ? (progress <= 1.0 ? Colors.blue : Colors.grey[600]!)
+                          : Colors.grey[400]!,
                     ),
                   ),
                 ),
@@ -214,7 +207,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       '${_currentCalories.toInt()}',
                       style: TextStyle(
-                        fontSize: 24,
+                        fontSize: 22,
                         fontWeight: FontWeight.bold,
                         color: Colors.black,
                       ),
@@ -223,54 +216,59 @@ class _HomeScreenState extends State<HomeScreen> {
                       _dailyTarget != null
                           ? 'of ${_dailyTarget!.toInt()}'
                           : 'calories',
-                      style: TextStyle(fontSize: 14, color: Colors.grey[600]),
+                      style: TextStyle(fontSize: 11, color: Colors.grey[600]),
                     ),
                     if (_dailyTarget != null)
                       Text(
                         'calories',
-                        style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+                        style: TextStyle(fontSize: 10, color: Colors.grey[500]),
                       ),
                   ],
                 ),
               ],
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 14),
 
           // Macros row
           Text(
-            'Protein: ${_currentMacros['protein']!.toInt()}g | Carbs: ${_currentMacros['carbs']!.toInt()}g | Fat: ${_currentMacros['fat']!.toInt()}g',
+            'Protein: ${_currentMacros['protein']!.toInt()}g • Carbs: ${_currentMacros['carbs']!.toInt()}g • Fat: ${_currentMacros['fat']!.toInt()}g',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 12,
               color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
+              fontWeight: FontWeight.w400,
             ),
           ),
-          SizedBox(height: 16),
+          SizedBox(height: 14),
 
-          SizedBox(
-            width: double.infinity,
-            child: ElevatedButton(
-              onPressed: () async {
-                final result = await Navigator.push(
-                  context,
-                  MaterialPageRoute(builder: (context) => AddFoodEntryScreen()),
-                );
-                if (result == true) {
-                  _loadData();
-                }
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.green,
-                foregroundColor: Colors.white,
-                padding: EdgeInsets.symmetric(vertical: 16),
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(8),
+          Center(
+            child: SizedBox(
+              width: MediaQuery.of(context).size.width * 0.6,
+              height: 45,
+              child: ElevatedButton(
+                onPressed: () async {
+                  final result = await Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) => AddFoodEntryScreen(),
+                    ),
+                  );
+                  if (result == true) {
+                    _loadData();
+                  }
+                },
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.blue,
+                  foregroundColor: Colors.white,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(30),
+                  ),
+                  elevation: 0,
                 ),
-              ),
-              child: Text(
-                'Add Food',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                child: Text(
+                  'Add Food',
+                  style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                ),
               ),
             ),
           ),
@@ -286,16 +284,16 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           'Quick Actions',
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 12),
 
         // Recent items
         _buildTodaysLog(),
-        SizedBox(height: 12),
+        SizedBox(height: 8),
 
         // Copy from yesterday button
         _buildCopyYesterdayButton(),
@@ -311,34 +309,27 @@ class _HomeScreenState extends State<HomeScreen> {
 
     if (totalEntries == 0) {
       return Container(
-        padding: EdgeInsets.all(16),
+        padding: EdgeInsets.all(12),
         decoration: BoxDecoration(
           color: Colors.white,
-          borderRadius: BorderRadius.circular(8),
-          boxShadow: [
-            BoxShadow(
-              color: Colors.grey.withValues(alpha: 0.1),
-              spreadRadius: 1,
-              blurRadius: 4,
-              offset: Offset(0, 2),
-            ),
-          ],
+          borderRadius: BorderRadius.circular(6),
+          border: Border.all(color: Colors.grey[200]!),
         ),
         child: Column(
           children: [
-            Icon(Icons.restaurant_menu, size: 32, color: Colors.grey[400]),
-            SizedBox(height: 8),
+            Icon(Icons.restaurant_menu, size: 24, color: Colors.grey[400]),
+            SizedBox(height: 6),
             Text(
               'No entries logged today yet',
               style: TextStyle(
-                fontSize: 16,
+                fontSize: 14,
                 fontWeight: FontWeight.w500,
                 color: Colors.grey[600],
               ),
             ),
             Text(
               'Tap "Add Food" to start tracking',
-              style: TextStyle(fontSize: 12, color: Colors.grey[500]),
+              style: TextStyle(fontSize: 11, color: Colors.grey[500]),
             ),
           ],
         ),
@@ -385,18 +376,11 @@ class _HomeScreenState extends State<HomeScreen> {
     final hasMore = allEntries.length > 4;
 
     return Container(
-      padding: EdgeInsets.all(16),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: Colors.grey[200]!),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -407,7 +391,7 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 'Today\'s Log',
                 style: TextStyle(
-                  fontSize: 16,
+                  fontSize: 14,
                   fontWeight: FontWeight.w600,
                   color: Colors.black,
                 ),
@@ -418,7 +402,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   child: Text(
                     'View All (${allEntries.length})',
                     style: TextStyle(
-                      fontSize: 12,
+                      fontSize: 11,
                       color: Colors.blue,
                       fontWeight: FontWeight.w500,
                     ),
@@ -426,7 +410,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
             ],
           ),
-          SizedBox(height: 12),
+          SizedBox(height: 8),
           ...miniList.map((item) => _buildLogEntryItem(item)),
         ],
       ),
@@ -463,34 +447,34 @@ class _HomeScreenState extends State<HomeScreen> {
       subtitle =
           '${entry.multiplier.toStringAsFixed(entry.multiplier % 1 == 0 ? 0 : 1)}x serving';
       icon = Icons.local_dining;
-      iconColor = Colors.orange;
+      iconColor = Colors.grey[600]!;
     }
 
     return Container(
-      margin: EdgeInsets.only(bottom: 8),
-      padding: EdgeInsets.all(8),
+      margin: EdgeInsets.only(bottom: 6),
+      padding: EdgeInsets.all(6),
       decoration: BoxDecoration(
         color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(6),
+        borderRadius: BorderRadius.circular(4),
         border: Border.all(color: Colors.grey[200]!),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 16, color: iconColor),
-          SizedBox(width: 8),
+          Icon(icon, size: 14, color: iconColor),
+          SizedBox(width: 6),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 12, fontWeight: FontWeight.w600),
                   maxLines: 1,
                   overflow: TextOverflow.ellipsis,
                 ),
                 Text(
                   subtitle,
-                  style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                  style: TextStyle(fontSize: 10, color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -498,7 +482,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Text(
             '${calories.toInt()} cal',
             style: TextStyle(
-              fontSize: 12,
+              fontSize: 11,
               fontWeight: FontWeight.w500,
               color: Colors.grey[700],
             ),
@@ -518,10 +502,10 @@ class _HomeScreenState extends State<HomeScreen> {
           child: Column(
             children: [
               Container(
-                padding: EdgeInsets.all(16),
+                padding: EdgeInsets.all(12),
                 decoration: BoxDecoration(
                   color: Colors.white,
-                  borderRadius: BorderRadius.vertical(top: Radius.circular(12)),
+                  borderRadius: BorderRadius.vertical(top: Radius.circular(8)),
                   border: Border(bottom: BorderSide(color: Colors.grey[200]!)),
                 ),
                 child: Row(
@@ -530,13 +514,13 @@ class _HomeScreenState extends State<HomeScreen> {
                     Text(
                       'Today\'s Complete Log',
                       style: TextStyle(
-                        fontSize: 18,
+                        fontSize: 16,
                         fontWeight: FontWeight.w600,
                       ),
                     ),
                     IconButton(
                       onPressed: () => Navigator.pop(context),
-                      icon: Icon(Icons.close),
+                      icon: Icon(Icons.close, size: 20),
                       padding: EdgeInsets.zero,
                       constraints: BoxConstraints(),
                     ),
@@ -545,7 +529,7 @@ class _HomeScreenState extends State<HomeScreen> {
               ),
               Expanded(
                 child: ListView.builder(
-                  padding: EdgeInsets.all(16),
+                  padding: EdgeInsets.all(12),
                   itemCount: allEntries.length,
                   itemBuilder: (context, index) {
                     return _buildFullLogEntryItem(allEntries[index]);
@@ -590,36 +574,36 @@ class _HomeScreenState extends State<HomeScreen> {
       subtitle =
           '${entry.multiplier.toStringAsFixed(entry.multiplier % 1 == 0 ? 0 : 1)}x serving';
       icon = Icons.local_dining;
-      iconColor = Colors.orange;
+      iconColor = Colors.grey[600]!;
     }
 
     final timeStr =
         '${timestamp.hour.toString().padLeft(2, '0')}:${timestamp.minute.toString().padLeft(2, '0')}';
 
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      padding: EdgeInsets.all(12),
+      margin: EdgeInsets.only(bottom: 8),
+      padding: EdgeInsets.all(8),
       decoration: BoxDecoration(
         color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(8),
+        borderRadius: BorderRadius.circular(6),
         border: Border.all(color: Colors.grey[200]!),
       ),
       child: Row(
         children: [
-          Icon(icon, size: 20, color: iconColor),
-          SizedBox(width: 12),
+          Icon(icon, size: 16, color: iconColor),
+          SizedBox(width: 8),
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
                   name,
-                  style: TextStyle(fontSize: 14, fontWeight: FontWeight.w600),
+                  style: TextStyle(fontSize: 13, fontWeight: FontWeight.w600),
                 ),
-                SizedBox(height: 2),
+                SizedBox(height: 1),
                 Text(
                   subtitle,
-                  style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                  style: TextStyle(fontSize: 11, color: Colors.grey[600]),
                 ),
               ],
             ),
@@ -630,14 +614,14 @@ class _HomeScreenState extends State<HomeScreen> {
               Text(
                 '${calories.toInt()} cal',
                 style: TextStyle(
-                  fontSize: 13,
+                  fontSize: 12,
                   fontWeight: FontWeight.w600,
                   color: Colors.grey[700],
                 ),
               ),
               Text(
                 timeStr,
-                style: TextStyle(fontSize: 11, color: Colors.grey[500]),
+                style: TextStyle(fontSize: 10, color: Colors.grey[500]),
               ),
             ],
           ),
@@ -651,27 +635,20 @@ class _HomeScreenState extends State<HomeScreen> {
       width: double.infinity,
       decoration: BoxDecoration(
         color: Colors.white,
-        borderRadius: BorderRadius.circular(8),
-        boxShadow: [
-          BoxShadow(
-            color: Colors.grey.withValues(alpha: 0.1),
-            spreadRadius: 1,
-            blurRadius: 4,
-            offset: Offset(0, 2),
-          ),
-        ],
+        borderRadius: BorderRadius.circular(6),
+        border: Border.all(color: Colors.grey[200]!),
       ),
       child: Material(
         color: Colors.transparent,
         child: InkWell(
           onTap: _copyFromYesterday,
-          borderRadius: BorderRadius.circular(8),
+          borderRadius: BorderRadius.circular(6),
           child: Padding(
-            padding: EdgeInsets.all(16),
+            padding: EdgeInsets.all(12),
             child: Row(
               children: [
-                Icon(Icons.copy, color: Colors.purple, size: 24),
-                SizedBox(width: 12),
+                Icon(Icons.copy, color: Colors.blue, size: 20),
+                SizedBox(width: 8),
                 Expanded(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
@@ -679,14 +656,14 @@ class _HomeScreenState extends State<HomeScreen> {
                       Text(
                         'Copy from Yesterday',
                         style: TextStyle(
-                          fontSize: 16,
+                          fontSize: 14,
                           fontWeight: FontWeight.w600,
                           color: Colors.black,
                         ),
                       ),
                       Text(
                         'Add all yesterday\'s entries to today',
-                        style: TextStyle(fontSize: 12, color: Colors.grey[600]),
+                        style: TextStyle(fontSize: 11, color: Colors.grey[600]),
                       ),
                     ],
                   ),
@@ -694,7 +671,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 Icon(
                   Icons.arrow_forward_ios,
                   color: Colors.grey[400],
-                  size: 16,
+                  size: 12,
                 ),
               ],
             ),
@@ -714,12 +691,12 @@ class _HomeScreenState extends State<HomeScreen> {
         Text(
           'Quick Stats',
           style: TextStyle(
-            fontSize: 18,
-            fontWeight: FontWeight.bold,
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
             color: Colors.black,
           ),
         ),
-        SizedBox(height: 16),
+        SizedBox(height: 12),
 
         Row(
           children: [
@@ -730,10 +707,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? weeklyAverage.toInt().toString()
                     : '--',
                 unit: 'calories/day',
-                color: Colors.purple,
+                color: Colors.blue,
               ),
             ),
-            SizedBox(width: 12),
+            SizedBox(width: 8),
             Expanded(
               child: StatCard(
                 title: 'Yesterday',
@@ -741,12 +718,12 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? yesterdayCalories.toInt().toString()
                     : '--',
                 unit: 'calories',
-                color: Colors.teal,
+                color: Colors.grey[600]!,
               ),
             ),
           ],
         ),
-        SizedBox(height: 12),
+        SizedBox(height: 8),
         Row(
           children: [
             Expanded(
@@ -756,10 +733,10 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? '${(_dailyTarget! - _currentCalories).toInt()}'
                     : '--',
                 unit: 'calories',
-                color: Colors.indigo,
+                color: Colors.blue[300]!,
               ),
             ),
-            SizedBox(width: 12),
+            SizedBox(width: 8),
             Expanded(
               child: StatCard(
                 title: 'Progress',
@@ -767,7 +744,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ? '${((_currentCalories / _dailyTarget!) * 100).toInt()}'
                     : '--',
                 unit: '%',
-                color: Colors.green,
+                color: Colors.grey[700]!,
               ),
             ),
           ],
@@ -869,7 +846,16 @@ class _HomeScreenState extends State<HomeScreen> {
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Set Daily Calorie Target'),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          'Set Daily Calorie Target',
+          style: TextStyle(
+            fontSize: 18,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
@@ -880,7 +866,24 @@ class _HomeScreenState extends State<HomeScreen> {
               decoration: InputDecoration(
                 labelText: 'Daily Calorie Target',
                 suffixText: 'calories',
-                border: OutlineInputBorder(),
+                filled: true,
+                fillColor: Colors.grey[50],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
               ),
             ),
             SizedBox(height: 8),
@@ -889,6 +892,7 @@ class _HomeScreenState extends State<HomeScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
             child: Text('Cancel'),
           ),
           ElevatedButton(
@@ -912,8 +916,12 @@ class _HomeScreenState extends State<HomeScreen> {
               }
             },
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 0,
             ),
             child: Text('Save'),
           ),

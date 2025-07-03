@@ -1,7 +1,9 @@
-// screens/tools/tools_screen.dart
 import 'package:flutter/material.dart';
 import '../../widgets/common/custom_card.dart';
 import 'tdee_calculator_screen.dart';
+import 'bmi_calculator_screen.dart';
+import 'ideal_weight_calculator_screen.dart';
+import 'body_fat_calculator_screen.dart';
 
 class ToolsScreen extends StatelessWidget {
   const ToolsScreen({super.key});
@@ -58,12 +60,10 @@ class ToolsScreen extends StatelessWidget {
               'Calculate your Body Mass Index',
               Icons.monitor_weight,
               Colors.blue,
-              () {
-                // TODO: Navigate to BMI Calculator
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('BMI Calculator coming soon!')),
-                );
-              },
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => BMICalculatorScreen()),
+              ),
             ),
 
             SizedBox(height: 12),
@@ -75,14 +75,12 @@ class ToolsScreen extends StatelessWidget {
               'Find your ideal weight range',
               Icons.balance,
               Colors.green,
-              () {
-                // TODO: Navigate to Ideal Weight Calculator
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(
-                    content: Text('Ideal Weight Calculator coming soon!'),
-                  ),
-                );
-              },
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => IdealWeightCalculatorScreen(),
+                ),
+              ),
             ),
 
             SizedBox(height: 12),
@@ -94,12 +92,12 @@ class ToolsScreen extends StatelessWidget {
               'Estimate your body fat percentage',
               Icons.fitness_center,
               Colors.purple,
-              () {
-                // TODO: Navigate to Body Fat Calculator
-                ScaffoldMessenger.of(context).showSnackBar(
-                  SnackBar(content: Text('Body Fat Calculator coming soon!')),
-                );
-              },
+              () => Navigator.push(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => BodyFatCalculatorScreen(),
+                ),
+              ),
             ),
           ],
         ),

@@ -13,7 +13,6 @@ class UserSettings extends HiveObject {
   @HiveField(2)
   DateTime lastUpdated;
 
-  // Future settings we might add
   @HiveField(3)
   double? weight; // in kg
 
@@ -30,12 +29,18 @@ class UserSettings extends HiveObject {
   String? activityLevel; // 'sedentary', 'light', 'moderate', 'active', 'very_active'
 
   @HiveField(8)
-  String? goal; // 'lose', 'maintain', 'gain'
+  double? neck;
 
   @HiveField(9)
-  bool darkMode;
+  double? waist;
 
   @HiveField(10)
+  double? hip;
+
+  @HiveField(11)
+  bool darkMode;
+
+  @HiveField(12)
   bool notifications;
 
   UserSettings({
@@ -47,7 +52,9 @@ class UserSettings extends HiveObject {
     this.age,
     this.gender,
     this.activityLevel,
-    this.goal,
+    this.neck,
+    this.waist,
+    this.hip,
     this.darkMode = false,
     this.notifications = true,
   });

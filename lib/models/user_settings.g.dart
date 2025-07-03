@@ -25,16 +25,18 @@ class UserSettingsAdapter extends TypeAdapter<UserSettings> {
       age: fields[5] as int?,
       gender: fields[6] as String?,
       activityLevel: fields[7] as String?,
-      goal: fields[8] as String?,
-      darkMode: fields[9] as bool,
-      notifications: fields[10] as bool,
+      neck: fields[8] as double?,
+      waist: fields[9] as double?,
+      hip: fields[10] as double?,
+      darkMode: fields[11] as bool,
+      notifications: fields[12] as bool,
     );
   }
 
   @override
   void write(BinaryWriter writer, UserSettings obj) {
     writer
-      ..writeByte(11)
+      ..writeByte(13)
       ..writeByte(0)
       ..write(obj.dailyCalorieTarget)
       ..writeByte(1)
@@ -52,10 +54,14 @@ class UserSettingsAdapter extends TypeAdapter<UserSettings> {
       ..writeByte(7)
       ..write(obj.activityLevel)
       ..writeByte(8)
-      ..write(obj.goal)
+      ..write(obj.neck)
       ..writeByte(9)
-      ..write(obj.darkMode)
+      ..write(obj.waist)
       ..writeByte(10)
+      ..write(obj.hip)
+      ..writeByte(11)
+      ..write(obj.darkMode)
+      ..writeByte(12)
       ..write(obj.notifications);
   }
 

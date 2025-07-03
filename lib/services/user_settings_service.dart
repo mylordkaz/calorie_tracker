@@ -65,7 +65,9 @@ class UserSettingsService {
     int? age,
     String? gender,
     String? activityLevel,
-    String? goal,
+    double? neck,
+    double? waist,
+    double? hip,
   }) async {
     final settings = getSettings();
 
@@ -74,7 +76,9 @@ class UserSettingsService {
     if (age != null) settings.age = age;
     if (gender != null) settings.gender = gender;
     if (activityLevel != null) settings.activityLevel = activityLevel;
-    if (goal != null) settings.goal = goal;
+    if (neck != null) settings.neck = neck;
+    if (waist != null) settings.waist = waist;
+    if (hip != null) settings.hip = hip;
 
     await saveSettings(settings);
   }

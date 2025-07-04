@@ -15,152 +15,118 @@ class AddEntryForDateScreen extends StatefulWidget {
   _AddEntryForDateScreenState createState() => _AddEntryForDateScreenState();
 }
 
-class _AddEntryForDateScreenState extends State<AddEntryForDateScreen>
-    with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+class _AddEntryForDateScreenState extends State<AddEntryForDateScreen> {
+  @override
+  Widget build(BuildContext context) {
+    return DefaultTabController(
+      length: 3,
+      child: Scaffold(
+        backgroundColor: Colors.grey[50],
+        appBar: AppBar(
+          title: Text(
+            'Add Entry - ${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}',
+          ),
+          backgroundColor: Colors.white,
+          elevation: 0,
+          foregroundColor: Colors.black,
+          bottom: TabBar(
+            labelColor: Colors.blue,
+            unselectedLabelColor: Colors.grey,
+            indicatorColor: Colors.blue,
+            tabs: [
+              Tab(text: 'Foods'),
+              Tab(text: 'Meals'),
+              Tab(text: 'Quick Entry'),
+            ],
+          ),
+        ),
+        body: TabBarView(
+          children: [
+            _FoodLibraryTab(selectedDate: widget.selectedDate),
+            _MealLibraryTab(selectedDate: widget.selectedDate),
+            _QuickEntryTab(selectedDate: widget.selectedDate),
+          ],
+        ),
+      ),
+    );
+  }
+}
 
-  // Food tab
+class _FoodLibraryTab extends StatefulWidget {
+  final DateTime selectedDate;
+
+  const _FoodLibraryTab({required this.selectedDate});
+
+  @override
+  _FoodLibraryTabState createState() => _FoodLibraryTabState();
+}
+
+class _FoodLibraryTabState extends State<_FoodLibraryTab> {
   List<FoodItem> _foods = [];
   List<FoodItem> _filteredFoods = [];
-  final TextEditingController _foodSearchController = TextEditingController();
-
-  // Meal tab
-  List<Meal> _meals = [];
-  List<Meal> _filteredMeals = [];
-  final TextEditingController _mealSearchController = TextEditingController();
+  final TextEditingController _searchController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _tabController = TabController(length: 2, vsync: this);
-    _loadData();
-    _foodSearchController.addListener(_onFoodSearchChanged);
-    _mealSearchController.addListener(_onMealSearchChanged);
+    _loadFoods();
+    _searchController.addListener(_onSearchChanged);
   }
 
-  @override
-  void dispose() {
-    _tabController.dispose();
-    _foodSearchController.dispose();
-    _mealSearchController.dispose();
-    super.dispose();
-  }
-
-  void _loadData() {
+  void _loadFoods() {
     setState(() {
       _foods = FoodDatabaseService.getAllFoods();
       _filteredFoods = _foods;
-      _meals = FoodDatabaseService.getAllMeals();
-      _filteredMeals = _meals;
     });
   }
 
-  void _onFoodSearchChanged() {
+  void _onSearchChanged() {
     setState(() {
-      _filteredFoods = FoodDatabaseService.searchFoods(
-        _foodSearchController.text,
-      );
-    });
-  }
-
-  void _onMealSearchChanged() {
-    setState(() {
-      _filteredMeals = FoodDatabaseService.searchMeals(
-        _mealSearchController.text,
-      );
+      _filteredFoods = FoodDatabaseService.searchFoods(_searchController.text);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      backgroundColor: Colors.grey[50],
-      appBar: AppBar(
-        title: Text(
-          'Add Entry - ${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}',
-        ),
-        backgroundColor: Colors.white,
-        elevation: 0,
-        foregroundColor: Colors.black,
-        bottom: TabBar(
-          controller: _tabController,
-          labelColor: Colors.green,
-          unselectedLabelColor: Colors.grey,
-          indicatorColor: Colors.green,
-          tabs: [
-            Tab(text: 'Foods'),
-            Tab(text: 'Meals'),
-          ],
-        ),
-      ),
-      body: TabBarView(
-        controller: _tabController,
-        children: [_buildFoodTab(), _buildMealTab()],
-      ),
-    );
-  }
-
-  Widget _buildFoodTab() {
     return Column(
       children: [
-        // Search Bar
         Container(
-          padding: EdgeInsets.all(16),
-          child: CustomCard(
+          padding: EdgeInsets.all(12),
+          child: Container(
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
             child: TextField(
-              controller: _foodSearchController,
+              controller: _searchController,
               decoration: InputDecoration(
                 hintText: 'Search foods...',
-                prefixIcon: Icon(Icons.search, color: Colors.grey),
+                hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey[400],
+                  size: 18,
+                ),
                 border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(vertical: 12),
+                contentPadding: EdgeInsets.symmetric(vertical: 8),
               ),
+              style: TextStyle(fontSize: 14),
             ),
           ),
         ),
-        // Foods List
         Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            itemCount: _filteredFoods.length,
-            itemBuilder: (context, index) {
-              final food = _filteredFoods[index];
-              return _buildFoodCard(food);
-            },
-          ),
-        ),
-      ],
-    );
-  }
-
-  Widget _buildMealTab() {
-    return Column(
-      children: [
-        // Search Bar
-        Container(
-          padding: EdgeInsets.all(16),
-          child: CustomCard(
-            child: TextField(
-              controller: _mealSearchController,
-              decoration: InputDecoration(
-                hintText: 'Search meals...',
-                prefixIcon: Icon(Icons.search, color: Colors.grey),
-                border: InputBorder.none,
-                contentPadding: EdgeInsets.symmetric(vertical: 12),
-              ),
-            ),
-          ),
-        ),
-        // Meals List
-        Expanded(
-          child: ListView.builder(
-            padding: EdgeInsets.symmetric(horizontal: 16),
-            itemCount: _filteredMeals.length,
-            itemBuilder: (context, index) {
-              final meal = _filteredMeals[index];
-              return _buildMealCard(meal);
-            },
-          ),
+          child: _filteredFoods.isEmpty
+              ? Center(child: Text('No foods found'))
+              : ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  itemCount: _filteredFoods.length,
+                  itemBuilder: (context, index) {
+                    final food = _filteredFoods[index];
+                    return _buildFoodCard(food);
+                  },
+                ),
         ),
       ],
     );
@@ -168,23 +134,315 @@ class _AddEntryForDateScreenState extends State<AddEntryForDateScreen>
 
   Widget _buildFoodCard(FoodItem food) {
     return Container(
-      margin: EdgeInsets.only(bottom: 8),
-      child: CustomCard(
-        padding: EdgeInsets.all(12),
-        child: ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          title: Text(
-            food.name,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
+      margin: EdgeInsets.only(bottom: 6),
+      height: 56,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[200]!),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => _showQuantityDialog(food),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        food.name,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (food.description.isNotEmpty)
+                        Text(
+                          food.description,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[600],
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${food.calories.toInt()} cal ${food.getDisplayUnit()}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
           ),
-          subtitle: Text(
-            '${food.calories.toInt()} cal • ${food.protein.toStringAsFixed(1)}g protein ${food.getDisplayUnit()}',
-            style: TextStyle(color: Colors.grey[600], fontSize: 12),
-          ),
-          onTap: () => _showFoodQuantityDialog(food),
         ),
       ),
+    );
+  }
+
+  void _showQuantityDialog(FoodItem food) {
+    final quantityController = TextEditingController();
+    String selectedUnit;
+
+    // Set initial values based on food type
+    switch (food.unit) {
+      case 'item':
+        quantityController.text = '1';
+        selectedUnit = 'items';
+        break;
+      case 'serving':
+        quantityController.text = '1';
+        selectedUnit = 'servings';
+        break;
+      default:
+        quantityController.text = '100';
+        selectedUnit = 'grams';
+    }
+
+    showDialog(
+      context: context,
+      builder: (context) => StatefulBuilder(
+        builder: (context, setDialogState) => AlertDialog(
+          backgroundColor: Colors.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12),
+          ),
+          title: Text(
+            'Add ${food.name}',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          content: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              TextField(
+                controller: quantityController,
+                keyboardType: TextInputType.numberWithOptions(decimal: true),
+                inputFormatters: [
+                  FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+                ],
+                decoration: InputDecoration(
+                  labelText: 'Quantity',
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+              DropdownButtonFormField<String>(
+                value: selectedUnit,
+                items: _getUnitsForFood(food),
+                onChanged: (value) =>
+                    setDialogState(() => selectedUnit = value!),
+                decoration: InputDecoration(
+                  labelText: 'Unit',
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+            ],
+          ),
+          actions: [
+            TextButton(
+              onPressed: () => Navigator.pop(context),
+              style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
+              child: Text('Cancel'),
+            ),
+            ElevatedButton(
+              onPressed: () =>
+                  _addFoodEntry(food, quantityController.text, selectedUnit),
+              style: ElevatedButton.styleFrom(
+                backgroundColor: Colors.blue,
+                foregroundColor: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(8),
+                ),
+                elevation: 0,
+              ),
+              child: Text('Add'),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+
+  List<DropdownMenuItem<String>> _getUnitsForFood(FoodItem food) {
+    switch (food.unit) {
+      case 'item':
+        return [DropdownMenuItem(value: 'items', child: Text('Items'))];
+      case 'serving':
+        return [
+          DropdownMenuItem(value: 'servings', child: Text('Servings')),
+          DropdownMenuItem(value: 'grams', child: Text('Grams')),
+        ];
+      default: // '100g'
+        return [DropdownMenuItem(value: 'grams', child: Text('Grams'))];
+    }
+  }
+
+  void _addFoodEntry(FoodItem food, String quantityText, String unit) async {
+    final quantity = double.tryParse(quantityText);
+    if (quantity == null || quantity <= 0) return;
+
+    double grams;
+    switch (unit) {
+      case 'items':
+        grams = quantity * food.getGramsPerUnit();
+        break;
+      case 'servings':
+        grams = quantity * food.getGramsPerUnit();
+        break;
+      default:
+        grams = quantity;
+    }
+
+    await DailyTrackingService.addFoodEntryForDate(
+      foodId: food.id,
+      grams: grams,
+      date: widget.selectedDate,
+      originalQuantity: quantity,
+      originalUnit: unit,
+    );
+
+    if (mounted) {
+      Navigator.pop(context); // Close dialog
+      Navigator.pop(context, true); // Return to stats with refresh signal
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Added ${food.name} to ${widget.selectedDate.day}/${widget.selectedDate.month}',
+          ),
+        ),
+      );
+    }
+  }
+}
+
+class _MealLibraryTab extends StatefulWidget {
+  final DateTime selectedDate;
+
+  const _MealLibraryTab({required this.selectedDate});
+
+  @override
+  _MealLibraryTabState createState() => _MealLibraryTabState();
+}
+
+class _MealLibraryTabState extends State<_MealLibraryTab> {
+  List<Meal> _meals = [];
+  List<Meal> _filteredMeals = [];
+  final TextEditingController _searchController = TextEditingController();
+
+  @override
+  void initState() {
+    super.initState();
+    _loadMeals();
+    _searchController.addListener(_onSearchChanged);
+  }
+
+  void _loadMeals() {
+    setState(() {
+      _meals = FoodDatabaseService.getAllMeals();
+      _filteredMeals = _meals;
+    });
+  }
+
+  void _onSearchChanged() {
+    setState(() {
+      _filteredMeals = FoodDatabaseService.searchMeals(_searchController.text);
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Container(
+          padding: EdgeInsets.all(12),
+          child: Container(
+            height: 36,
+            decoration: BoxDecoration(
+              color: Colors.white,
+              borderRadius: BorderRadius.circular(18),
+              border: Border.all(color: Colors.grey[300]!),
+            ),
+            child: TextField(
+              controller: _searchController,
+              decoration: InputDecoration(
+                hintText: 'Search meals...',
+                hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                prefixIcon: Icon(
+                  Icons.search,
+                  color: Colors.grey[400],
+                  size: 18,
+                ),
+                border: InputBorder.none,
+                contentPadding: EdgeInsets.symmetric(vertical: 8),
+              ),
+              style: TextStyle(fontSize: 14),
+            ),
+          ),
+        ),
+        Expanded(
+          child: _filteredMeals.isEmpty
+              ? Center(child: Text('No meals found'))
+              : ListView.builder(
+                  padding: EdgeInsets.symmetric(horizontal: 12),
+                  itemCount: _filteredMeals.length,
+                  itemBuilder: (context, index) {
+                    final meal = _filteredMeals[index];
+                    return _buildMealCard(meal);
+                  },
+                ),
+        ),
+      ],
     );
   }
 
@@ -192,127 +450,105 @@ class _AddEntryForDateScreenState extends State<AddEntryForDateScreen>
     final macros = FoodDatabaseService.calculateMealMacros(meal);
 
     return Container(
-      margin: EdgeInsets.only(bottom: 8),
-      child: CustomCard(
-        padding: EdgeInsets.all(12),
-        child: ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.zero,
-          title: Text(
-            meal.name,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 14),
-          ),
-          subtitle: Text(
-            '${macros['calories']!.toInt()} cal • ${meal.getIngredientCount()} ingredients',
-            style: TextStyle(color: Colors.grey[600], fontSize: 12),
-          ),
-          onTap: () => _showMealQuantityDialog(meal),
-        ),
+      margin: EdgeInsets.only(bottom: 6),
+      height: 56,
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: Colors.grey[200]!),
       ),
-    );
-  }
-
-  void _showFoodQuantityDialog(FoodItem food) {
-    final quantityController = TextEditingController(text: '100');
-
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Add ${food.name}'),
-        content: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            TextField(
-              controller: quantityController,
-              keyboardType: TextInputType.numberWithOptions(decimal: true),
-              inputFormatters: [
-                FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => _showMealQuantityDialog(meal),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        meal.name,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      Text(
+                        '${meal.getIngredientCount()} ingredients',
+                        style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                      ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${macros['calories']!.toInt()} cal',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
               ],
-              decoration: InputDecoration(
-                labelText: 'Quantity',
-                suffixText: food.unit == '100g'
-                    ? 'g'
-                    : food.unit == 'item'
-                    ? 'items'
-                    : 'servings',
-                border: OutlineInputBorder(),
-              ),
             ),
-          ],
+          ),
         ),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
-          ),
-          ElevatedButton(
-            onPressed: () async {
-              final quantity = double.tryParse(quantityController.text);
-              if (quantity != null && quantity > 0) {
-                double grams;
-                switch (food.unit) {
-                  case '100g':
-                    grams = quantity;
-                    break;
-                  case 'item':
-                  case 'serving':
-                    grams = quantity * food.getGramsPerUnit();
-                    break;
-                  default:
-                    grams = quantity;
-                }
-
-                await DailyTrackingService.addFoodEntryForDate(
-                  foodId: food.id,
-                  grams: grams,
-                  date: widget.selectedDate,
-                  originalQuantity: quantity,
-                  originalUnit: food.unit,
-                );
-
-                if (context.mounted) {
-                  Navigator.pop(context); // Close dialog
-                  Navigator.pop(
-                    context,
-                    true,
-                  ); // Return to stats with refresh signal
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${food.name} added!')),
-                  );
-                }
-              }
-            },
-            style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
-              foregroundColor: Colors.white,
-            ),
-            child: Text('Add'),
-          ),
-        ],
       ),
     );
   }
 
   void _showMealQuantityDialog(Meal meal) {
-    final quantityController = TextEditingController(text: '1');
+    final multiplierController = TextEditingController(text: '1');
 
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Add ${meal.name}'),
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          'Add ${meal.name}',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             TextField(
-              controller: quantityController,
+              controller: multiplierController,
               keyboardType: TextInputType.numberWithOptions(decimal: true),
               inputFormatters: [
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
               ],
               decoration: InputDecoration(
                 labelText: 'Servings',
-                suffixText: 'portions',
-                border: OutlineInputBorder(),
+                helperText: '1.0 = full meal, 0.5 = half meal',
+                filled: true,
+                fillColor: Colors.grey[50],
+                border: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                enabledBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.grey[300]!),
+                ),
+                focusedBorder: OutlineInputBorder(
+                  borderRadius: BorderRadius.circular(12),
+                  borderSide: BorderSide(color: Colors.blue, width: 2),
+                ),
+                contentPadding: EdgeInsets.symmetric(
+                  horizontal: 16,
+                  vertical: 12,
+                ),
               ),
             ),
           ],
@@ -320,38 +556,448 @@ class _AddEntryForDateScreenState extends State<AddEntryForDateScreen>
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
             child: Text('Cancel'),
           ),
           ElevatedButton(
-            onPressed: () async {
-              final quantity = double.tryParse(quantityController.text);
-              if (quantity != null && quantity > 0) {
-                await DailyTrackingService.addMealEntryForDate(
-                  mealId: meal.id,
-                  multiplier: quantity,
-                  date: widget.selectedDate,
-                );
-
-                if (context.mounted) {
-                  Navigator.pop(context); // Close dialog
-                  Navigator.pop(
-                    context,
-                    true,
-                  ); // Return to stats with refresh signal
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(content: Text('${meal.name} added!')),
-                  );
-                }
-              }
-            },
+            onPressed: () => _addMealEntry(meal, multiplierController.text),
             style: ElevatedButton.styleFrom(
-              backgroundColor: Colors.green,
+              backgroundColor: Colors.blue,
               foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 0,
             ),
             child: Text('Add'),
           ),
         ],
       ),
     );
+  }
+
+  void _addMealEntry(Meal meal, String multiplierText) async {
+    final multiplier = double.tryParse(multiplierText);
+    if (multiplier == null || multiplier <= 0) return;
+
+    await DailyTrackingService.addMealEntryForDate(
+      mealId: meal.id,
+      multiplier: multiplier,
+      date: widget.selectedDate,
+    );
+
+    if (mounted) {
+      Navigator.pop(context); // Close dialog
+      Navigator.pop(context, true); // Return to stats with refresh signal
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            'Added ${meal.name} to ${widget.selectedDate.day}/${widget.selectedDate.month}',
+          ),
+        ),
+      );
+    }
+  }
+}
+
+class _QuickEntryTab extends StatefulWidget {
+  final DateTime selectedDate;
+
+  const _QuickEntryTab({required this.selectedDate});
+
+  @override
+  _QuickEntryTabState createState() => _QuickEntryTabState();
+}
+
+class _QuickEntryTabState extends State<_QuickEntryTab> {
+  final _formKey = GlobalKey<FormState>();
+  final _nameController = TextEditingController();
+  final _caloriesController = TextEditingController();
+  final _proteinController = TextEditingController();
+  final _carbsController = TextEditingController();
+  final _fatController = TextEditingController();
+
+  @override
+  void dispose() {
+    _nameController.dispose();
+    _caloriesController.dispose();
+    _proteinController.dispose();
+    _carbsController.dispose();
+    _fatController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return SingleChildScrollView(
+      padding: EdgeInsets.all(12),
+      child: Form(
+        key: _formKey,
+        child: Container(
+          padding: EdgeInsets.all(16),
+          decoration: BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.circular(8),
+            border: Border.all(color: Colors.grey[200]!),
+          ),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                'Quick Calorie Entry',
+                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+              ),
+              SizedBox(height: 16),
+
+              // Food name
+              TextFormField(
+                controller: _nameController,
+                validator: (value) =>
+                    value?.isEmpty == true ? 'Name required' : null,
+                decoration: InputDecoration(
+                  labelText: 'Food Name',
+                  hintText: 'e.g., Sandwich from café',
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+
+              // Calories (required)
+              TextFormField(
+                controller: _caloriesController,
+                keyboardType: TextInputType.number,
+                inputFormatters: [FilteringTextInputFormatter.digitsOnly],
+                validator: (value) {
+                  if (value?.isEmpty == true) return 'Calories required';
+                  if (int.tryParse(value!) == null) return 'Enter valid number';
+                  return null;
+                },
+                decoration: InputDecoration(
+                  labelText: 'Calories *',
+                  suffixText: 'kcal',
+                  filled: true,
+                  fillColor: Colors.grey[50],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  enabledBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.grey[300]!),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: Colors.blue, width: 2),
+                  ),
+                  contentPadding: EdgeInsets.symmetric(
+                    horizontal: 16,
+                    vertical: 12,
+                  ),
+                ),
+              ),
+              SizedBox(height: 16),
+
+              // Optional nutrients section
+              Text(
+                'Nutrition Details (Optional)',
+                style: TextStyle(
+                  fontSize: 14,
+                  fontWeight: FontWeight.w500,
+                  color: Colors.grey[600],
+                ),
+              ),
+              SizedBox(height: 12),
+
+              // Protein, Carbs, Fat row
+              Row(
+                children: [
+                  Expanded(
+                    child: TextFormField(
+                      controller: _proteinController,
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
+                      decoration: InputDecoration(
+                        labelText: 'Protein',
+                        hintText: '0',
+                        suffixText: 'g',
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _carbsController,
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
+                      decoration: InputDecoration(
+                        labelText: 'Carbs',
+                        hintText: '0',
+                        suffixText: 'g',
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                      ),
+                    ),
+                  ),
+                  SizedBox(width: 8),
+                  Expanded(
+                    child: TextFormField(
+                      controller: _fatController,
+                      keyboardType: TextInputType.numberWithOptions(
+                        decimal: true,
+                      ),
+                      inputFormatters: [
+                        FilteringTextInputFormatter.allow(
+                          RegExp(r'^\d*\.?\d*'),
+                        ),
+                      ],
+                      decoration: InputDecoration(
+                        labelText: 'Fat',
+                        hintText: '0',
+                        suffixText: 'g',
+                        filled: true,
+                        fillColor: Colors.grey[50],
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        enabledBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.grey[300]!),
+                        ),
+                        focusedBorder: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(12),
+                          borderSide: BorderSide(color: Colors.blue, width: 2),
+                        ),
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 12,
+                          vertical: 8,
+                        ),
+                      ),
+                    ),
+                  ),
+                ],
+              ),
+              SizedBox(height: 8),
+
+              // Helper text
+              Text(
+                'These can be edited later in the food library',
+                style: TextStyle(
+                  fontSize: 12,
+                  color: Colors.grey[500],
+                  fontStyle: FontStyle.italic,
+                ),
+              ),
+              SizedBox(height: 24),
+
+              // Add button
+              Center(
+                child: SizedBox(
+                  width: MediaQuery.of(context).size.width * 0.6,
+                  height: 40,
+                  child: ElevatedButton(
+                    onPressed: _addQuickEntry,
+                    style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.blue,
+                      foregroundColor: Colors.white,
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      elevation: 0,
+                    ),
+                    child: Text(
+                      'Add Quick Entry',
+                      style: TextStyle(
+                        fontSize: 14,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ),
+              ),
+            ],
+          ),
+        ),
+      ),
+    );
+  }
+
+  void _addQuickEntry() async {
+    if (!_formKey.currentState!.validate()) return;
+
+    final calories = int.parse(_caloriesController.text);
+    final name = _nameController.text.trim();
+
+    final protein = _proteinController.text.isEmpty
+        ? 0.0
+        : double.tryParse(_proteinController.text) ?? 0.0;
+    final carbs = _carbsController.text.isEmpty
+        ? 0.0
+        : double.tryParse(_carbsController.text) ?? 0.0;
+    final fat = _fatController.text.isEmpty
+        ? 0.0
+        : double.tryParse(_fatController.text) ?? 0.0;
+
+    // Ask user if they want to save to library
+    final shouldSaveToLibrary = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          'Save to Library?',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+        content: Text(
+          'Do you want to save "$name" to your food library for future use?',
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
+            child: Text(
+              'No, just add to ${widget.selectedDate.day}/${widget.selectedDate.month}',
+            ),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 0,
+            ),
+            child: Text('Yes, save to library'),
+          ),
+        ],
+      ),
+    );
+
+    if (shouldSaveToLibrary == null) return; // User cancelled
+
+    if (shouldSaveToLibrary) {
+      // Save to food library and add regular entry for the date
+      final quickFood = FoodItem(
+        id: 'quick_${DateTime.now().millisecondsSinceEpoch}',
+        name: name,
+        description: 'Quick entry',
+        calories: calories.toDouble(),
+        protein: protein,
+        carbs: carbs,
+        fat: fat,
+        createdAt: DateTime.now(),
+        lastUsed: DateTime.now(),
+      );
+
+      await FoodDatabaseService.addFood(quickFood);
+      await DailyTrackingService.addFoodEntryForDate(
+        foodId: quickFood.id,
+        grams: 100,
+        date: widget.selectedDate,
+      );
+
+      if (mounted) {
+        Navigator.pop(context, true);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              '$name saved to library and added to ${widget.selectedDate.day}/${widget.selectedDate.month}',
+            ),
+            action: SnackBarAction(label: 'Edit in Library', onPressed: () {}),
+          ),
+        );
+      }
+    } else {
+      // Add as quick entry for the specific date
+      await DailyTrackingService.addQuickFoodEntryForDate(
+        name: name,
+        calories: calories.toDouble(),
+        date: widget.selectedDate,
+        protein: protein,
+        carbs: carbs,
+        fat: fat,
+      );
+
+      if (mounted) {
+        Navigator.pop(context, true);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text(
+              'Added $name ($calories cal) to ${widget.selectedDate.day}/${widget.selectedDate.month}',
+            ),
+          ),
+        );
+      }
+    }
   }
 }

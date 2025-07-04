@@ -67,6 +67,35 @@ class DailyTrackingService {
     await _foodEntriesBox.put(entry.id, entry);
   }
 
+  static Future<void> addQuickFoodEntryForDate({
+    required String name,
+    required double calories,
+    required DateTime date,
+    double protein = 0.0,
+    double carbs = 0.0,
+    double fat = 0.0,
+  }) async {
+    final entry = DailyFoodEntry(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      grams: 100, // Default to 100g for quick entries
+      timestamp: DateTime(
+        date.year,
+        date.month,
+        date.day,
+        DateTime.now().hour,
+        DateTime.now().minute,
+        DateTime.now().second,
+      ),
+      quickEntryName: name,
+      quickEntryCalories: calories,
+      quickEntryProtein: protein,
+      quickEntryCarbs: carbs,
+      quickEntryFat: fat,
+    );
+
+    await _foodEntriesBox.put(entry.id, entry);
+  }
+
   // Add meal entry
   static Future<void> addMealEntry({
     required String mealId,

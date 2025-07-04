@@ -36,6 +36,7 @@ class TodaysLogCard extends StatelessWidget {
 
   Widget _buildEmptyState() {
     return Container(
+			width: double.infinity,
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,

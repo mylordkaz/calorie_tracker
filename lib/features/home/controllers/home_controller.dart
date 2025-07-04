@@ -2,9 +2,6 @@ import 'package:flutter/material.dart';
 import '../../../data/repositories/food_repository.dart';
 import '../../../data/repositories/tracking_repository.dart';
 import '../../../data/repositories/settings_repository.dart';
-import '../../../data/models/food_item.dart';
-import '../../../data/models/meal.dart';
-import '../../../data/models/daily_entry.dart';
 
 class HomeController extends ChangeNotifier {
   final FoodRepository _foodRepository;

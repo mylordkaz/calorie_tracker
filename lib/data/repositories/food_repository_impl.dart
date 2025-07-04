@@ -78,4 +78,105 @@ class FoodRepositoryImpl implements FoodRepository {
   Map<String, double> calculateMealMacros(Meal meal) {
     return FoodDatabaseService.calculateMealMacros(meal);
   }
+
+  @override
+  List<FoodItem> getRecentFoods({int limit = 10}) {
+    return FoodDatabaseService.getRecentFoods(limit: limit);
+  }
+
+  @override
+  List<FoodItem> getMostUsedFoods({int limit = 10}) {
+    return FoodDatabaseService.getMostUsedFoods(limit: limit);
+  }
+
+  @override
+  List<Meal> getRecentMeals({int limit = 10}) {
+    return FoodDatabaseService.getRecentMeals(limit: limit);
+  }
+
+  @override
+  List<Meal> getFavoriteMeals() {
+    return FoodDatabaseService.getFavoriteMeals();
+  }
+
+  @override
+  List<Meal> getMealsByCategory(String category) {
+    return FoodDatabaseService.getMealsByCategory(category);
+  }
+
+  @override
+  Future<void> toggleMealFavorite(String mealId) async {
+    return FoodDatabaseService.toggleMealFavorite(mealId);
+  }
+
+  @override
+  Map<String, double> calculateMealMacrosForQuantity(
+    Meal meal,
+    double multiplier,
+  ) {
+    return FoodDatabaseService.calculateMealMacrosForQuantity(meal, multiplier);
+  }
+
+  @override
+  Map<String, double> calculateMealMacrosPer100g(Meal meal) {
+    return FoodDatabaseService.calculateMealMacrosPer100g(meal);
+  }
+
+  @override
+  Future<Meal> createMealFromIngredients({
+    required String name,
+    required String description,
+    required List<MealIngredient> ingredients,
+    String? category,
+  }) async {
+    return FoodDatabaseService.createMealFromIngredients(
+      name: name,
+      description: description,
+      ingredients: ingredients,
+      category: category,
+    );
+  }
+
+  @override
+  MealIngredient createIngredientFromFood({
+    required FoodItem food,
+    required double quantity,
+    required String unit,
+  }) {
+    return FoodDatabaseService.createIngredientFromFood(
+      food: food,
+      quantity: quantity,
+      unit: unit,
+    );
+  }
+
+  @override
+  List<String> getMealCategories() {
+    return FoodDatabaseService.getMealCategories();
+  }
+
+  @override
+  int getTotalFoodCount() {
+    return FoodDatabaseService.getTotalFoodCount();
+  }
+
+  @override
+  int getTotalMealCount() {
+    return FoodDatabaseService.getTotalMealCount();
+  }
+
+  @override
+  Future<void> clearAllData() async {
+    return FoodDatabaseService.clearAllData();
+  }
+
+  @override
+  List<String> getMissingFoodIds() {
+    return FoodDatabaseService.getMissingFoodIds();
+  }
+
+  @override
+  Future<void> cleanupMeals() async {
+    return FoodDatabaseService.cleanupMeals();
+  }
 }

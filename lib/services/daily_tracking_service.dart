@@ -1,7 +1,5 @@
 import 'package:hive/hive.dart';
 import '../models/daily_entry.dart';
-import '../models/food_item.dart';
-import '../models/meal.dart';
 import 'food_database_service.dart';
 
 class DailyTrackingService {
@@ -47,6 +45,28 @@ class DailyTrackingService {
     await FoodDatabaseService.markFoodAsUsed(foodId);
   }
 
+  // Add quick food entry
+  static Future<void> addQuickFoodEntry({
+    required String name,
+    required double calories,
+    double protein = 0.0,
+    double carbs = 0.0,
+    double fat = 0.0,
+  }) async {
+    final entry = DailyFoodEntry(
+      id: DateTime.now().millisecondsSinceEpoch.toString(),
+      grams: 100, // Default to 100g for quick entries
+      timestamp: DateTime.now(),
+      quickEntryName: name,
+      quickEntryCalories: calories,
+      quickEntryProtein: protein,
+      quickEntryCarbs: carbs,
+      quickEntryFat: fat,
+    );
+
+    await _foodEntriesBox.put(entry.id, entry);
+  }
+
   // Add meal entry
   static Future<void> addMealEntry({
     required String mealId,
@@ -77,9 +97,13 @@ class DailyTrackingService {
     for (var entry in _foodEntriesBox.values) {
       if (!entry.timestamp.isBefore(startOfDay) &&
           entry.timestamp.isBefore(endOfDay)) {
-        final food = FoodDatabaseService.getFood(entry.foodId);
-        if (food != null) {
-          totalCalories += food.getCaloriesForGrams(entry.grams);
+        if (entry.isQuickEntry) {
+          totalCalories += entry.getCalories();
+        } else if (entry.foodId != null) {
+          final food = FoodDatabaseService.getFood(entry.foodId!);
+          if (food != null) {
+            totalCalories += food.getCaloriesForGrams(entry.grams);
+          }
         }
       }
     }
@@ -110,9 +134,13 @@ class DailyTrackingService {
     for (var entry in _foodEntriesBox.values) {
       if (!entry.timestamp.isBefore(startOfDay) &&
           entry.timestamp.isBefore(endOfDay)) {
-        final food = FoodDatabaseService.getFood(entry.foodId);
-        if (food != null) {
-          totalCalories += food.getCaloriesForGrams(entry.grams);
+        if (entry.isQuickEntry) {
+          totalCalories += entry.getCalories();
+        } else if (entry.foodId != null) {
+          final food = FoodDatabaseService.getFood(entry.foodId!);
+          if (food != null) {
+            totalCalories += food.getCaloriesForGrams(entry.grams);
+          }
         }
       }
     }
@@ -255,14 +283,24 @@ class DailyTrackingService {
     for (var entry in _foodEntriesBox.values) {
       if (!entry.timestamp.isBefore(startOfDay) &&
           entry.timestamp.isBefore(endOfDay)) {
-        final food = FoodDatabaseService.getFood(entry.foodId);
-        if (food != null) {
-          final macros = food.getMacrosForGrams(entry.grams);
+        if (entry.isQuickEntry) {
+          final macros = entry.getMacros();
           totalMacros['calories'] =
               totalMacros['calories']! + macros['calories']!;
           totalMacros['protein'] = totalMacros['protein']! + macros['protein']!;
           totalMacros['carbs'] = totalMacros['carbs']! + macros['carbs']!;
           totalMacros['fat'] = totalMacros['fat']! + macros['fat']!;
+        } else if (entry.foodId != null) {
+          final food = FoodDatabaseService.getFood(entry.foodId!);
+          if (food != null) {
+            final macros = food.getMacrosForGrams(entry.grams);
+            totalMacros['calories'] =
+                totalMacros['calories']! + macros['calories']!;
+            totalMacros['protein'] =
+                totalMacros['protein']! + macros['protein']!;
+            totalMacros['carbs'] = totalMacros['carbs']! + macros['carbs']!;
+            totalMacros['fat'] = totalMacros['fat']! + macros['fat']!;
+          }
         }
       }
     }
@@ -403,8 +441,6 @@ class DailyTrackingService {
 
     return datesWithEntries.toList();
   }
-
-  // Add these methods to DailyTrackingService class
 
   // Add food entry for a specific date
   static Future<void> addFoodEntryForDate({

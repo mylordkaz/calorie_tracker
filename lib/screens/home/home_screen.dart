@@ -53,12 +53,19 @@ class _HomeScreenState extends State<HomeScreen> {
     // Get today's food entries
     final foodEntries = DailyTrackingService.getTodayFoodEntries();
     for (var entry in foodEntries) {
-      final food = FoodDatabaseService.getFood(entry.foodId);
-      if (food != null) {
-        final macros = food.getMacrosForGrams(entry.grams);
+      if (entry.isQuickEntry) {
+        final macros = entry.getMacros();
         totalMacros['protein'] = totalMacros['protein']! + macros['protein']!;
         totalMacros['carbs'] = totalMacros['carbs']! + macros['carbs']!;
         totalMacros['fat'] = totalMacros['fat']! + macros['fat']!;
+      } else if (entry.foodId != null) {
+        final food = FoodDatabaseService.getFood(entry.foodId!);
+        if (food != null) {
+          final macros = food.getMacrosForGrams(entry.grams);
+          totalMacros['protein'] = totalMacros['protein']! + macros['protein']!;
+          totalMacros['carbs'] = totalMacros['carbs']! + macros['carbs']!;
+          totalMacros['fat'] = totalMacros['fat']! + macros['fat']!;
+        }
       }
     }
 
@@ -340,17 +347,29 @@ class _HomeScreenState extends State<HomeScreen> {
     List<Map<String, dynamic>> allEntries = [];
 
     for (var entry in todayFoodEntries) {
-      final food = FoodDatabaseService.getFood(entry.foodId);
-      if (food != null) {
-        final calories = food.getCaloriesForGrams(entry.grams);
-        allEntries.add({
-          'type': 'food',
-          'entry': entry,
-          'food': food,
-          'calories': calories,
-          'timestamp': entry.timestamp,
-        });
+      double calories;
+      FoodItem? food;
+
+      if (entry.isQuickEntry) {
+        calories = entry.getCalories();
+      } else if (entry.foodId != null) {
+        food = FoodDatabaseService.getFood(entry.foodId!);
+        if (food != null) {
+          calories = food.getCaloriesForGrams(entry.grams);
+        } else {
+          continue; // Skip if food not found
+        }
+      } else {
+        continue; // Skip invalid entries
       }
+
+      allEntries.add({
+        'type': 'food',
+        'entry': entry,
+        'food': food, // Can be null for quick entries
+        'calories': calories,
+        'timestamp': entry.timestamp,
+      });
     }
 
     for (var entry in todayMealEntries) {
@@ -427,15 +446,21 @@ class _HomeScreenState extends State<HomeScreen> {
     Color iconColor;
 
     if (isFood) {
-      final food = item['food'] as FoodItem;
       final entry = item['entry'] as DailyFoodEntry;
-      name = food.name;
 
-      if (entry.originalQuantity != null && entry.originalUnit != null) {
-        subtitle =
-            '${entry.originalQuantity!.toStringAsFixed(entry.originalQuantity! % 1 == 0 ? 0 : 1)} ${entry.originalUnit}';
+      if (entry.isQuickEntry) {
+        name = entry.quickEntryName!;
+        subtitle = '${entry.grams.toInt()}g (quick entry)';
       } else {
-        subtitle = '${entry.grams.toInt()}g';
+        final food = item['food'] as FoodItem;
+        name = food.name;
+
+        if (entry.originalQuantity != null && entry.originalUnit != null) {
+          subtitle =
+              '${entry.originalQuantity!.toStringAsFixed(entry.originalQuantity! % 1 == 0 ? 0 : 1)} ${entry.originalUnit}';
+        } else {
+          subtitle = '${entry.grams.toInt()}g';
+        }
       }
 
       icon = Icons.restaurant;
@@ -554,15 +579,21 @@ class _HomeScreenState extends State<HomeScreen> {
     Color iconColor;
 
     if (isFood) {
-      final food = item['food'] as FoodItem;
       final entry = item['entry'] as DailyFoodEntry;
-      name = food.name;
 
-      if (entry.originalQuantity != null && entry.originalUnit != null) {
-        subtitle =
-            '${entry.originalQuantity!.toStringAsFixed(entry.originalQuantity! % 1 == 0 ? 0 : 1)} ${entry.originalUnit}';
+      if (entry.isQuickEntry) {
+        name = entry.quickEntryName!;
+        subtitle = '${entry.grams.toInt()}g (quick entry)';
       } else {
-        subtitle = '${entry.grams.toInt()}g';
+        final food = item['food'] as FoodItem;
+        name = food.name;
+
+        if (entry.originalQuantity != null && entry.originalUnit != null) {
+          subtitle =
+              '${entry.originalQuantity!.toStringAsFixed(entry.originalQuantity! % 1 == 0 ? 0 : 1)} ${entry.originalUnit}';
+        } else {
+          subtitle = '${entry.grams.toInt()}g';
+        }
       }
 
       icon = Icons.restaurant;
@@ -753,51 +784,6 @@ class _HomeScreenState extends State<HomeScreen> {
     );
   }
 
-  void _quickAddFood(FoodItem food) async {
-    // Add with default quantity based on food type
-    double grams;
-    double originalQuantity;
-    String originalUnit;
-
-    switch (food.unit) {
-      case 'item':
-        grams = food.getGramsPerUnit();
-        originalQuantity = 1;
-        originalUnit = 'items';
-        break;
-      case 'serving':
-        grams = food.getGramsPerUnit();
-        originalQuantity = 1;
-        originalUnit = 'servings';
-        break;
-      default:
-        grams = 100;
-        originalQuantity = 100;
-        originalUnit = 'grams';
-    }
-
-    await DailyTrackingService.addFoodEntry(
-      foodId: food.id,
-      grams: grams,
-      originalQuantity: originalQuantity,
-      originalUnit: originalUnit,
-    );
-
-    _loadData();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Added ${food.name} to today\'s log')),
-    );
-  }
-
-  void _quickAddMeal(Meal meal) async {
-    await DailyTrackingService.addMealEntry(mealId: meal.id, multiplier: 1.0);
-
-    _loadData();
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text('Added ${meal.name} to today\'s log')),
-    );
-  }
-
   void _copyFromYesterday() async {
     // Get yesterday's entries using public methods
     final allFoodEntries = DailyTrackingService.getYesterdayFoodEntries();
@@ -812,12 +798,24 @@ class _HomeScreenState extends State<HomeScreen> {
 
     // Copy food entries
     for (var entry in allFoodEntries) {
-      await DailyTrackingService.addFoodEntry(
-        foodId: entry.foodId,
-        grams: entry.grams,
-        originalQuantity: entry.originalQuantity,
-        originalUnit: entry.originalUnit,
-      );
+      if (entry.isQuickEntry) {
+        // Copy as quick entry
+        await DailyTrackingService.addQuickFoodEntry(
+          name: entry.quickEntryName!,
+          calories: entry.quickEntryCalories ?? 0.0,
+          protein: entry.quickEntryProtein ?? 0.0,
+          carbs: entry.quickEntryCarbs ?? 0.0,
+          fat: entry.quickEntryFat ?? 0.0,
+        );
+      } else if (entry.foodId != null) {
+        // Copy as regular food entry
+        await DailyTrackingService.addFoodEntry(
+          foodId: entry.foodId!,
+          grams: entry.grams,
+          originalQuantity: entry.originalQuantity,
+          originalUnit: entry.originalUnit,
+        );
+      }
     }
 
     // Copy meal entries

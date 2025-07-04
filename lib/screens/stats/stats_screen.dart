@@ -801,51 +801,67 @@ class _StatsScreenState extends State<StatsScreen> {
   }
 
   Widget _buildFoodEntryCard(DailyFoodEntry entry) {
-    final food = FoodDatabaseService.getFood(entry.foodId);
+  String name;
+  String subtitle;
+  double calories;
+
+  if (entry.isQuickEntry) {
+    name = entry.quickEntryName!;
+    calories = entry.quickEntryCalories ?? 0.0;
+    subtitle = '${entry.grams.toInt()}g • ${calories.toInt()} cal';
+  } else if (entry.foodId != null) {
+    final food = FoodDatabaseService.getFood(entry.foodId!);
     if (food == null) return Container();
-
+    
+    name = food.name;
     final macros = food.getMacrosForGrams(entry.grams);
-    final timeStr =
-        '${entry.timestamp.hour.toString().padLeft(2, '0')}:${entry.timestamp.minute.toString().padLeft(2, '0')}';
-
-    return Container(
-      margin: EdgeInsets.only(bottom: 6),
-      padding: EdgeInsets.all(8),
-      decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.grey[200]!),
-      ),
-      child: Row(
-        children: [
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                Text(
-                  food.name,
-                  style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
-                ),
-                Text(
-                  '${entry.grams.toInt()}g • ${macros['calories']!.toInt()} cal',
-                  style: TextStyle(color: Colors.grey[600], fontSize: 10),
-                ),
-              ],
-            ),
-          ),
-          Text(
-            timeStr,
-            style: TextStyle(color: Colors.grey[500], fontSize: 10),
-          ),
-          SizedBox(width: 8),
-          GestureDetector(
-            onTap: () => _deleteEntry(entry.id, true),
-            child: Icon(Icons.delete, size: 16, color: Colors.red),
-          ),
-        ],
-      ),
-    );
+    calories = macros['calories']!;
+    subtitle = '${entry.grams.toInt()}g • ${calories.toInt()} cal';
+  } else {
+    return Container();
   }
+
+  final timeStr =
+      '${entry.timestamp.hour.toString().padLeft(2, '0')}:${entry.timestamp.minute.toString().padLeft(2, '0')}';
+
+  return Container(
+    margin: EdgeInsets.only(bottom: 6),
+    padding: EdgeInsets.all(8),
+    decoration: BoxDecoration(
+      color: Colors.grey[50],
+      borderRadius: BorderRadius.circular(6),
+      border: Border.all(color: Colors.grey[200]!),
+    ),
+    child: Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text(
+                name,
+                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 12),
+              ),
+              Text(
+                subtitle,
+                style: TextStyle(color: Colors.grey[600], fontSize: 10),
+              ),
+            ],
+          ),
+        ),
+        Text(
+          timeStr,
+          style: TextStyle(color: Colors.grey[500], fontSize: 10),
+        ),
+        SizedBox(width: 8),
+        GestureDetector(
+          onTap: () => _deleteEntry(entry.id, true),
+          child: Icon(Icons.delete, size: 16, color: Colors.red),
+        ),
+      ],
+    ),
+  );
+}
 
   Widget _buildModernMacroCard(
     String label,
@@ -896,10 +912,27 @@ class _StatsScreenState extends State<StatsScreen> {
   }
 
   Widget _buildModernFoodEntryCard(DailyFoodEntry entry) {
-    final food = FoodDatabaseService.getFood(entry.foodId);
-    if (food == null) return Container();
+    String name;
+    String subtitle;
+    double calories;
 
-    final macros = food.getMacrosForGrams(entry.grams);
+    if (entry.isQuickEntry) {
+      name = entry.quickEntryName!;
+      calories = entry.quickEntryCalories ?? 0.0;
+      subtitle =
+          '${entry.grams.toInt()}g • ${calories.toInt()} cal (quick entry)';
+    } else if (entry.foodId != null) {
+      final food = FoodDatabaseService.getFood(entry.foodId!);
+      if (food == null) return Container(); // Skip if food not found
+
+      name = food.name;
+      final macros = food.getMacrosForGrams(entry.grams);
+      calories = macros['calories']!;
+      subtitle = '${entry.grams.toInt()}g • ${calories.toInt()} cal';
+    } else {
+      return Container(); // Skip invalid entries
+    }
+
     final timeStr =
         '${entry.timestamp.hour.toString().padLeft(2, '0')}:${entry.timestamp.minute.toString().padLeft(2, '0')}';
 
@@ -936,7 +969,7 @@ class _StatsScreenState extends State<StatsScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  food.name,
+                  name,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
@@ -945,7 +978,7 @@ class _StatsScreenState extends State<StatsScreen> {
                 ),
                 SizedBox(height: 2),
                 Text(
-                  '${entry.grams.toInt()}g • ${macros['calories']!.toInt()} cal',
+                  subtitle,
                   style: TextStyle(color: Colors.grey[600], fontSize: 12),
                 ),
               ],

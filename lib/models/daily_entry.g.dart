@@ -18,19 +18,24 @@ class DailyFoodEntryAdapter extends TypeAdapter<DailyFoodEntry> {
     };
     return DailyFoodEntry(
       id: fields[0] as String,
-      foodId: fields[1] as String,
+      foodId: fields[1] as String?,
       grams: fields[2] as double,
       timestamp: fields[3] as DateTime,
       mealId: fields[4] as String?,
       originalQuantity: fields[5] as double?,
       originalUnit: fields[6] as String?,
+      quickEntryName: fields[7] as String?,
+      quickEntryCalories: fields[8] as double?,
+      quickEntryProtein: fields[9] as double?,
+      quickEntryCarbs: fields[10] as double?,
+      quickEntryFat: fields[11] as double?,
     );
   }
 
   @override
   void write(BinaryWriter writer, DailyFoodEntry obj) {
     writer
-      ..writeByte(7)
+      ..writeByte(12)
       ..writeByte(0)
       ..write(obj.id)
       ..writeByte(1)
@@ -44,7 +49,17 @@ class DailyFoodEntryAdapter extends TypeAdapter<DailyFoodEntry> {
       ..writeByte(5)
       ..write(obj.originalQuantity)
       ..writeByte(6)
-      ..write(obj.originalUnit);
+      ..write(obj.originalUnit)
+      ..writeByte(7)
+      ..write(obj.quickEntryName)
+      ..writeByte(8)
+      ..write(obj.quickEntryCalories)
+      ..writeByte(9)
+      ..write(obj.quickEntryProtein)
+      ..writeByte(10)
+      ..write(obj.quickEntryCarbs)
+      ..writeByte(11)
+      ..write(obj.quickEntryFat);
   }
 
   @override

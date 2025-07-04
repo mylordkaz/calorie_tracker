@@ -623,7 +623,7 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                 validator: (value) =>
                     value?.isEmpty == true ? 'Name required' : null,
                 decoration: InputDecoration(
-                  labelText: 'Food/Meal Name',
+                  labelText: 'Food Name',
                   hintText: 'e.g., Sandwich from café',
                   filled: true,
                   fillColor: Colors.grey[50],
@@ -869,31 +869,92 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
         ? 0.0
         : double.tryParse(_fatController.text) ?? 0.0;
 
-    // Create a temporary food item for quick entry
-    final quickFood = FoodItem(
-      id: 'quick_${DateTime.now().millisecondsSinceEpoch}',
-      name: name,
-      description: 'Quick entry',
-      calories: calories.toDouble(),
-      protein: protein,
-      carbs: carbs,
-      fat: fat,
-      createdAt: DateTime.now(),
-      lastUsed: DateTime.now(),
+    // Ask user if they want to save to library
+    final shouldSaveToLibrary = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        backgroundColor: Colors.white,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        title: Text(
+          'Save to Library?',
+          style: TextStyle(
+            fontSize: 16,
+            fontWeight: FontWeight.w600,
+            color: Colors.black,
+          ),
+        ),
+        content: Text(
+          'Do you want to save "$name" to your food library for future use?',
+          style: TextStyle(fontSize: 14),
+        ),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
+            child: Text('No, just add today'),
+          ),
+          ElevatedButton(
+            onPressed: () => Navigator.pop(context, true),
+            style: ElevatedButton.styleFrom(
+              backgroundColor: Colors.blue,
+              foregroundColor: Colors.white,
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(8),
+              ),
+              elevation: 0,
+            ),
+            child: Text('Yes, save to library'),
+          ),
+        ],
+      ),
     );
 
-    // Add to food database temporarily and then add entry
-    await FoodDatabaseService.addFood(quickFood);
-    await DailyTrackingService.addFoodEntry(
-      foodId: quickFood.id,
-      grams: 100, // Use 100g as base for quick entries
-    );
+    if (shouldSaveToLibrary == null) return; // User cancelled
 
-    if (mounted) {
-      Navigator.pop(context, true);
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Added $name ($calories cal) to today\'s log')),
+    if (shouldSaveToLibrary) {
+      // Save to food library and add regular entry
+      final quickFood = FoodItem(
+        id: 'quick_${DateTime.now().millisecondsSinceEpoch}',
+        name: name,
+        description: 'Quick entry',
+        calories: calories.toDouble(),
+        protein: protein,
+        carbs: carbs,
+        fat: fat,
+        createdAt: DateTime.now(),
+        lastUsed: DateTime.now(),
       );
+
+      await FoodDatabaseService.addFood(quickFood);
+      await DailyTrackingService.addFoodEntry(foodId: quickFood.id, grams: 100);
+
+      if (mounted) {
+        Navigator.pop(context, true);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('$name saved to library and added to today\'s log'),
+            action: SnackBarAction(label: 'Edit in Library', onPressed: () {}),
+          ),
+        );
+      }
+    } else {
+      // Add as quick entry only
+      await DailyTrackingService.addQuickFoodEntry(
+        name: name,
+        calories: calories.toDouble(),
+        protein: protein,
+        carbs: carbs,
+        fat: fat,
+      );
+
+      if (mounted) {
+        Navigator.pop(context, true);
+        ScaffoldMessenger.of(context).showSnackBar(
+          SnackBar(
+            content: Text('Added $name ($calories cal) to today\'s log'),
+          ),
+        );
+      }
     }
   }
 }

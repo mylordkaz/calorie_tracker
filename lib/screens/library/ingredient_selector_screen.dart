@@ -78,8 +78,9 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
             child: Text(
               'Add',
               style: TextStyle(
-                color: _canSave() ? Colors.green : Colors.grey,
+                color: _canSave() ? Colors.blue : Colors.grey,
                 fontWeight: FontWeight.w600,
+                fontSize: 16,
               ),
             ),
           ),
@@ -89,29 +90,28 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
         children: [
           // Search Bar
           Container(
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            padding: EdgeInsets.all(12),
             child: Container(
-              height: 44,
+              height: 36,
               decoration: BoxDecoration(
                 color: Colors.white,
-                borderRadius: BorderRadius.circular(8),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.grey.withValues(alpha: 0.1),
-                    spreadRadius: 1,
-                    blurRadius: 4,
-                    offset: Offset(0, 2),
-                  ),
-                ],
+                borderRadius: BorderRadius.circular(18),
+                border: Border.all(color: Colors.grey[300]!),
               ),
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search foods...',
-                  prefixIcon: Icon(Icons.search, color: Colors.grey, size: 20),
+                  hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey[400],
+                    size: 18,
+                  ),
                   border: InputBorder.none,
                   contentPadding: EdgeInsets.symmetric(vertical: 8),
                 ),
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ),
@@ -119,101 +119,123 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
           // Selected Food & Quantity
           if (_selectedFood != null) ...[
             Container(
-              margin: EdgeInsets.symmetric(horizontal: 16, vertical: 4),
+              margin: EdgeInsets.symmetric(horizontal: 12),
               child: CustomCard(
-                padding: EdgeInsets.all(12),
+                padding: EdgeInsets.all(16),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-                    Text(
-                      'Selected: ${_selectedFood!.name}',
-                      style: TextStyle(
-                        fontSize: 14,
-                        fontWeight: FontWeight.w600,
-                      ),
+                    Row(
+                      children: [
+                        Icon(Icons.check_circle, color: Colors.blue, size: 20),
+                        SizedBox(width: 8),
+                        Expanded(
+                          child: Text(
+                            'Selected: ${_selectedFood!.name}',
+                            style: TextStyle(
+                              fontSize: 14,
+                              fontWeight: FontWeight.w600,
+                              color: Colors.blue,
+                            ),
+                          ),
+                        ),
+                      ],
                     ),
-                    SizedBox(height: 12),
+                    SizedBox(height: 16),
 
-                    // Quantity Input
+                    // Quantity Input Row
                     Row(
                       children: [
                         Expanded(
                           flex: 2,
-                          child: Container(
-                            height: 44,
-                            child: TextFormField(
-                              controller: _quantityController,
-                              keyboardType: TextInputType.numberWithOptions(
-                                decimal: true,
-                              ),
-                              inputFormatters: [
-                                FilteringTextInputFormatter.allow(
-                                  RegExp(r'^\d*\.?\d*'),
-                                ),
-                              ],
-                              decoration: InputDecoration(
-                                labelText: 'Quantity',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(color: Colors.green),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
-                                ),
-                              ),
-                              style: TextStyle(fontSize: 14),
-                              onChanged: (_) => setState(() {}),
+                          child: TextFormField(
+                            controller: _quantityController,
+                            keyboardType: TextInputType.numberWithOptions(
+                              decimal: true,
                             ),
+                            inputFormatters: [
+                              FilteringTextInputFormatter.allow(
+                                RegExp(r'^\d*\.?\d*'),
+                              ),
+                            ],
+                            decoration: InputDecoration(
+                              labelText: 'Quantity',
+                              filled: true,
+                              fillColor: Colors.grey[50],
+                              border: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                  color: Colors.grey[300]!,
+                                ),
+                              ),
+                              enabledBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                  color: Colors.grey[300]!,
+                                ),
+                              ),
+                              focusedBorder: OutlineInputBorder(
+                                borderRadius: BorderRadius.circular(12),
+                                borderSide: BorderSide(
+                                  color: Colors.blue,
+                                  width: 2,
+                                ),
+                              ),
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                            ),
+                            style: TextStyle(fontSize: 14),
+                            onChanged: (_) => setState(() {}),
                           ),
                         ),
-                        SizedBox(width: 8),
-                        // Unit buttons
-                        Container(
-                          height: 44,
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: _getAvailableUnits().map((unit) {
-                              final isSelected = _selectedUnit == unit['value'];
-                              return GestureDetector(
-                                onTap: () {
-                                  setState(() {
-                                    _selectedUnit = unit['value']!;
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.symmetric(
-                                    horizontal: 8,
-                                    vertical: 6,
-                                  ),
-                                  margin: EdgeInsets.only(right: 4),
-                                  decoration: BoxDecoration(
-                                    color: isSelected
-                                        ? Colors.green
-                                        : Colors.grey[100],
-                                    borderRadius: BorderRadius.circular(6),
-                                    border: Border.all(
-                                      color: isSelected
-                                          ? Colors.green
-                                          : Colors.grey[300]!,
-                                    ),
-                                  ),
-                                  child: Text(
-                                    unit['label']!,
-                                    style: TextStyle(
-                                      color: isSelected
-                                          ? Colors.white
-                                          : Colors.grey[700],
-                                      fontSize: 11,
-                                      fontWeight: FontWeight.w500,
-                                    ),
+                        SizedBox(width: 12),
+                        // Unit Selection
+                        Expanded(
+                          child: Container(
+                            height: 48,
+                            child: DropdownButtonFormField<String>(
+                              value: _selectedUnit,
+                              items: _getAvailableUnits(),
+                              onChanged: (value) {
+                                setState(() {
+                                  _selectedUnit = value!;
+                                });
+                              },
+                              decoration: InputDecoration(
+                                labelText: 'Unit',
+                                filled: true,
+                                fillColor: Colors.grey[50],
+                                border: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey[300]!,
                                   ),
                                 ),
-                              );
-                            }).toList(),
+                                enabledBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: Colors.grey[300]!,
+                                  ),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderRadius: BorderRadius.circular(12),
+                                  borderSide: BorderSide(
+                                    color: Colors.blue,
+                                    width: 2,
+                                  ),
+                                ),
+                                contentPadding: EdgeInsets.symmetric(
+                                  horizontal: 16,
+                                  vertical: 12,
+                                ),
+                              ),
+                              style: TextStyle(
+                                fontSize: 14,
+                                color: Colors.black,
+                              ),
+                            ),
                           ),
                         ),
                       ],
@@ -221,35 +243,22 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
 
                     // Nutrition Preview
                     if (_quantityController.text.isNotEmpty) ...[
-                      SizedBox(height: 12),
+                      SizedBox(height: 16),
                       _buildNutritionPreview(),
                     ],
                   ],
                 ),
               ),
             ),
+            SizedBox(height: 12),
           ],
-
-          // Foods List Title
-          Container(
-            width: double.infinity,
-            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
-            child: Text(
-              _selectedFood != null ? 'List of foods:' : 'Choose a food:',
-              style: TextStyle(
-                fontSize: 16,
-                fontWeight: FontWeight.w600,
-                color: Colors.grey[700],
-              ),
-            ),
-          ),
 
           // Foods List
           Expanded(
             child: _filteredFoods.isEmpty
                 ? _buildEmptyState()
                 : ListView.builder(
-                    padding: EdgeInsets.symmetric(horizontal: 16),
+                    padding: EdgeInsets.symmetric(horizontal: 12),
                     itemCount: _filteredFoods.length,
                     itemBuilder: (context, index) {
                       final food = _filteredFoods[index];
@@ -266,67 +275,72 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
   Widget _buildFoodCard(FoodItem food, bool isSelected) {
     return Container(
       margin: EdgeInsets.only(bottom: 6),
-      child: CustomCard(
-        padding: EdgeInsets.all(10),
-        child: ListTile(
-          dense: true,
-          contentPadding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-          title: Text(
-            food.name,
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 13,
-              color: isSelected ? Colors.green : Colors.black,
+      height: 56,
+      decoration: BoxDecoration(
+        color: isSelected ? Colors.blue.withOpacity(0.1) : Colors.white,
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(
+          color: isSelected ? Colors.blue : Colors.grey[200]!,
+          width: isSelected ? 2 : 1,
+        ),
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          borderRadius: BorderRadius.circular(8),
+          onTap: () => _selectFood(food),
+          child: Padding(
+            padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+            child: Row(
+              children: [
+                if (isSelected)
+                  Icon(Icons.check_circle, color: Colors.blue, size: 20)
+                else
+                  Icon(
+                    Icons.circle_outlined,
+                    color: Colors.grey[400],
+                    size: 20,
+                  ),
+                SizedBox(width: 12),
+                Expanded(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.start,
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        food.name,
+                        style: TextStyle(
+                          fontSize: 14,
+                          fontWeight: FontWeight.w600,
+                          color: isSelected ? Colors.blue : Colors.black,
+                        ),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
+                      if (food.description.isNotEmpty)
+                        Text(
+                          food.description,
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[600],
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+                    ],
+                  ),
+                ),
+                Text(
+                  '${food.calories.toInt()} cal ${food.getDisplayUnit()}',
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[600],
+                    fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
             ),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (food.description.isNotEmpty)
-                Text(
-                  food.description,
-                  style: TextStyle(color: Colors.grey[600], fontSize: 11),
-                ),
-              SizedBox(height: 2),
-              Text(
-                '${food.calories.toInt()} cal • ${food.protein.toStringAsFixed(1)}g protein ${food.getDisplayUnit()}',
-                style: TextStyle(color: Colors.grey[500], fontSize: 10),
-              ),
-            ],
-          ),
-          leading: isSelected
-              ? Icon(Icons.check_circle, color: Colors.green, size: 20)
-              : null,
-          onTap: () {
-            setState(() {
-              _selectedFood = food;
-              switch (food.unit) {
-                case 'item':
-                  _selectedUnit = 'items';
-                  break;
-                case 'serving':
-                  _selectedUnit = 'servings';
-                  break;
-                case '100g':
-                default:
-                  _selectedUnit = 'grams';
-                  break;
-              }
-
-              if (_quantityController.text.isEmpty) {
-                switch (food.unit) {
-                  case 'item':
-                  case 'serving':
-                    _quantityController.text = '1';
-                    break;
-                  case '100g':
-                  default:
-                    _quantityController.text = '100';
-                    break;
-                }
-              }
-            });
-          },
         ),
       ),
     );
@@ -350,27 +364,33 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
     final macros = ingredient.calculateMacros(_selectedFood!);
 
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.green.withOpacity(0.05),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: Colors.green.withOpacity(0.2)),
+        color: Colors.blue.withOpacity(0.05),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.blue.withOpacity(0.2)),
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          Text(
-            'Nutrition for ${ingredient.getDisplayQuantity(_selectedFood!)}:',
-            style: TextStyle(
-              fontWeight: FontWeight.w600,
-              fontSize: 11,
-              color: Colors.green[700],
-            ),
+          Row(
+            children: [
+              Icon(Icons.info_outline, size: 16, color: Colors.blue),
+              SizedBox(width: 6),
+              Text(
+                'Nutrition for ${ingredient.getDisplayQuantity(_selectedFood!)}:',
+                style: TextStyle(
+                  fontWeight: FontWeight.w600,
+                  fontSize: 12,
+                  color: Colors.blue,
+                ),
+              ),
+            ],
           ),
-          SizedBox(height: 6),
+          SizedBox(height: 8),
           Wrap(
-            spacing: 6,
-            runSpacing: 3,
+            spacing: 8,
+            runSpacing: 6,
             children: [
               _buildPreviewChip(
                 '${macros['calories']!.toInt()} cal',
@@ -397,18 +417,18 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
 
   Widget _buildPreviewChip(String text, Color color) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Text(
         text,
         style: TextStyle(
           color: color,
-          fontSize: 9,
-          fontWeight: FontWeight.w500,
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -439,32 +459,81 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
     );
   }
 
-  List<Map<String, String>> _getAvailableUnits() {
+  List<DropdownMenuItem<String>> _getAvailableUnits() {
     if (_selectedFood == null) {
       return [
-        {'value': 'grams', 'label': 'g'},
+        DropdownMenuItem(
+          value: 'grams',
+          child: Text('Grams', style: TextStyle(fontSize: 14)),
+        ),
       ];
     }
 
     switch (_selectedFood!.unit) {
       case '100g':
         return [
-          {'value': 'grams', 'label': 'g'},
+          DropdownMenuItem(
+            value: 'grams',
+            child: Text('Grams', style: TextStyle(fontSize: 14)),
+          ),
         ];
       case 'item':
         return [
-          {'value': 'items', 'label': 'items'},
+          DropdownMenuItem(
+            value: 'items',
+            child: Text('Items', style: TextStyle(fontSize: 14)),
+          ),
         ];
       case 'serving':
         return [
-          {'value': 'servings', 'label': 'servings'},
-          {'value': 'grams', 'label': 'g'},
+          DropdownMenuItem(
+            value: 'servings',
+            child: Text('Servings', style: TextStyle(fontSize: 14)),
+          ),
+          DropdownMenuItem(
+            value: 'grams',
+            child: Text('Grams', style: TextStyle(fontSize: 14)),
+          ),
         ];
       default:
         return [
-          {'value': 'grams', 'label': 'g'},
+          DropdownMenuItem(
+            value: 'grams',
+            child: Text('Grams', style: TextStyle(fontSize: 14)),
+          ),
         ];
     }
+  }
+
+  void _selectFood(FoodItem food) {
+    setState(() {
+      _selectedFood = food;
+      switch (food.unit) {
+        case 'item':
+          _selectedUnit = 'items';
+          break;
+        case 'serving':
+          _selectedUnit = 'servings';
+          break;
+        case '100g':
+        default:
+          _selectedUnit = 'grams';
+          break;
+      }
+
+      if (_quantityController.text.isEmpty) {
+        switch (food.unit) {
+          case 'item':
+          case 'serving':
+            _quantityController.text = '1';
+            break;
+          case '100g':
+          default:
+            _quantityController.text = '100';
+            break;
+        }
+      }
+    });
   }
 
   bool _canSave() {

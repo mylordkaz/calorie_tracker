@@ -49,16 +49,36 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
         children: [
           // Search Bar
           Container(
-            padding: EdgeInsets.all(16),
-            child: CustomCard(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Container(
+              height: 42,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(21),
+                border: Border.all(color: Colors.grey[300]!),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withValues(alpha: 0.1),
+                    spreadRadius: 1,
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search meals...',
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
+                  hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey[400],
+                    size: 20,
+                  ),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10),
                 ),
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ),
@@ -78,10 +98,17 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToAddMeal(),
-        backgroundColor: Colors.green,
-        child: Icon(Icons.add, color: Colors.white),
+      floatingActionButton: Container(
+        width: 56,
+        height: 56,
+        child: FloatingActionButton(
+          onPressed: () => _navigateToAddMeal(),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          elevation: 2,
+          shape: CircleBorder(),
+          child: Icon(Icons.add, size: 24),
+        ),
       ),
     );
   }
@@ -89,63 +116,116 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
   Widget _buildMealCard(Meal meal) {
     final macros = FoodDatabaseService.calculateMealMacros(meal);
     final totalWeight = meal.getTotalWeight();
+    final hasImage =
+        meal.imagePath != null && File(meal.imagePath!).existsSync();
 
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      child: CustomCard(
-        child: ListTile(
-          contentPadding: EdgeInsets.all(16),
-          leading: meal.imagePath != null && File(meal.imagePath!).existsSync()
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.file(
-                    File(meal.imagePath!),
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : null,
-          title: Text(
-            meal.name,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      margin: EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.08),
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: Offset(0, 2),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (meal.description.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.only(top: 4),
-                  child: Text(
-                    meal.description,
-                    style: TextStyle(color: Colors.grey[600]),
-                  ),
-                ),
-              SizedBox(height: 8),
-              Text(
-                '${meal.getIngredientCount()} ingredients • ${totalWeight.toInt()}g total',
-                style: TextStyle(fontSize: 12, color: Colors.grey[500]),
-              ),
-              SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 4,
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => _navigateToMealDetails(meal),
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: EdgeInsets.all(12),
+            child: IntrinsicHeight(
+              child: Row(
                 children: [
-                  _buildMacroChip(
-                    '${macros['calories']!.toInt()} cal',
-                    Colors.orange,
+                  // Image - only show if exists
+                  if (hasImage) ...[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        File(meal.imagePath!),
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                  ],
+
+                  // Content
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          meal.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            color: Colors.black87,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+
+                        if (meal.description.isNotEmpty) ...[
+                          SizedBox(height: 2),
+                          Text(
+                            meal.description,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 12,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+
+                        SizedBox(height: 2),
+                        Text(
+                          '${meal.getIngredientCount()} ingredients • ${totalWeight.toInt()}g total',
+                          style: TextStyle(
+                            fontSize: 11,
+                            color: Colors.grey[500],
+                          ),
+                        ),
+
+                        SizedBox(height: 6),
+
+                        // Flexible macro chips
+                        Flexible(
+                          child: Wrap(
+                            spacing: 6,
+                            runSpacing: 4,
+                            children: [
+                              _buildMacroChip(
+                                '${macros['calories']!.toInt()} cal',
+                                Colors.orange,
+                              ),
+                              _buildMacroChip(
+                                '${macros['protein']!.toStringAsFixed(1)}g protein',
+                                Colors.blue,
+                              ),
+                              if (meal.category != null)
+                                _buildCategoryChip(meal.category!),
+                              if (meal.isFavorite) _buildFavoriteChip(),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
                   ),
-                  _buildMacroChip(
-                    '${macros['protein']!.toStringAsFixed(1)}g protein',
-                    Colors.blue,
-                  ),
-                  if (meal.category != null) _buildCategoryChip(meal.category!),
-                  if (meal.isFavorite) _buildFavoriteChip(),
                 ],
               ),
-            ],
+            ),
           ),
-          onTap: () => _navigateToMealDetails(meal),
         ),
       ),
     );
@@ -153,18 +233,18 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
 
   Widget _buildMacroChip(String text, Color color) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         text,
         style: TextStyle(
           color: color,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -172,18 +252,18 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
 
   Widget _buildCategoryChip(String category) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
         color: Colors.purple.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.purple.withValues(alpha: 0.3)),
       ),
       child: Text(
         category,
         style: TextStyle(
           color: Colors.purple,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -191,10 +271,10 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
 
   Widget _buildFavoriteChip() {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 6, vertical: 3),
       decoration: BoxDecoration(
         color: Colors.red.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(8),
         border: Border.all(color: Colors.red.withValues(alpha: 0.3)),
       ),
       child: Icon(Icons.favorite, size: 12, color: Colors.red),
@@ -206,16 +286,27 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          Icon(Icons.local_dining_outlined, size: 64, color: Colors.grey[400]),
-          SizedBox(height: 16),
+          Container(
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.local_dining_outlined,
+              size: 48,
+              color: Colors.grey[400],
+            ),
+          ),
+          SizedBox(height: 20),
           Text(
             _meals.isEmpty
                 ? 'No meals in your library yet'
                 : 'No meals match your search',
             style: TextStyle(
               fontSize: 18,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
+              color: Colors.grey[700],
+              fontWeight: FontWeight.w600,
             ),
           ),
           SizedBox(height: 8),

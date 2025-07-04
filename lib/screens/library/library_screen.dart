@@ -17,27 +17,16 @@ class LibraryScreen extends StatelessWidget {
           elevation: 0,
           foregroundColor: Colors.black,
           bottom: TabBar(
-            labelColor: Colors.green,
+            labelColor: Colors.blue,
             unselectedLabelColor: Colors.grey,
-            indicatorColor: Colors.green,
+            indicatorColor: Colors.blue,
             tabs: [
-              Tab(
-                icon: Icon(Icons.restaurant),
-                text: 'Foods',
-              ),
-              Tab(
-                icon: Icon(Icons.local_dining),
-                text: 'Meals',
-              ),
+              Tab(icon: Icon(Icons.restaurant), text: 'Foods'),
+              Tab(icon: Icon(Icons.local_dining), text: 'Meals'),
             ],
           ),
         ),
-        body: TabBarView(
-          children: [
-            FoodLibraryTab(),
-            MealLibraryTab(),
-          ],
-        ),
+        body: TabBarView(children: [FoodLibraryTab(), MealLibraryTab()]),
       ),
     );
   }

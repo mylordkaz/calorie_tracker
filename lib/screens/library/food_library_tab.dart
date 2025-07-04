@@ -49,16 +49,36 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
         children: [
           // Search Bar
           Container(
-            padding: EdgeInsets.all(16),
-            child: CustomCard(
+            padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+            child: Container(
+              height: 42,
+              decoration: BoxDecoration(
+                color: Colors.white,
+                borderRadius: BorderRadius.circular(21),
+                border: Border.all(color: Colors.grey[300]!),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.grey.withValues(alpha: 0.1),
+                    spreadRadius: 1,
+                    blurRadius: 4,
+                    offset: Offset(0, 2),
+                  ),
+                ],
+              ),
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
                   hintText: 'Search foods...',
-                  prefixIcon: Icon(Icons.search, color: Colors.grey),
+                  hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
+                  prefixIcon: Icon(
+                    Icons.search,
+                    color: Colors.grey[400],
+                    size: 20,
+                  ),
                   border: InputBorder.none,
-                  contentPadding: EdgeInsets.symmetric(vertical: 12),
+                  contentPadding: EdgeInsets.symmetric(vertical: 10),
                 ),
+                style: TextStyle(fontSize: 14),
               ),
             ),
           ),
@@ -78,10 +98,17 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
           ),
         ],
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => _navigateToAddFood(),
-        backgroundColor: Colors.green,
-        child: Icon(Icons.add, color: Colors.white),
+      floatingActionButton: Container(
+        width: 56,
+        height: 56,
+        child: FloatingActionButton(
+          onPressed: () => _navigateToAddFood(),
+          backgroundColor: Colors.blue,
+          foregroundColor: Colors.white,
+          elevation: 2,
+          shape: CircleBorder(),
+          child: Icon(Icons.add, size: 24),
+        ),
       ),
     );
   }
@@ -110,51 +137,99 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
         break;
     }
 
+    final hasImage =
+        food.imagePath != null && File(food.imagePath!).existsSync();
+
     return Container(
-      margin: EdgeInsets.only(bottom: 12),
-      child: CustomCard(
-        child: ListTile(
-          contentPadding: EdgeInsets.all(16),
-          leading: food.imagePath != null && File(food.imagePath!).existsSync()
-              ? ClipRRect(
-                  borderRadius: BorderRadius.circular(8),
-                  child: Image.file(
-                    File(food.imagePath!),
-                    width: 60,
-                    height: 60,
-                    fit: BoxFit.cover,
-                  ),
-                )
-              : null,
-          title: Text(
-            food.name,
-            style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+      margin: EdgeInsets.only(bottom: 8),
+      decoration: BoxDecoration(
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: Colors.grey[200]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withValues(alpha: 0.08),
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: Offset(0, 2),
           ),
-          subtitle: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              if (food.description.isNotEmpty)
-                Padding(
-                  padding: EdgeInsets.only(top: 4),
-                  child: Text(
-                    food.description,
-                    style: TextStyle(color: Colors.grey[600]),
-                  ),
-                ),
-              SizedBox(height: 8),
-              Wrap(
-                spacing: 8,
-                runSpacing: 4,
+        ],
+      ),
+      child: Material(
+        color: Colors.transparent,
+        child: InkWell(
+          onTap: () => _navigateToFoodDetails(food),
+          borderRadius: BorderRadius.circular(12),
+          child: Padding(
+            padding: EdgeInsets.all(12),
+            child: IntrinsicHeight(
+              child: Row(
                 children: [
-                  _buildMacroChip(calorieDisplay, Colors.orange),
-                  _buildMacroChip(proteinDisplay, Colors.blue),
-                  _buildUnitChip(unitDisplay, food.unit),
+                  // Image - only show if exists
+                  if (hasImage) ...[
+                    ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: Image.file(
+                        File(food.imagePath!),
+                        width: 60,
+                        height: 60,
+                        fit: BoxFit.cover,
+                      ),
+                    ),
+                    SizedBox(width: 12),
+                  ],
+
+                  // Content
+                  Expanded(
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          food.name,
+                          style: TextStyle(
+                            fontWeight: FontWeight.w600,
+                            fontSize: 15,
+                            color: Colors.black87,
+                          ),
+                          maxLines: 1,
+                          overflow: TextOverflow.ellipsis,
+                        ),
+
+                        if (food.description.isNotEmpty) ...[
+                          SizedBox(height: 2),
+                          Text(
+                            food.description,
+                            style: TextStyle(
+                              color: Colors.grey[600],
+                              fontSize: 12,
+                            ),
+                            maxLines: 1,
+                            overflow: TextOverflow.ellipsis,
+                          ),
+                        ],
+
+                        SizedBox(height: 6),
+
+                        // Flexible macro chips
+                        Flexible(
+                          child: Wrap(
+                            spacing: 6,
+                            runSpacing: 4,
+                            children: [
+                              _buildMacroChip(calorieDisplay, Colors.orange),
+                              _buildMacroChip(proteinDisplay, Colors.blue),
+                              _buildUnitChip(unitDisplay, food.unit),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
                 ],
               ),
-            ],
+            ),
           ),
-
-          onTap: () => _navigateToFoodDetails(food),
         ),
       ),
     );
@@ -162,92 +237,19 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
 
   Widget _buildMacroChip(String text, Color color) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Text(
         text,
         style: TextStyle(
           color: color,
-          fontSize: 12,
-          fontWeight: FontWeight.w500,
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
         ),
-      ),
-    );
-  }
-
-  Widget _buildEmptyState() {
-    return Center(
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: [
-          Icon(Icons.restaurant_outlined, size: 64, color: Colors.grey[400]),
-          SizedBox(height: 16),
-          Text(
-            _foods.isEmpty
-                ? 'No foods in your library yet'
-                : 'No foods match your search',
-            style: TextStyle(
-              fontSize: 18,
-              color: Colors.grey[600],
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-          SizedBox(height: 8),
-          Text(
-            _foods.isEmpty
-                ? 'Tap the + button to add your first food'
-                : 'Try a different search term',
-            style: TextStyle(fontSize: 14, color: Colors.grey[500]),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void _navigateToAddFood() async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddFoodScreen()),
-    );
-    if (result == true) {
-      _loadFoods();
-    }
-  }
-
-  void _navigateToEditFood(FoodItem food) async {
-    final result = await Navigator.push(
-      context,
-      MaterialPageRoute(builder: (context) => AddFoodScreen(foodToEdit: food)),
-    );
-    if (result == true) {
-      _loadFoods();
-    }
-  }
-
-  void _showDeleteConfirmation(FoodItem food) {
-    showDialog(
-      context: context,
-      builder: (context) => AlertDialog(
-        title: Text('Delete Food'),
-        content: Text('Are you sure you want to delete "${food.name}"?'),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
-          ),
-          TextButton(
-            onPressed: () async {
-              await FoodDatabaseService.deleteFood(food.id);
-              Navigator.pop(context);
-              _loadFoods();
-            },
-            child: Text('Delete', style: TextStyle(color: Colors.red)),
-          ),
-        ],
       ),
     );
   }
@@ -273,28 +275,78 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
     }
 
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withOpacity(0.1),
-        borderRadius: BorderRadius.circular(12),
-        border: Border.all(color: color.withOpacity(0.3)),
+        color: color.withValues(alpha: 0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withValues(alpha: 0.3)),
       ),
       child: Row(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Icon(icon, size: 12, color: color),
+          Icon(icon, size: 11, color: color),
           SizedBox(width: 4),
           Text(
             text,
             style: TextStyle(
               color: color,
-              fontSize: 12,
-              fontWeight: FontWeight.w500,
+              fontSize: 11,
+              fontWeight: FontWeight.w600,
             ),
           ),
         ],
       ),
     );
+  }
+
+  Widget _buildEmptyState() {
+    return Center(
+      child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: [
+          Container(
+            padding: EdgeInsets.all(24),
+            decoration: BoxDecoration(
+              color: Colors.grey[100],
+              shape: BoxShape.circle,
+            ),
+            child: Icon(
+              Icons.restaurant_outlined,
+              size: 48,
+              color: Colors.grey[400],
+            ),
+          ),
+          SizedBox(height: 20),
+          Text(
+            _foods.isEmpty
+                ? 'No foods in your library yet'
+                : 'No foods match your search',
+            style: TextStyle(
+              fontSize: 18,
+              color: Colors.grey[700],
+              fontWeight: FontWeight.w600,
+            ),
+          ),
+          SizedBox(height: 8),
+          Text(
+            _foods.isEmpty
+                ? 'Tap the + button to add your first food'
+                : 'Try a different search term',
+            style: TextStyle(fontSize: 14, color: Colors.grey[500]),
+          ),
+        ],
+      ),
+    );
+  }
+
+  void _navigateToAddFood() async {
+    final result = await Navigator.push(
+      context,
+      MaterialPageRoute(builder: (context) => AddFoodScreen()),
+    );
+    if (result == true) {
+      _loadFoods();
+    }
   }
 
   void _navigateToFoodDetails(FoodItem food) async {

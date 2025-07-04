@@ -68,18 +68,6 @@ class _AddMealScreenState extends State<AddMealScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
-        actions: [
-          TextButton(
-            onPressed: _saveMeal,
-            child: Text(
-              'Save',
-              style: TextStyle(
-                color: Colors.green,
-                fontWeight: FontWeight.w600,
-              ),
-            ),
-          ),
-        ],
       ),
       body: Form(
         key: _formKey,
@@ -89,250 +77,82 @@ class _AddMealScreenState extends State<AddMealScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Basic Information
-              CustomCard(
-                padding: EdgeInsets.all(12),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
+              _buildSection('Basic Information', [
+                _buildTextField(
+                  controller: _nameController,
+                  label: 'Meal Name',
+                  hint: 'e.g., Chicken & Rice Bowl',
+                  validator: (value) =>
+                      value?.isEmpty == true ? 'Name is required' : null,
+                ),
+                SizedBox(height: 12),
+                Row(
                   children: [
-                    Text(
-                      'Basic Information',
-                      style: TextStyle(
-                        fontSize: 16,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black,
+                    Expanded(
+                      flex: 2,
+                      child: _buildTextField(
+                        controller: _descriptionController,
+                        label: 'Description (Optional)',
+                        hint: 'High protein meal',
                       ),
                     ),
-                    SizedBox(height: 12),
-
-                    // Name field
-                    Container(
-                      height: 44,
-                      child: TextFormField(
-                        controller: _nameController,
-                        validator: (value) =>
-                            value?.isEmpty == true ? 'Name is required' : null,
-                        decoration: InputDecoration(
-                          labelText: 'Meal Name',
-                          hintText: 'e.g., Chicken & Rice Bowl',
-                          border: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                          ),
-                          focusedBorder: OutlineInputBorder(
-                            borderRadius: BorderRadius.circular(8),
-                            borderSide: BorderSide(color: Colors.green),
-                          ),
-                          contentPadding: EdgeInsets.symmetric(
-                            horizontal: 12,
-                            vertical: 8,
-                          ),
-                        ),
-                        style: TextStyle(fontSize: 14),
+                    SizedBox(width: 12),
+                    Expanded(
+                      child: _buildTextField(
+                        controller: _categoryController,
+                        label: 'Category',
+                        hint: 'Lunch',
                       ),
-                    ),
-
-                    SizedBox(height: 8),
-
-                    // Description and Category
-                    Row(
-                      children: [
-                        Expanded(
-                          flex: 2,
-                          child: Container(
-                            height: 44,
-                            child: TextFormField(
-                              controller: _descriptionController,
-                              decoration: InputDecoration(
-                                labelText: 'Description',
-                                hintText: 'High protein meal',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(color: Colors.green),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
-                                ),
-                              ),
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
-                        SizedBox(width: 8),
-                        Expanded(
-                          child: Container(
-                            height: 44,
-                            child: TextFormField(
-                              controller: _categoryController,
-                              decoration: InputDecoration(
-                                labelText: 'Category',
-                                hintText: 'Lunch',
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(8),
-                                  borderSide: BorderSide(color: Colors.green),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 12,
-                                  vertical: 8,
-                                ),
-                              ),
-                              style: TextStyle(fontSize: 14),
-                            ),
-                          ),
-                        ),
-                      ],
                     ),
                   ],
                 ),
-              ),
+              ]),
 
               SizedBox(height: 16),
 
-              // Photo section
-              Card(
-                margin: EdgeInsets.symmetric(vertical: 8),
-                child: ExpansionTile(
-                  title: Text(
-                    'Add a picture ?',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w500),
-                  ),
-                  leading: Icon(
-                    _imageFile != null ? Icons.photo : Icons.add_a_photo,
-                    color: _imageFile != null ? Colors.green : Colors.grey[600],
-                  ),
-                  trailing: _imageFile != null
-                      ? Icon(Icons.check_circle, color: Colors.green, size: 20)
-                      : null,
-                  children: [
-                    Padding(
-                      padding: EdgeInsets.all(16),
-                      child: Column(
-                        children: [
-                          GestureDetector(
-                            onTap: _pickImage,
-                            child: Container(
-                              height: 120,
-                              width: double.infinity,
-                              decoration: BoxDecoration(
-                                color: Colors.grey[100],
-                                borderRadius: BorderRadius.circular(8),
-                                border: Border.all(color: Colors.grey[300]!),
-                              ),
-                              child: _imageFile != null
-                                  ? ClipRRect(
-                                      borderRadius: BorderRadius.circular(8),
-                                      child: Image.file(
-                                        _imageFile!,
-                                        fit: BoxFit.cover,
-                                      ),
-                                    )
-                                  : Column(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.center,
-                                      children: [
-                                        Icon(
-                                          Icons.add_a_photo,
-                                          size: 32,
-                                          color: Colors.grey[400],
-                                        ),
-                                        SizedBox(height: 8),
-                                        Text(
-                                          'Tap to add photo',
-                                          style: TextStyle(
-                                            color: Colors.grey[600],
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                            ),
-                          ),
-                          if (_imageFile != null) ...[
-                            SizedBox(height: 12),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                              children: [
-                                TextButton.icon(
-                                  onPressed: _pickImage,
-                                  icon: Icon(Icons.edit, size: 16),
-                                  label: Text('Change'),
-                                ),
-                                TextButton.icon(
-                                  onPressed: () =>
-                                      setState(() => _imageFile = null),
-                                  icon: Icon(
-                                    Icons.delete,
-                                    size: 16,
-                                    color: Colors.red,
-                                  ),
-                                  label: Text(
-                                    'Remove',
-                                    style: TextStyle(color: Colors.red),
-                                  ),
-                                ),
-                              ],
-                            ),
-                          ],
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
+              // Photo Section
+              _buildPhotoSection(),
+
+              SizedBox(height: 16),
 
               // Ingredients Section
               CustomCard(
-                padding: EdgeInsets.all(12),
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text(
-                              'Ingredients',
-                              style: TextStyle(
-                                fontSize: 16,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.black,
-                              ),
-                            ),
-                            Text(
-                              '${_ingredients.length} ingredients',
-                              style: TextStyle(
-                                fontSize: 12,
-                                color: Colors.grey[600],
-                              ),
-                            ),
-                          ],
+                        Text(
+                          'Ingredients (${_ingredients.length})',
+                          style: TextStyle(
+                            fontSize: 16,
+                            fontWeight: FontWeight.w600,
+                            color: Colors.black,
+                          ),
                         ),
                         ElevatedButton.icon(
                           onPressed: _addIngredient,
-                          icon: Icon(Icons.add, size: 14),
+                          icon: Icon(Icons.add, size: 16),
                           label: Text('Add', style: TextStyle(fontSize: 12)),
                           style: ElevatedButton.styleFrom(
-                            backgroundColor: Colors.green,
+                            backgroundColor: Colors.blue,
                             foregroundColor: Colors.white,
                             padding: EdgeInsets.symmetric(
-                              horizontal: 10,
+                              horizontal: 12,
                               vertical: 6,
                             ),
                             minimumSize: Size(0, 32),
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(20),
+                            ),
+                            elevation: 0,
                           ),
                         ),
                       ],
                     ),
+                    SizedBox(height: 16),
 
-                    SizedBox(height: 12),
-
-                    // Ingredients List
                     if (_ingredients.isEmpty)
                       _buildEmptyIngredientsState()
                     else
@@ -348,85 +168,224 @@ class _AddMealScreenState extends State<AddMealScreen> {
               if (_ingredients.isNotEmpty) ...[
                 SizedBox(height: 16),
 
-                // Nutrition Summary - More compact
-                CustomCard(
-                  padding: EdgeInsets.all(12),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
+                // Nutrition Summary
+                _buildSection('Nutrition Summary', [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                        children: [
-                          Text(
-                            'Nutrition Summary',
-                            style: TextStyle(
-                              fontSize: 16,
-                              fontWeight: FontWeight.w600,
-                              color: Colors.black,
-                            ),
-                          ),
-                          Text(
-                            'Total: ${totalWeight.toInt()}g',
-                            style: TextStyle(
-                              fontSize: 12,
-                              color: Colors.grey[600],
-                              fontWeight: FontWeight.w500,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 12),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildMacroCard(
-                              'Calories',
-                              macros['calories']!,
-                              'kcal',
-                              Colors.orange,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: _buildMacroCard(
-                              'Protein',
-                              macros['protein']!,
-                              'g',
-                              Colors.blue,
-                            ),
-                          ),
-                        ],
-                      ),
-                      SizedBox(height: 8),
-                      Row(
-                        children: [
-                          Expanded(
-                            child: _buildMacroCard(
-                              'Carbs',
-                              macros['carbs']!,
-                              'g',
-                              Colors.green,
-                            ),
-                          ),
-                          SizedBox(width: 8),
-                          Expanded(
-                            child: _buildMacroCard(
-                              'Fat',
-                              macros['fat']!,
-                              'g',
-                              Colors.red,
-                            ),
-                          ),
-                        ],
+                      Text(
+                        'Total Weight: ${totalWeight.toInt()}g',
+                        style: TextStyle(
+                          fontSize: 13,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w500,
+                        ),
                       ),
                     ],
                   ),
-                ),
+                  SizedBox(height: 12),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildMacroCard(
+                          'Calories',
+                          macros['calories']!,
+                          'kcal',
+                          Colors.orange,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: _buildMacroCard(
+                          'Protein',
+                          macros['protein']!,
+                          'g',
+                          Colors.blue,
+                        ),
+                      ),
+                    ],
+                  ),
+                  SizedBox(height: 8),
+                  Row(
+                    children: [
+                      Expanded(
+                        child: _buildMacroCard(
+                          'Carbs',
+                          macros['carbs']!,
+                          'g',
+                          Colors.green,
+                        ),
+                      ),
+                      SizedBox(width: 8),
+                      Expanded(
+                        child: _buildMacroCard(
+                          'Fat',
+                          macros['fat']!,
+                          'g',
+                          Colors.red,
+                        ),
+                      ),
+                    ],
+                  ),
+                ]),
               ],
+
+              SizedBox(height: 24),
+
+              // Save Button
+              SizedBox(
+                width: double.infinity,
+                height: 52,
+                child: ElevatedButton(
+                  onPressed: _saveMeal,
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: Colors.blue,
+                    foregroundColor: Colors.white,
+                    shape: RoundedRectangleBorder(
+                      borderRadius: BorderRadius.circular(12),
+                    ),
+                    elevation: 0,
+                  ),
+                  child: Text(
+                    isEditing ? 'Update Meal' : 'Save Meal',
+                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                  ),
+                ),
+              ),
+
+              SizedBox(height: 20),
             ],
           ),
         ),
       ),
+    );
+  }
+
+  Widget _buildSection(String title, List<Widget> children) {
+    return CustomCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            title,
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: 16),
+          ...children,
+        ],
+      ),
+    );
+  }
+
+  Widget _buildPhotoSection() {
+    return CustomCard(
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: [
+          Text(
+            'Photo (Optional)',
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.w600,
+              color: Colors.black,
+            ),
+          ),
+          SizedBox(height: 12),
+          GestureDetector(
+            onTap: _pickImage,
+            child: Container(
+              height: 120,
+              width: double.infinity,
+              decoration: BoxDecoration(
+                color: _imageFile != null
+                    ? Colors.transparent
+                    : Colors.blue.withOpacity(0.05),
+                borderRadius: BorderRadius.circular(12),
+                border: Border.all(
+                  color: _imageFile != null
+                      ? Colors.grey[300]!
+                      : Colors.blue.withOpacity(0.3),
+                ),
+              ),
+              child: _imageFile != null
+                  ? ClipRRect(
+                      borderRadius: BorderRadius.circular(12),
+                      child: Image.file(_imageFile!, fit: BoxFit.cover),
+                    )
+                  : Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.add_a_photo, size: 32, color: Colors.blue),
+                        SizedBox(height: 8),
+                        Text(
+                          'Tap to add photo',
+                          style: TextStyle(
+                            color: Colors.blue,
+                            fontWeight: FontWeight.w500,
+                          ),
+                        ),
+                      ],
+                    ),
+            ),
+          ),
+          if (_imageFile != null) ...[
+            SizedBox(height: 12),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                TextButton.icon(
+                  onPressed: _pickImage,
+                  icon: Icon(Icons.edit, size: 16, color: Colors.blue),
+                  label: Text('Change', style: TextStyle(color: Colors.blue)),
+                ),
+                TextButton.icon(
+                  onPressed: () => setState(() => _imageFile = null),
+                  icon: Icon(Icons.delete, size: 16, color: Colors.red),
+                  label: Text('Remove', style: TextStyle(color: Colors.red)),
+                ),
+              ],
+            ),
+          ],
+        ],
+      ),
+    );
+  }
+
+  Widget _buildTextField({
+    required TextEditingController controller,
+    required String label,
+    String? hint,
+    int maxLines = 1,
+    String? Function(String?)? validator,
+  }) {
+    return TextFormField(
+      controller: controller,
+      maxLines: maxLines,
+      validator: validator,
+      decoration: InputDecoration(
+        labelText: label,
+        hintText: hint,
+        filled: true,
+        fillColor: Colors.grey[50],
+        border: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey[300]!),
+        ),
+        enabledBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.grey[300]!),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderRadius: BorderRadius.circular(12),
+          borderSide: BorderSide(color: Colors.blue, width: 2),
+        ),
+        contentPadding: EdgeInsets.symmetric(horizontal: 16, vertical: 12),
+      ),
+      style: TextStyle(fontSize: 14),
     );
   }
 
@@ -447,7 +406,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
           ),
           SizedBox(height: 6),
           Text(
-            'Tap "Add" to start building your meal',
+            'Tap "Add Ingredient" to start building your meal',
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12, color: Colors.grey[500]),
           ),
@@ -466,11 +425,19 @@ class _AddMealScreenState extends State<AddMealScreen> {
 
     return Container(
       margin: EdgeInsets.only(bottom: 8),
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: Colors.grey[50],
-        borderRadius: BorderRadius.circular(6),
+        color: Colors.white,
+        borderRadius: BorderRadius.circular(12),
         border: Border.all(color: Colors.grey[200]!),
+        boxShadow: [
+          BoxShadow(
+            color: Colors.grey.withOpacity(0.05),
+            spreadRadius: 0,
+            blurRadius: 4,
+            offset: Offset(0, 1),
+          ),
+        ],
       ),
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -485,13 +452,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       food.name,
                       style: TextStyle(
                         fontWeight: FontWeight.w600,
-                        fontSize: 13,
+                        fontSize: 14,
+                        color: Colors.black87,
                       ),
                     ),
-                    SizedBox(height: 2),
+                    SizedBox(height: 4),
                     Text(
                       ingredient.getDisplayQuantity(food),
-                      style: TextStyle(color: Colors.grey[600], fontSize: 11),
+                      style: TextStyle(color: Colors.grey[600], fontSize: 12),
                     ),
                   ],
                 ),
@@ -502,22 +470,23 @@ class _AddMealScreenState extends State<AddMealScreen> {
                   IconButton(
                     onPressed: () => _editIngredient(index),
                     icon: Icon(Icons.edit, size: 16, color: Colors.blue),
-                    constraints: BoxConstraints(minWidth: 28, minHeight: 28),
+                    constraints: BoxConstraints(minWidth: 32, minHeight: 32),
                     padding: EdgeInsets.all(4),
                   ),
                   IconButton(
                     onPressed: () => _removeIngredient(index),
                     icon: Icon(Icons.delete, size: 16, color: Colors.red),
-                    constraints: BoxConstraints(minWidth: 28, minHeight: 28),
+                    constraints: BoxConstraints(minWidth: 32, minHeight: 32),
                     padding: EdgeInsets.all(4),
                   ),
                 ],
               ),
             ],
           ),
-          SizedBox(height: 6),
+          SizedBox(height: 8),
           Wrap(
             spacing: 6,
+            runSpacing: 4,
             children: [
               _buildSmallMacroChip(
                 '${macros['calories']!.toInt()} cal',
@@ -526,6 +495,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
               _buildSmallMacroChip(
                 '${macros['protein']!.toStringAsFixed(1)}g protein',
                 Colors.blue,
+              ),
+              _buildSmallMacroChip(
+                '${macros['carbs']!.toStringAsFixed(1)}g carbs',
+                Colors.green,
+              ),
+              _buildSmallMacroChip(
+                '${macros['fat']!.toStringAsFixed(1)}g fat',
+                Colors.red,
               ),
             ],
           ),
@@ -536,32 +513,32 @@ class _AddMealScreenState extends State<AddMealScreen> {
 
   Widget _buildMacroCard(String label, double value, String unit, Color color) {
     return Container(
-      padding: EdgeInsets.all(8),
+      padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(12),
+        border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Column(
         children: [
           Text(
             label,
             style: TextStyle(
-              fontSize: 11,
+              fontSize: 12,
               color: color,
               fontWeight: FontWeight.w500,
             ),
           ),
-          SizedBox(height: 2),
+          SizedBox(height: 4),
           Text(
             '${value.toStringAsFixed(value % 1 == 0 ? 0 : 1)}',
             style: TextStyle(
-              fontSize: 14,
+              fontSize: 18,
               fontWeight: FontWeight.bold,
               color: color,
             ),
           ),
-          Text(unit, style: TextStyle(fontSize: 9, color: color)),
+          Text(unit, style: TextStyle(fontSize: 10, color: color)),
         ],
       ),
     );
@@ -569,18 +546,18 @@ class _AddMealScreenState extends State<AddMealScreen> {
 
   Widget _buildSmallMacroChip(String text, Color color) {
     return Container(
-      padding: EdgeInsets.symmetric(horizontal: 4, vertical: 1),
+      padding: EdgeInsets.symmetric(horizontal: 8, vertical: 3),
       decoration: BoxDecoration(
-        color: color.withValues(alpha: 0.1),
-        borderRadius: BorderRadius.circular(6),
-        border: Border.all(color: color.withValues(alpha: 0.3)),
+        color: color.withOpacity(0.1),
+        borderRadius: BorderRadius.circular(8),
+        border: Border.all(color: color.withOpacity(0.3)),
       ),
       child: Text(
         text,
         style: TextStyle(
           color: color,
-          fontSize: 10,
-          fontWeight: FontWeight.w500,
+          fontSize: 11,
+          fontWeight: FontWeight.w600,
         ),
       ),
     );
@@ -670,11 +647,17 @@ class _AddMealScreenState extends State<AddMealScreen> {
       imagePath = widget.mealToEdit!.imagePath;
     }
 
+    // Capitalize first letter of meal name
+    String mealName = _nameController.text.trim();
+    if (mealName.isNotEmpty) {
+      mealName = mealName[0].toUpperCase() + mealName.substring(1);
+    }
+
     final meal = Meal(
       id: isEditing
           ? widget.mealToEdit!.id
           : DateTime.now().millisecondsSinceEpoch.toString(),
-      name: _nameController.text.trim(),
+      name: mealName,
       description: _descriptionController.text.trim(),
       ingredients: _ingredients,
       createdAt: isEditing ? widget.mealToEdit!.createdAt : DateTime.now(),
@@ -725,7 +708,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
               onTap: () => Navigator.pop(context, ImageSource.camera),
             ),
             ListTile(
-              leading: Icon(Icons.photo_library, color: Colors.green),
+              leading: Icon(Icons.photo_library, color: Colors.blue),
               title: Text('Gallery'),
               onTap: () => Navigator.pop(context, ImageSource.gallery),
             ),

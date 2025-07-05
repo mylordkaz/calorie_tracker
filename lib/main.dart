@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
-import 'screens/main_screen.dart';
+import 'core/routes/main_screen.dart';
 import 'data/services/food_database_service.dart';
 import 'data/services/user_settings_service.dart';
 import 'data/services/daily_tracking_service.dart';

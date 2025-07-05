@@ -4,6 +4,7 @@ import '../../../../data/models/food_item.dart';
 import '../../../../data/models/meal.dart';
 import '../../../../data/services/food_database_service.dart';
 import '../../../../shared/widgets/custom_card.dart';
+import '../../../../shared/widgets/custom_dropdown.dart';
 
 class IngredientSelectorScreen extends StatefulWidget {
   final FoodItem? selectedFood;
@@ -193,49 +194,15 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
                         SizedBox(width: 12),
                         // Unit Selection
                         Expanded(
-                          child: Container(
-                            height: 48,
-                            child: DropdownButtonFormField<String>(
-                              value: _selectedUnit,
-                              items: _getAvailableUnits(),
-                              onChanged: (value) {
-                                setState(() {
-                                  _selectedUnit = value!;
-                                });
-                              },
-                              decoration: InputDecoration(
-                                labelText: 'Unit',
-                                filled: true,
-                                fillColor: Colors.grey[50],
-                                border: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey[300]!,
-                                  ),
-                                ),
-                                enabledBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
-                                    color: Colors.grey[300]!,
-                                  ),
-                                ),
-                                focusedBorder: OutlineInputBorder(
-                                  borderRadius: BorderRadius.circular(12),
-                                  borderSide: BorderSide(
-                                    color: Colors.blue,
-                                    width: 2,
-                                  ),
-                                ),
-                                contentPadding: EdgeInsets.symmetric(
-                                  horizontal: 16,
-                                  vertical: 12,
-                                ),
-                              ),
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.black,
-                              ),
-                            ),
+                          child: CustomDropdown<String>(
+                            value: _selectedUnit,
+                            hintText: 'Unit',
+                            items: _getCustomAvailableUnits(),
+                            onChanged: (value) {
+                              setState(() {
+                                _selectedUnit = value!;
+                              });
+                            },
                           ),
                         ),
                       ],
@@ -459,49 +426,23 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
     );
   }
 
-  List<DropdownMenuItem<String>> _getAvailableUnits() {
+  List<DropdownItem<String>> _getCustomAvailableUnits() {
     if (_selectedFood == null) {
-      return [
-        DropdownMenuItem(
-          value: 'grams',
-          child: Text('Grams', style: TextStyle(fontSize: 14)),
-        ),
-      ];
+      return [DropdownItem(value: 'grams', text: 'Grams')];
     }
 
     switch (_selectedFood!.unit) {
       case '100g':
-        return [
-          DropdownMenuItem(
-            value: 'grams',
-            child: Text('Grams', style: TextStyle(fontSize: 14)),
-          ),
-        ];
+        return [DropdownItem(value: 'grams', text: 'Grams')];
       case 'item':
-        return [
-          DropdownMenuItem(
-            value: 'items',
-            child: Text('Items', style: TextStyle(fontSize: 14)),
-          ),
-        ];
+        return [DropdownItem(value: 'items', text: 'Items')];
       case 'serving':
         return [
-          DropdownMenuItem(
-            value: 'servings',
-            child: Text('Servings', style: TextStyle(fontSize: 14)),
-          ),
-          DropdownMenuItem(
-            value: 'grams',
-            child: Text('Grams', style: TextStyle(fontSize: 14)),
-          ),
+          DropdownItem(value: 'servings', text: 'Servings'),
+          DropdownItem(value: 'grams', text: 'Grams'),
         ];
       default:
-        return [
-          DropdownMenuItem(
-            value: 'grams',
-            child: Text('Grams', style: TextStyle(fontSize: 14)),
-          ),
-        ];
+        return [DropdownItem(value: 'grams', text: 'Grams')];
     }
   }
 

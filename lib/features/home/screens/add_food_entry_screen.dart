@@ -4,7 +4,7 @@ import '../../../data/models/food_item.dart';
 import '../../../data/models/meal.dart';
 import '../../../data/services/food_database_service.dart';
 import '../../../data/services/daily_tracking_service.dart';
-import '../../../widgets/common/custom_card.dart';
+import '../../../shared/widgets/custom_dropdown.dart';
 
 class AddFoodEntryScreen extends StatefulWidget {
   @override
@@ -246,32 +246,12 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
                 ),
               ),
               SizedBox(height: 16),
-              DropdownButtonFormField<String>(
+              CustomDropdown<String>(
                 value: selectedUnit,
-                items: _getUnitsForFood(food),
+                hintText: 'Unit',
+                items: _getCustomUnitsForFood(food),
                 onChanged: (value) =>
                     setDialogState(() => selectedUnit = value!),
-                decoration: InputDecoration(
-                  labelText: 'Unit',
-                  filled: true,
-                  fillColor: Colors.grey[50],
-                  border: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  enabledBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.grey[300]!),
-                  ),
-                  focusedBorder: OutlineInputBorder(
-                    borderRadius: BorderRadius.circular(12),
-                    borderSide: BorderSide(color: Colors.blue, width: 2),
-                  ),
-                  contentPadding: EdgeInsets.symmetric(
-                    horizontal: 16,
-                    vertical: 12,
-                  ),
-                ),
               ),
             ],
           ),
@@ -300,17 +280,17 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
     );
   }
 
-  List<DropdownMenuItem<String>> _getUnitsForFood(FoodItem food) {
+  List<DropdownItem<String>> _getCustomUnitsForFood(FoodItem food) {
     switch (food.unit) {
       case 'item':
-        return [DropdownMenuItem(value: 'items', child: Text('Items'))];
+        return [DropdownItem(value: 'items', text: 'Items')];
       case 'serving':
         return [
-          DropdownMenuItem(value: 'servings', child: Text('Servings')),
-          DropdownMenuItem(value: 'grams', child: Text('Grams')),
+          DropdownItem(value: 'servings', text: 'Servings'),
+          DropdownItem(value: 'grams', text: 'Grams'),
         ];
       default: // '100g'
-        return [DropdownMenuItem(value: 'grams', child: Text('Grams'))];
+        return [DropdownItem(value: 'grams', text: 'Grams')];
     }
   }
 

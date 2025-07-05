@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../data/repositories/repository_factory.dart';
 import '../controllers/tdee_calculator_controller.dart';
 import '../../../shared/widgets/custom_card.dart';
+import '../../../shared/widgets/custom_dropdown.dart';
 
 class TDEECalculatorScreen extends StatefulWidget {
   const TDEECalculatorScreen({super.key});
@@ -99,55 +100,15 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                             ),
                             SizedBox(width: 12),
                             Expanded(
-                              child: Container(
-                                height: 44,
-                                child: DropdownButtonFormField<String>(
-                                  value: _controller.selectedGender,
-                                  items: [
-                                    DropdownMenuItem(
-                                      value: 'male',
-                                      child: Text(
-                                        'Male',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                    DropdownMenuItem(
-                                      value: 'female',
-                                      child: Text(
-                                        'Female',
-                                        style: TextStyle(
-                                          color: Colors.black,
-                                          fontSize: 14,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                  onChanged: (value) =>
-                                      _controller.setGender(value!),
-                                  decoration: InputDecoration(
-                                    labelText: 'Gender',
-                                    contentPadding: EdgeInsets.symmetric(
-                                      horizontal: 12,
-                                      vertical: 8,
-                                    ),
-                                    border: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                    ),
-                                    focusedBorder: OutlineInputBorder(
-                                      borderRadius: BorderRadius.circular(8),
-                                      borderSide: BorderSide(
-                                        color: Colors.blue,
-                                      ),
-                                    ),
-                                  ),
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
+                              child: CustomDropdown<String>(
+                                value: _controller.selectedGender,
+                                labelText: 'Gender',
+                                items: [
+                                  DropdownItem(value: 'male', text: 'Male'),
+                                  DropdownItem(value: 'female', text: 'Female'),
+                                ],
+                                onChanged: (value) =>
+                                    _controller.setGender(value!),
                               ),
                             ),
                           ],
@@ -156,110 +117,45 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                         SizedBox(height: 12),
 
                         // Activity Level
-                        Container(
-                          height: 44,
-                          child: DropdownButtonFormField<String>(
-                            value: _controller.selectedActivityLevel,
-                            items: [
-                              DropdownMenuItem(
-                                value: 'sedentary',
-                                child: Text(
-                                  'Sedentary (no exercise)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'light_low',
-                                child: Text(
-                                  'Light (1-2 days/week)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'light',
-                                child: Text(
-                                  'Light (2-3 days/week)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'moderate_low',
-                                child: Text(
-                                  'Moderate (3-4 days/week)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'moderate',
-                                child: Text(
-                                  'Moderate (4-5 days/week)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'active',
-                                child: Text(
-                                  'Active (6-7 days/week)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'very_active',
-                                child: Text(
-                                  'Very Active (2x daily)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'extremely_active',
-                                child: Text(
-                                  'Extreme (physical job)',
-                                  style: TextStyle(
-                                    fontSize: 14,
-                                    color: Colors.black,
-                                  ),
-                                ),
-                              ),
-                            ],
-                            onChanged: (value) =>
-                                _controller.setActivityLevel(value!),
-                            decoration: InputDecoration(
-                              labelText: 'Activity Level',
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 8,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(color: Colors.blue),
-                              ),
+                        CustomDropdown<String>(
+                          value: _controller.selectedActivityLevel,
+                          labelText: 'Activity Level',
+                          items: [
+                            DropdownItem(
+                              value: 'sedentary',
+                              text: 'Sedentary (no exercise)',
                             ),
-                            style: TextStyle(fontSize: 14, color: Colors.black),
-                          ),
+                            DropdownItem(
+                              value: 'light_low',
+                              text: 'Light (1-2 days/week)',
+                            ),
+                            DropdownItem(
+                              value: 'light',
+                              text: 'Light (2-3 days/week)',
+                            ),
+                            DropdownItem(
+                              value: 'moderate_low',
+                              text: 'Moderate (3-4 days/week)',
+                            ),
+                            DropdownItem(
+                              value: 'moderate',
+                              text: 'Moderate (4-5 days/week)',
+                            ),
+                            DropdownItem(
+                              value: 'active',
+                              text: 'Active (6-7 days/week)',
+                            ),
+                            DropdownItem(
+                              value: 'very_active',
+                              text: 'Very Active (2x daily)',
+                            ),
+                            DropdownItem(
+                              value: 'extremely_active',
+                              text: 'Extreme (physical job)',
+                            ),
+                          ],
+                          onChanged: (value) =>
+                              _controller.setActivityLevel(value!),
                         ),
 
                         SizedBox(height: 20),

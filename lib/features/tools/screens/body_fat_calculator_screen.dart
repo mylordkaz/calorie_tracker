@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../../../data/repositories/repository_factory.dart';
 import '../controllers/body_fat_calculator_controller.dart';
 import '../../../shared/widgets/custom_card.dart';
+import '../../../shared/widgets/custom_dropdown.dart';
 
 class BodyFatCalculatorScreen extends StatefulWidget {
   const BodyFatCalculatorScreen({super.key});
@@ -97,46 +98,14 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                         // Gender
                         Container(
                           height: 44,
-                          child: DropdownButtonFormField<String>(
+                          child: CustomDropdown<String>(
                             value: _controller.selectedGender,
+                            hintText: 'Gender',
                             items: [
-                              DropdownMenuItem(
-                                value: 'male',
-                                child: Text(
-                                  'Male',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
-                              DropdownMenuItem(
-                                value: 'female',
-                                child: Text(
-                                  'Female',
-                                  style: TextStyle(
-                                    color: Colors.black,
-                                    fontSize: 14,
-                                  ),
-                                ),
-                              ),
+                              DropdownItem(value: 'male', text: 'Male'),
+                              DropdownItem(value: 'female', text: 'Female'),
                             ],
                             onChanged: (value) => _controller.setGender(value!),
-                            decoration: InputDecoration(
-                              labelText: 'Gender',
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 12,
-                                vertical: 8,
-                              ),
-                              border: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderRadius: BorderRadius.circular(8),
-                                borderSide: BorderSide(color: Colors.blue),
-                              ),
-                            ),
-                            style: TextStyle(fontSize: 14, color: Colors.black),
                           ),
                         ),
 

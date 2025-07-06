@@ -186,7 +186,7 @@ abstract class AppLocalizations {
   /// No description provided for @grams.
   ///
   /// In en, this message translates to:
-  /// **'grams'**
+  /// **'Grams'**
   String get grams;
 
   /// No description provided for @save.
@@ -330,7 +330,7 @@ abstract class AppLocalizations {
   /// No description provided for @quickEntry.
   ///
   /// In en, this message translates to:
-  /// **'quick entry'**
+  /// **'Quick Entry'**
   String get quickEntry;
 
   /// No description provided for @serving.
@@ -342,7 +342,7 @@ abstract class AppLocalizations {
   /// No description provided for @servings.
   ///
   /// In en, this message translates to:
-  /// **'servings'**
+  /// **'Servings'**
   String get servings;
 
   /// No description provided for @copiedEntriesFromYesterday.
@@ -416,6 +416,168 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'cal'**
   String get cal;
+
+  /// No description provided for @addFoodEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Food Entry'**
+  String get addFoodEntry;
+
+  /// No description provided for @foodName.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Name'**
+  String get foodName;
+
+  /// No description provided for @nutritionDetailsOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Details (Optional)'**
+  String get nutritionDetailsOptional;
+
+  /// No description provided for @nutritionEditLater.
+  ///
+  /// In en, this message translates to:
+  /// **'These can be edited later in the food library'**
+  String get nutritionEditLater;
+
+  /// No description provided for @addQuickEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Quick Entry'**
+  String get addQuickEntry;
+
+  /// No description provided for @quantity.
+  ///
+  /// In en, this message translates to:
+  /// **'Quantity'**
+  String get quantity;
+
+  /// No description provided for @unit.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit'**
+  String get unit;
+
+  /// No description provided for @items.
+  ///
+  /// In en, this message translates to:
+  /// **'Items'**
+  String get items;
+
+  /// No description provided for @add.
+  ///
+  /// In en, this message translates to:
+  /// **'Add'**
+  String get add;
+
+  /// No description provided for @saveToLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Save to Library?'**
+  String get saveToLibrary;
+
+  /// No description provided for @saveToLibraryPrompt.
+  ///
+  /// In en, this message translates to:
+  /// **'Do you want to save \"{name}\" to your food library for future use?'**
+  String saveToLibraryPrompt(String name);
+
+  /// No description provided for @noJustAddToday.
+  ///
+  /// In en, this message translates to:
+  /// **'No, just add today'**
+  String get noJustAddToday;
+
+  /// No description provided for @yesSaveToLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Yes, save to library'**
+  String get yesSaveToLibrary;
+
+  /// No description provided for @addFoodTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {foodName}'**
+  String addFoodTitle(String foodName);
+
+  /// No description provided for @addMealTitle.
+  ///
+  /// In en, this message translates to:
+  /// **'Add {mealName}'**
+  String addMealTitle(String mealName);
+
+  /// No description provided for @servingsHelperText.
+  ///
+  /// In en, this message translates to:
+  /// **'1.0 = full meal, 0.5 = half meal'**
+  String get servingsHelperText;
+
+  /// No description provided for @addedFoodToLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {foodName} to today\'s log'**
+  String addedFoodToLog(String foodName);
+
+  /// No description provided for @addedMealToLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {mealName} to today\'s log'**
+  String addedMealToLog(String mealName);
+
+  /// No description provided for @savedToLibraryAndAdded.
+  ///
+  /// In en, this message translates to:
+  /// **'{name} saved to library and added to today\'s log'**
+  String savedToLibraryAndAdded(String name);
+
+  /// No description provided for @addedWithCalories.
+  ///
+  /// In en, this message translates to:
+  /// **'Added {name} ({calories} cal) to today\'s log'**
+  String addedWithCalories(String name, int calories);
+
+  /// No description provided for @editInLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit in Library'**
+  String get editInLibrary;
+
+  /// No description provided for @noFoodsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No foods found'**
+  String get noFoodsFound;
+
+  /// No description provided for @noMealsFound.
+  ///
+  /// In en, this message translates to:
+  /// **'No meals found'**
+  String get noMealsFound;
+
+  /// No description provided for @ingredientsCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ingredients'**
+  String ingredientsCount(int count);
+
+  /// No description provided for @hintZero.
+  ///
+  /// In en, this message translates to:
+  /// **'0'**
+  String get hintZero;
+
+  /// No description provided for @fieldRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'{field} is required'**
+  String fieldRequired(String field);
+
+  /// No description provided for @quickEntryLower.
+  ///
+  /// In en, this message translates to:
+  /// **'quick entry'**
+  String get quickEntryLower;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

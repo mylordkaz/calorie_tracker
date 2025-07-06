@@ -52,5 +52,103 @@
   "setTarget": "Set Target",
 	"setDailyTarget": "Set Daily Calorie Target",
   "todayWithDate": "Today - {date}",
-  "cal": "cal"
+  "cal": "cal",
+	"addFoodEntry": "Add Food Entry",
+  "quickEntry": "Quick Entry",
+  "searchFoods": "Search foods...",
+  "searchMeals": "Search meals...",
+  "foodName": "Food Name",
+  "nutritionDetailsOptional": "Nutrition Details (Optional)",
+  "nutritionEditLater": "These can be edited later in the food library",
+  "addQuickEntry": "Add Quick Entry",
+  "quantity": "Quantity",
+  "unit": "Unit",
+  "servings": "Servings",
+  "items": "Items",
+  "grams": "Grams",
+  "add": "Add",
+  "saveToLibrary": "Save to Library?",
+  "saveToLibraryPrompt": "Do you want to save \"{name}\" to your food library for future use?",
+  "@saveToLibraryPrompt": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "noJustAddToday": "No, just add today",
+  "yesSaveToLibrary": "Yes, save to library",
+  "addFoodTitle": "Add {foodName}",
+  "@addFoodTitle": {
+    "placeholders": {
+      "foodName": {
+        "type": "String"
+      }
+    }
+  },
+  "addMealTitle": "Add {mealName}",
+  "@addMealTitle": {
+    "placeholders": {
+      "mealName": {
+        "type": "String"
+      }
+    }
+  },
+  "servingsHelperText": "1.0 = full meal, 0.5 = half meal",
+  "addedFoodToLog": "Added {foodName} to today's log",
+  "@addedFoodToLog": {
+    "placeholders": {
+      "foodName": {
+        "type": "String"
+      }
+    }
+  },
+  "addedMealToLog": "Added {mealName} to today's log",
+  "@addedMealToLog": {
+    "placeholders": {
+      "mealName": {
+        "type": "String"
+      }
+    }
+  },
+  "savedToLibraryAndAdded": "{name} saved to library and added to today's log",
+  "@savedToLibraryAndAdded": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      }
+    }
+  },
+  "addedWithCalories": "Added {name} ({calories} cal) to today's log",
+  "@addedWithCalories": {
+    "placeholders": {
+      "name": {
+        "type": "String"
+      },
+      "calories": {
+        "type": "int"
+      }
+    }
+  },
+  "editInLibrary": "Edit in Library",
+  "noFoodsFound": "No foods found",
+  "noMealsFound": "No meals found",
+  "ingredientsCount": "{count} ingredients",
+  "@ingredientsCount": {
+    "placeholders": {
+      "count": {
+        "type": "int"
+      }
+    }
+  },
+  "hintZero": "0",
+  "fieldRequired": "{field} is required",
+  "@fieldRequired": {
+    "placeholders": {
+      "field": {
+        "type": "String"
+      }
+    }
+  },
+  "quickEntryLower": "quick entry"
 }

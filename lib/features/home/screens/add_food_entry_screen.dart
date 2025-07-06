@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../core/utils/localization_helper.dart';
 import '../../../data/models/food_item.dart';
 import '../../../data/models/meal.dart';
 import '../../../data/services/food_database_service.dart';
@@ -14,12 +15,14 @@ class AddFoodEntryScreen extends StatefulWidget {
 class _AddFoodEntryScreenState extends State<AddFoodEntryScreen> {
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
-          title: Text('Add Food Entry'),
+          title: Text(l10n.addFoodEntry),
           backgroundColor: Colors.white,
           elevation: 0,
           foregroundColor: Colors.black,
@@ -28,9 +31,9 @@ class _AddFoodEntryScreenState extends State<AddFoodEntryScreen> {
             unselectedLabelColor: Colors.grey,
             indicatorColor: Colors.blue,
             tabs: [
-              Tab(text: 'Foods'),
-              Tab(text: 'Meals'),
-              Tab(text: 'Quick Entry'),
+              Tab(text: l10n.foods),
+              Tab(text: l10n.meals),
+              Tab(text: l10n.quickEntry),
             ],
           ),
         ),
@@ -74,6 +77,8 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Column(
       children: [
         Container(
@@ -88,7 +93,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search foods...',
+                hintText: l10n.searchFoods,
                 hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
                 prefixIcon: Icon(
                   Icons.search,
@@ -104,7 +109,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
         ),
         Expanded(
           child: _filteredFoods.isEmpty
-              ? Center(child: Text('No foods found'))
+              ? Center(child: Text(l10n.noFoodsFound))
               : ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   itemCount: _filteredFoods.length,
@@ -119,6 +124,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
   }
 
   Widget _buildFoodCard(FoodItem food) {
+    final l10n = L10n.of(context);
     return Container(
       margin: EdgeInsets.only(bottom: 6),
       height: 56,
@@ -131,7 +137,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
         color: Colors.transparent,
         child: InkWell(
           borderRadius: BorderRadius.circular(8),
-          onTap: () => _showQuantityDialog(food),
+          onTap: () => _showFoodEntryDialog(food),
           child: Padding(
             padding: EdgeInsets.symmetric(horizontal: 12, vertical: 8),
             child: Row(
@@ -150,21 +156,17 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
                         maxLines: 1,
                         overflow: TextOverflow.ellipsis,
                       ),
-                      if (food.description.isNotEmpty)
-                        Text(
-                          food.description,
-                          style: TextStyle(
-                            fontSize: 11,
-                            color: Colors.grey[600],
-                          ),
-                          maxLines: 1,
-                          overflow: TextOverflow.ellipsis,
-                        ),
+                      Text(
+                        food.description,
+                        style: TextStyle(fontSize: 11, color: Colors.grey[600]),
+                        maxLines: 1,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ],
                   ),
                 ),
                 Text(
-                  '${food.calories.toInt()} cal ${food.getDisplayUnit()}',
+                  '${food.calories.toInt()} ${l10n.cal} ${food.getDisplayUnit()}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -179,7 +181,8 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
     );
   }
 
-  void _showQuantityDialog(FoodItem food) {
+  void _showFoodEntryDialog(FoodItem food) {
+    final l10n = L10n.of(context);
     final quantityController = TextEditingController();
     String selectedUnit;
 
@@ -207,7 +210,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
             borderRadius: BorderRadius.circular(12),
           ),
           title: Text(
-            'Add ${food.name}',
+            l10n.addFoodTitle(food.name),
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -224,7 +227,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                 ],
                 decoration: InputDecoration(
-                  labelText: 'Quantity',
+                  labelText: l10n.quantity,
                   filled: true,
                   fillColor: Colors.grey[50],
                   border: OutlineInputBorder(
@@ -248,8 +251,8 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
               SizedBox(height: 16),
               CustomDropdown<String>(
                 value: selectedUnit,
-                hintText: 'Unit',
-                items: _getCustomUnitsForFood(food),
+                hintText: l10n.unit,
+                items: _getCustomUnitsForFood(food, context),
                 onChanged: (value) =>
                     setDialogState(() => selectedUnit = value!),
               ),
@@ -259,7 +262,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
             TextButton(
               onPressed: () => Navigator.pop(context),
               style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
-              child: Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: () =>
@@ -272,7 +275,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
                 ),
                 elevation: 0,
               ),
-              child: Text('Add'),
+              child: Text(l10n.add),
             ),
           ],
         ),
@@ -280,21 +283,27 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
     );
   }
 
-  List<DropdownItem<String>> _getCustomUnitsForFood(FoodItem food) {
+  List<DropdownItem<String>> _getCustomUnitsForFood(
+    FoodItem food,
+    BuildContext context,
+  ) {
+    final l10n = L10n.of(context);
+
     switch (food.unit) {
       case 'item':
-        return [DropdownItem(value: 'items', text: 'Items')];
+        return [DropdownItem(value: 'items', text: l10n.items)];
       case 'serving':
         return [
-          DropdownItem(value: 'servings', text: 'Servings'),
-          DropdownItem(value: 'grams', text: 'Grams'),
+          DropdownItem(value: 'servings', text: l10n.servings),
+          DropdownItem(value: 'grams', text: l10n.grams),
         ];
       default: // '100g'
-        return [DropdownItem(value: 'grams', text: 'Grams')];
+        return [DropdownItem(value: 'grams', text: l10n.grams)];
     }
   }
 
   void _addFoodEntry(FoodItem food, String quantityText, String unit) async {
+    final l10n = L10n.of(context);
     final quantity = double.tryParse(quantityText);
     if (quantity == null || quantity <= 0) return;
 
@@ -320,9 +329,9 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
     if (mounted) {
       Navigator.pop(context); // Close dialog
       Navigator.pop(context, true); // Return to home with refresh signal
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Added ${food.name} to today\'s log')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.addedFoodToLog(food.name))));
     }
   }
 }
@@ -359,6 +368,8 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Column(
       children: [
         Container(
@@ -373,7 +384,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search meals...',
+                hintText: l10n.searchMeals,
                 hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
                 prefixIcon: Icon(
                   Icons.search,
@@ -389,7 +400,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
         ),
         Expanded(
           child: _filteredMeals.isEmpty
-              ? Center(child: Text('No meals found'))
+              ? Center(child: Text(l10n.noMealsFound))
               : ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   itemCount: _filteredMeals.length,
@@ -404,6 +415,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
   }
 
   Widget _buildMealCard(Meal meal) {
+    final l10n = L10n.of(context);
     final macros = FoodDatabaseService.calculateMealMacros(meal);
 
     return Container(
@@ -438,14 +450,14 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        '${meal.getIngredientCount()} ingredients',
+                        l10n.ingredientsCount(meal.getIngredientCount()),
                         style: TextStyle(fontSize: 11, color: Colors.grey[600]),
                       ),
                     ],
                   ),
                 ),
                 Text(
-                  '${macros['calories']!.toInt()} cal',
+                  '${macros['calories']!.toInt()} ${l10n.cal}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -461,6 +473,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
   }
 
   void _showMealQuantityDialog(Meal meal) {
+    final l10n = L10n.of(context);
     final multiplierController = TextEditingController(text: '1');
 
     showDialog(
@@ -469,7 +482,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         title: Text(
-          'Add ${meal.name}',
+          l10n.addMealTitle(meal.name),
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -486,8 +499,8 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
               ],
               decoration: InputDecoration(
-                labelText: 'Servings',
-                helperText: '1.0 = full meal, 0.5 = half meal',
+                labelText: l10n.servings,
+                helperText: l10n.servingsHelperText,
                 filled: true,
                 fillColor: Colors.grey[50],
                 border: OutlineInputBorder(
@@ -514,7 +527,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
-            child: Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => _addMealEntry(meal, multiplierController.text),
@@ -526,7 +539,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
               ),
               elevation: 0,
             ),
-            child: Text('Add'),
+            child: Text(l10n.add),
           ),
         ],
       ),
@@ -534,6 +547,7 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
   }
 
   void _addMealEntry(Meal meal, String multiplierText) async {
+    final l10n = L10n.of(context);
     final multiplier = double.tryParse(multiplierText);
     if (multiplier == null || multiplier <= 0) return;
 
@@ -545,9 +559,9 @@ class _MealLibraryTabState extends State<_MealLibraryTab> {
     if (mounted) {
       Navigator.pop(context); // Close dialog
       Navigator.pop(context, true); // Return to home with refresh signal
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Added ${meal.name} to today\'s log')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.addedMealToLog(meal.name))));
     }
   }
 }
@@ -577,6 +591,8 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return SingleChildScrollView(
       padding: EdgeInsets.all(12),
       child: Form(
@@ -591,20 +607,11 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Text(
-                'Quick Calorie Entry',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
-              ),
-              SizedBox(height: 16),
-
-              // Food name
+              // Food name field
               TextFormField(
                 controller: _nameController,
-                validator: (value) =>
-                    value?.isEmpty == true ? 'Name required' : null,
                 decoration: InputDecoration(
-                  labelText: 'Food Name',
-                  hintText: 'e.g., Sandwich from café',
+                  labelText: l10n.foodName,
                   filled: true,
                   fillColor: Colors.grey[50],
                   border: OutlineInputBorder(
@@ -624,22 +631,20 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                     vertical: 12,
                   ),
                 ),
+                validator: (value) => value?.isEmpty == true
+                    ? l10n.fieldRequired(l10n.foodName)
+                    : null,
               ),
               SizedBox(height: 16),
 
-              // Calories (required)
+              // Calories field
               TextFormField(
                 controller: _caloriesController,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (value) {
-                  if (value?.isEmpty == true) return 'Calories required';
-                  if (int.tryParse(value!) == null) return 'Enter valid number';
-                  return null;
-                },
                 decoration: InputDecoration(
-                  labelText: 'Calories *',
-                  suffixText: 'kcal',
+                  labelText: l10n.calories,
+                  hintText: l10n.hintZero,
                   filled: true,
                   fillColor: Colors.grey[50],
                   border: OutlineInputBorder(
@@ -659,12 +664,15 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                     vertical: 12,
                   ),
                 ),
+                validator: (value) => value?.isEmpty == true
+                    ? l10n.fieldRequired(l10n.calories)
+                    : null,
               ),
               SizedBox(height: 16),
 
               // Optional nutrients section
               Text(
-                'Nutrition Details (Optional)',
+                l10n.nutritionDetailsOptional,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -688,8 +696,8 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                         ),
                       ],
                       decoration: InputDecoration(
-                        labelText: 'Protein',
-                        hintText: '0',
+                        labelText: l10n.protein,
+                        hintText: l10n.hintZero,
                         suffixText: 'g',
                         filled: true,
                         fillColor: Colors.grey[50],
@@ -725,8 +733,8 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                         ),
                       ],
                       decoration: InputDecoration(
-                        labelText: 'Carbs',
-                        hintText: '0',
+                        labelText: l10n.carbs,
+                        hintText: l10n.hintZero,
                         suffixText: 'g',
                         filled: true,
                         fillColor: Colors.grey[50],
@@ -762,8 +770,8 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                         ),
                       ],
                       decoration: InputDecoration(
-                        labelText: 'Fat',
-                        hintText: '0',
+                        labelText: l10n.fat,
+                        hintText: l10n.hintZero,
                         suffixText: 'g',
                         filled: true,
                         fillColor: Colors.grey[50],
@@ -792,7 +800,7 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
 
               // Helper text
               Text(
-                'These can be edited later in the food library',
+                l10n.nutritionEditLater,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey[500],
@@ -817,7 +825,7 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
                       elevation: 0,
                     ),
                     child: Text(
-                      'Add Quick Entry',
+                      l10n.addQuickEntry,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -834,6 +842,8 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
   }
 
   void _addQuickEntry() async {
+    final l10n = L10n.of(context);
+
     if (!_formKey.currentState!.validate()) return;
 
     final calories = int.parse(_caloriesController.text);
@@ -856,7 +866,7 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         title: Text(
-          'Save to Library?',
+          l10n.saveToLibrary,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -864,14 +874,14 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
           ),
         ),
         content: Text(
-          'Do you want to save "$name" to your food library for future use?',
+          l10n.saveToLibraryPrompt(name),
           style: TextStyle(fontSize: 14),
         ),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
             style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
-            child: Text('No, just add today'),
+            child: Text(l10n.noJustAddToday),
           ),
           ElevatedButton(
             onPressed: () => Navigator.pop(context, true),
@@ -883,7 +893,7 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
               ),
               elevation: 0,
             ),
-            child: Text('Yes, save to library'),
+            child: Text(l10n.yesSaveToLibrary),
           ),
         ],
       ),
@@ -896,7 +906,7 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
       final quickFood = FoodItem(
         id: 'quick_${DateTime.now().millisecondsSinceEpoch}',
         name: name,
-        description: 'Quick entry',
+        description: l10n.quickEntryLower,
         calories: calories.toDouble(),
         protein: protein,
         carbs: carbs,
@@ -912,8 +922,8 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('$name saved to library and added to today\'s log'),
-            action: SnackBarAction(label: 'Edit in Library', onPressed: () {}),
+            content: Text(l10n.savedToLibraryAndAdded(name)),
+            action: SnackBarAction(label: l10n.editInLibrary, onPressed: () {}),
           ),
         );
       }
@@ -930,9 +940,7 @@ class _QuickEntryTabState extends State<_QuickEntryTab> {
       if (mounted) {
         Navigator.pop(context, true);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text('Added $name ($calories cal) to today\'s log'),
-          ),
+          SnackBar(content: Text(l10n.addedWithCalories(name, calories))),
         );
       }
     }

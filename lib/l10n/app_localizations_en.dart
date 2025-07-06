@@ -54,7 +54,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get fat => 'Fat';
 
   @override
-  String get grams => 'grams';
+  String get grams => 'Grams';
 
   @override
   String get save => 'Save';
@@ -126,13 +126,13 @@ class AppLocalizationsEn extends AppLocalizations {
   String get close => 'Close';
 
   @override
-  String get quickEntry => 'quick entry';
+  String get quickEntry => 'Quick Entry';
 
   @override
   String get serving => 'serving';
 
   @override
-  String get servings => 'servings';
+  String get servings => 'Servings';
 
   @override
   String get copiedEntriesFromYesterday => 'Copied entries from yesterday';
@@ -184,4 +184,103 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get cal => 'cal';
+
+  @override
+  String get addFoodEntry => 'Add Food Entry';
+
+  @override
+  String get foodName => 'Food Name';
+
+  @override
+  String get nutritionDetailsOptional => 'Nutrition Details (Optional)';
+
+  @override
+  String get nutritionEditLater => 'These can be edited later in the food library';
+
+  @override
+  String get addQuickEntry => 'Add Quick Entry';
+
+  @override
+  String get quantity => 'Quantity';
+
+  @override
+  String get unit => 'Unit';
+
+  @override
+  String get items => 'Items';
+
+  @override
+  String get add => 'Add';
+
+  @override
+  String get saveToLibrary => 'Save to Library?';
+
+  @override
+  String saveToLibraryPrompt(String name) {
+    return 'Do you want to save \"$name\" to your food library for future use?';
+  }
+
+  @override
+  String get noJustAddToday => 'No, just add today';
+
+  @override
+  String get yesSaveToLibrary => 'Yes, save to library';
+
+  @override
+  String addFoodTitle(String foodName) {
+    return 'Add $foodName';
+  }
+
+  @override
+  String addMealTitle(String mealName) {
+    return 'Add $mealName';
+  }
+
+  @override
+  String get servingsHelperText => '1.0 = full meal, 0.5 = half meal';
+
+  @override
+  String addedFoodToLog(String foodName) {
+    return 'Added $foodName to today\'s log';
+  }
+
+  @override
+  String addedMealToLog(String mealName) {
+    return 'Added $mealName to today\'s log';
+  }
+
+  @override
+  String savedToLibraryAndAdded(String name) {
+    return '$name saved to library and added to today\'s log';
+  }
+
+  @override
+  String addedWithCalories(String name, int calories) {
+    return 'Added $name ($calories cal) to today\'s log';
+  }
+
+  @override
+  String get editInLibrary => 'Edit in Library';
+
+  @override
+  String get noFoodsFound => 'No foods found';
+
+  @override
+  String get noMealsFound => 'No meals found';
+
+  @override
+  String ingredientsCount(int count) {
+    return '$count ingredients';
+  }
+
+  @override
+  String get hintZero => '0';
+
+  @override
+  String fieldRequired(String field) {
+    return '$field is required';
+  }
+
+  @override
+  String get quickEntryLower => 'quick entry';
 }

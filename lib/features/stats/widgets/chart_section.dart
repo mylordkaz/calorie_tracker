@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:fl_chart/fl_chart.dart';
 import '../../../shared/widgets/custom_card.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class ChartSection extends StatelessWidget {
   final int selectedChart;
@@ -20,26 +21,48 @@ class ChartSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Container(
       height: 280,
       child: PageView(
         onPageChanged: onChartChanged,
         children: [
-          _buildStatsPage(chartData, 'calories', 'Calories', Colors.orange),
-          _buildStatsPage(chartData, 'protein', 'Protein', Colors.blue),
-          _buildStatsPage(chartData, 'carbs', 'Carbs', Colors.green),
-          _buildStatsPage(chartData, 'fat', 'Fat', Colors.red),
+          _buildStatsPage(
+            context,
+            chartData,
+            'calories',
+            l10n.calories,
+            Colors.orange,
+          ),
+          _buildStatsPage(
+            context,
+            chartData,
+            'protein',
+            l10n.protein,
+            Colors.blue,
+          ),
+          _buildStatsPage(
+            context,
+            chartData,
+            'carbs',
+            l10n.carbs,
+            Colors.green,
+          ),
+          _buildStatsPage(context, chartData, 'fat', l10n.fat, Colors.red),
         ],
       ),
     );
   }
 
   Widget _buildStatsPage(
+    BuildContext context,
     List<ChartData> data,
     String macroType,
     String title,
     Color color,
   ) {
+    final l10n = L10n.of(context);
     final average = _calculateAverage(data, macroType);
 
     return CustomCard(
@@ -60,7 +83,7 @@ class ChartSection extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  ' - Avg: ${average.toStringAsFixed(average % 1 == 0 ? 0 : 1)} ${_getChartUnit(selectedChart)}',
+                  ' - ${l10n.average}: ${average.toStringAsFixed(average % 1 == 0 ? 0 : 1)} ${_getChartUnit(context, selectedChart)}',
                   style: TextStyle(
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
@@ -77,18 +100,18 @@ class ChartSection extends StatelessWidget {
           Row(
             mainAxisAlignment: MainAxisAlignment.start,
             children: [
-              _buildPeriodText('7 Days', 0),
+              _buildPeriodText(context, l10n.sevenDays, 0),
               SizedBox(width: 24),
-              _buildPeriodText('This Week', 1),
+              _buildPeriodText(context, l10n.thisWeek, 1),
               SizedBox(width: 24),
-              _buildPeriodText('30 Days', 2),
+              _buildPeriodText(context, l10n.thirtyDays, 2),
             ],
           ),
 
           SizedBox(height: 16),
 
           // Chart with proper spacing
-          Expanded(child: _buildWaveChart(data, macroType, color)),
+          Expanded(child: _buildWaveChart(context, data, macroType, color)),
 
           SizedBox(height: 16),
 
@@ -114,7 +137,7 @@ class ChartSection extends StatelessWidget {
     );
   }
 
-  Widget _buildPeriodText(String title, int index) {
+  Widget _buildPeriodText(BuildContext context, String title, int index) {
     final isSelected = selectedPeriod == index;
     return GestureDetector(
       onTap: () => onPeriodChanged(index),
@@ -137,7 +160,13 @@ class ChartSection extends StatelessWidget {
     );
   }
 
-  Widget _buildWaveChart(List<ChartData> data, String macroType, Color color) {
+  Widget _buildWaveChart(
+    BuildContext context,
+    List<ChartData> data,
+    String macroType,
+    Color color,
+  ) {
+    final l10n = L10n.of(context);
     final spots = <FlSpot>[];
 
     for (int i = 0; i < data.length; i++) {
@@ -150,7 +179,7 @@ class ChartSection extends StatelessWidget {
     if (spots.isEmpty) {
       return Center(
         child: Text(
-          'No data available',
+          l10n.noDataAvailable,
           style: TextStyle(color: Colors.grey[500], fontSize: 12),
         ),
       );
@@ -256,8 +285,9 @@ class ChartSection extends StatelessWidget {
     return colors[index];
   }
 
-  String _getChartUnit(int index) {
-    final units = ['kcal', 'g', 'g', 'g'];
+  String _getChartUnit(BuildContext context, int index) {
+    final l10n = L10n.of(context);
+    final units = [l10n.kcal, 'g', 'g', 'g'];
     return units[index];
   }
 }

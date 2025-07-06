@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../controllers/add_entry_for_date_controller.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class QuickEntryTab extends StatefulWidget {
   final AddEntryForDateController controller;
@@ -36,6 +37,8 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return SingleChildScrollView(
       padding: EdgeInsets.all(12),
       child: Form(
@@ -51,7 +54,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Quick Calorie Entry',
+                l10n.quickCalorieEntry,
                 style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
               ),
               SizedBox(height: 16),
@@ -60,10 +63,10 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
               TextFormField(
                 controller: _nameController,
                 validator: (value) =>
-                    value?.isEmpty == true ? 'Name required' : null,
+                    value?.isEmpty == true ? l10n.nameRequired : null,
                 decoration: InputDecoration(
-                  labelText: 'Food Name',
-                  hintText: 'e.g., Sandwich from café',
+                  labelText: l10n.foodName,
+                  hintText: l10n.foodNameHint,
                   filled: true,
                   fillColor: Colors.grey[50],
                   border: OutlineInputBorder(
@@ -89,16 +92,15 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
               // Calories (required)
               TextFormField(
                 controller: _caloriesController,
+                validator: (value) => value?.isEmpty == true
+                    ? l10n.fieldRequired(l10n.calories)
+                    : null,
                 keyboardType: TextInputType.number,
                 inputFormatters: [FilteringTextInputFormatter.digitsOnly],
-                validator: (value) {
-                  if (value?.isEmpty == true) return 'Calories required';
-                  if (int.tryParse(value!) == null) return 'Enter valid number';
-                  return null;
-                },
                 decoration: InputDecoration(
-                  labelText: 'Calories *',
-                  suffixText: 'kcal',
+                  labelText: l10n.calories,
+                  hintText: l10n.hintZero,
+                  suffixText: l10n.kcal,
                   filled: true,
                   fillColor: Colors.grey[50],
                   border: OutlineInputBorder(
@@ -123,7 +125,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
 
               // Optional nutrients section
               Text(
-                'Nutrition Details (Optional)',
+                l10n.nutritionDetailsOptional,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.w500,
@@ -147,8 +149,8 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
                         ),
                       ],
                       decoration: InputDecoration(
-                        labelText: 'Protein',
-                        hintText: '0',
+                        labelText: l10n.protein,
+                        hintText: l10n.hintZero,
                         suffixText: 'g',
                         filled: true,
                         fillColor: Colors.grey[50],
@@ -184,8 +186,8 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
                         ),
                       ],
                       decoration: InputDecoration(
-                        labelText: 'Carbs',
-                        hintText: '0',
+                        labelText: l10n.carbs,
+                        hintText: l10n.hintZero,
                         suffixText: 'g',
                         filled: true,
                         fillColor: Colors.grey[50],
@@ -221,8 +223,8 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
                         ),
                       ],
                       decoration: InputDecoration(
-                        labelText: 'Fat',
-                        hintText: '0',
+                        labelText: l10n.fat,
+                        hintText: l10n.hintZero,
                         suffixText: 'g',
                         filled: true,
                         fillColor: Colors.grey[50],
@@ -251,7 +253,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
 
               // Helper text
               Text(
-                'These can be edited later in the food library',
+                l10n.nutritionEditLater,
                 style: TextStyle(
                   fontSize: 12,
                   color: Colors.grey[500],
@@ -276,7 +278,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
                       elevation: 0,
                     ),
                     child: Text(
-                      'Add Quick Entry',
+                      l10n.addQuickEntry,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -293,6 +295,8 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
   }
 
   void _addQuickEntry() async {
+    final l10n = L10n.of(context);
+
     if (!_formKey.currentState!.validate()) return;
 
     final calories = int.parse(_caloriesController.text);
@@ -315,7 +319,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
         backgroundColor: Colors.white,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
         title: Text(
-          'Save to Library?',
+          l10n.saveToLibrary,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -323,7 +327,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
           ),
         ),
         content: Text(
-          'Do you want to save "$name" to your food library for future use?',
+          l10n.saveToLibraryPrompt(name),
           style: TextStyle(fontSize: 14),
         ),
         actions: [
@@ -331,7 +335,9 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
             onPressed: () => Navigator.pop(context, false),
             style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
             child: Text(
-              'No, just add to ${widget.controller.selectedDate.day}/${widget.controller.selectedDate.month}',
+              l10n.noJustAddToDate(
+                '${widget.controller.selectedDate.day}/${widget.controller.selectedDate.month}',
+              ),
             ),
           ),
           ElevatedButton(
@@ -344,7 +350,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
               ),
               elevation: 0,
             ),
-            child: Text('Yes, save to library'),
+            child: Text(l10n.yesSaveToLibrary),
           ),
         ],
       ),
@@ -363,13 +369,9 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
 
     if (mounted && success) {
       if (shouldSaveToLibrary) {
-        widget.onEntryAdded(
-          '$name saved to library and added to ${widget.controller.selectedDate.day}/${widget.controller.selectedDate.month}',
-        );
+        widget.onEntryAdded(l10n.savedToLibraryAndAdded(name));
       } else {
-        widget.onEntryAdded(
-          'Added $name ($calories cal) to ${widget.controller.selectedDate.day}/${widget.controller.selectedDate.month}',
-        );
+        widget.onEntryAdded(l10n.addedWithCalories(name, calories));
       }
     }
   }

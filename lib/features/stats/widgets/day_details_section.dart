@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../shared/widgets/custom_card.dart';
+import '../../../core/utils/localization_helper.dart';
 import 'macro_card.dart';
 import 'food_entry_card.dart';
 import 'meal_entry_card.dart';
@@ -21,17 +22,19 @@ class DayDetailsSection extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (selectedDate == null) {
-      return _buildEmptyState();
+      return _buildEmptyState(context);
     }
 
     if (dayData == null || !dayData!.hasEntries) {
-      return _buildSelectedDayWithoutEntries();
+      return _buildSelectedDayWithoutEntries(context);
     }
 
-    return _buildSelectedDayWithEntries();
+    return _buildSelectedDayWithEntries(context);
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return CustomCard(
       child: Container(
         width: double.infinity,
@@ -54,7 +57,7 @@ class DayDetailsSection extends StatelessWidget {
             ),
             SizedBox(height: 16),
             Text(
-              'Select a date to view details',
+              l10n.selectDateToViewDetails,
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontSize: 16,
@@ -64,7 +67,7 @@ class DayDetailsSection extends StatelessWidget {
             ),
             SizedBox(height: 4),
             Text(
-              'Tap on any day in the calendar above',
+              l10n.tapOnAnyDayInCalendar,
               textAlign: TextAlign.center,
               style: TextStyle(fontSize: 13, color: Colors.grey[500]),
             ),
@@ -74,7 +77,9 @@ class DayDetailsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectedDayWithoutEntries() {
+  Widget _buildSelectedDayWithoutEntries(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return CustomCard(
       child: Column(
         children: [
@@ -94,12 +99,12 @@ class DayDetailsSection extends StatelessWidget {
                   ),
                   SizedBox(height: 4),
                   Text(
-                    'No entries yet',
+                    l10n.noEntriesYet,
                     style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                   ),
                 ],
               ),
-              _buildAddButton(),
+              _buildAddButton(context),
             ],
           ),
         ],
@@ -107,7 +112,9 @@ class DayDetailsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildSelectedDayWithEntries() {
+  Widget _buildSelectedDayWithEntries(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Column(
       children: [
         // Header Card
@@ -130,12 +137,12 @@ class DayDetailsSection extends StatelessWidget {
                       ),
                       SizedBox(height: 4),
                       Text(
-                        '${dayData!.totalEntries} entries logged',
+                        '${dayData!.totalEntries} ${l10n.entriesLogged}',
                         style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                       ),
                     ],
                   ),
-                  _buildAddButton(),
+                  _buildAddButton(context),
                 ],
               ),
 
@@ -145,9 +152,9 @@ class DayDetailsSection extends StatelessWidget {
                 children: [
                   Expanded(
                     child: MacroCard(
-                      label: 'Calories',
+                      label: l10n.calories,
                       value: dayData!.calories,
-                      unit: 'kcal',
+                      unit: l10n.kcal,
                       color: Colors.orange,
                       icon: Icons.local_fire_department,
                     ),
@@ -155,7 +162,7 @@ class DayDetailsSection extends StatelessWidget {
                   SizedBox(width: 8),
                   Expanded(
                     child: MacroCard(
-                      label: 'Protein',
+                      label: l10n.protein,
                       value: dayData!.protein,
                       unit: 'g',
                       color: Colors.blue,
@@ -169,7 +176,7 @@ class DayDetailsSection extends StatelessWidget {
                 children: [
                   Expanded(
                     child: MacroCard(
-                      label: 'Carbs',
+                      label: l10n.carbs,
                       value: dayData!.carbs,
                       unit: 'g',
                       color: Colors.green,
@@ -179,7 +186,7 @@ class DayDetailsSection extends StatelessWidget {
                   SizedBox(width: 8),
                   Expanded(
                     child: MacroCard(
-                      label: 'Fat',
+                      label: l10n.fat,
                       value: dayData!.fat,
                       unit: 'g',
                       color: Colors.amber,
@@ -200,7 +207,7 @@ class DayDetailsSection extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Text(
-                'Food Log',
+                l10n.foodLog,
                 style: TextStyle(
                   fontSize: 16,
                   fontWeight: FontWeight.w600,
@@ -231,7 +238,9 @@ class DayDetailsSection extends StatelessWidget {
     );
   }
 
-  Widget _buildAddButton() {
+  Widget _buildAddButton(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Container(
       decoration: BoxDecoration(
         color: Colors.blue,
@@ -258,7 +267,7 @@ class DayDetailsSection extends StatelessWidget {
                 Icon(Icons.add, size: 18, color: Colors.white),
                 SizedBox(width: 6),
                 Text(
-                  'Add Entry',
+                  l10n.addEntry,
                   style: TextStyle(
                     color: Colors.white,
                     fontWeight: FontWeight.w600,

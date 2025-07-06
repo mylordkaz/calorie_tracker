@@ -3,6 +3,7 @@ import 'package:flutter/services.dart';
 import '../controllers/add_entry_for_date_controller.dart';
 import '../../../data/models/food_item.dart';
 import '../../../shared/widgets/custom_dropdown.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class FoodLibraryTab extends StatefulWidget {
   final AddEntryForDateController controller;
@@ -39,6 +40,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Column(
       children: [
         Container(
@@ -53,7 +55,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search foods...',
+                hintText: l10n.searchFoods,
                 hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
                 prefixIcon: Icon(
                   Icons.search,
@@ -69,7 +71,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
         ),
         Expanded(
           child: widget.controller.filteredFoods.isEmpty
-              ? Center(child: Text('No foods found'))
+              ? Center(child: Text(l10n.noFoodsFound))
               : ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   itemCount: widget.controller.filteredFoods.length,

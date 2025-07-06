@@ -774,7 +774,7 @@ abstract class AppLocalizations {
   /// No description provided for @average.
   ///
   /// In en, this message translates to:
-  /// **'Average'**
+  /// **'Avg'**
   String get average;
 
   /// No description provided for @yourBodyFatResult.
@@ -1040,6 +1040,246 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Estimate your body fat percentage'**
   String get bodyFatCalculatorDescription;
+
+  /// No description provided for @monday.
+  ///
+  /// In en, this message translates to:
+  /// **'Mon'**
+  String get monday;
+
+  /// No description provided for @tuesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Tue'**
+  String get tuesday;
+
+  /// No description provided for @wednesday.
+  ///
+  /// In en, this message translates to:
+  /// **'Wed'**
+  String get wednesday;
+
+  /// No description provided for @thursday.
+  ///
+  /// In en, this message translates to:
+  /// **'Thu'**
+  String get thursday;
+
+  /// No description provided for @friday.
+  ///
+  /// In en, this message translates to:
+  /// **'Fri'**
+  String get friday;
+
+  /// No description provided for @saturday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sat'**
+  String get saturday;
+
+  /// No description provided for @sunday.
+  ///
+  /// In en, this message translates to:
+  /// **'Sun'**
+  String get sunday;
+
+  /// No description provided for @january.
+  ///
+  /// In en, this message translates to:
+  /// **'January'**
+  String get january;
+
+  /// No description provided for @february.
+  ///
+  /// In en, this message translates to:
+  /// **'February'**
+  String get february;
+
+  /// No description provided for @march.
+  ///
+  /// In en, this message translates to:
+  /// **'March'**
+  String get march;
+
+  /// No description provided for @april.
+  ///
+  /// In en, this message translates to:
+  /// **'April'**
+  String get april;
+
+  /// No description provided for @may.
+  ///
+  /// In en, this message translates to:
+  /// **'May'**
+  String get may;
+
+  /// No description provided for @june.
+  ///
+  /// In en, this message translates to:
+  /// **'June'**
+  String get june;
+
+  /// No description provided for @july.
+  ///
+  /// In en, this message translates to:
+  /// **'July'**
+  String get july;
+
+  /// No description provided for @august.
+  ///
+  /// In en, this message translates to:
+  /// **'August'**
+  String get august;
+
+  /// No description provided for @september.
+  ///
+  /// In en, this message translates to:
+  /// **'September'**
+  String get september;
+
+  /// No description provided for @october.
+  ///
+  /// In en, this message translates to:
+  /// **'October'**
+  String get october;
+
+  /// No description provided for @november.
+  ///
+  /// In en, this message translates to:
+  /// **'November'**
+  String get november;
+
+  /// No description provided for @december.
+  ///
+  /// In en, this message translates to:
+  /// **'December'**
+  String get december;
+
+  /// No description provided for @sevenDays.
+  ///
+  /// In en, this message translates to:
+  /// **'7 Days'**
+  String get sevenDays;
+
+  /// No description provided for @thisWeek.
+  ///
+  /// In en, this message translates to:
+  /// **'This Week'**
+  String get thisWeek;
+
+  /// No description provided for @thirtyDays.
+  ///
+  /// In en, this message translates to:
+  /// **'30 Days'**
+  String get thirtyDays;
+
+  /// No description provided for @noDataAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'No data available'**
+  String get noDataAvailable;
+
+  /// No description provided for @kcal.
+  ///
+  /// In en, this message translates to:
+  /// **'kcal'**
+  String get kcal;
+
+  /// No description provided for @selectDateToViewDetails.
+  ///
+  /// In en, this message translates to:
+  /// **'Select a date to view details'**
+  String get selectDateToViewDetails;
+
+  /// No description provided for @tapOnAnyDayInCalendar.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap on any day in the calendar above'**
+  String get tapOnAnyDayInCalendar;
+
+  /// No description provided for @noEntriesYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No entries yet'**
+  String get noEntriesYet;
+
+  /// No description provided for @addEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Entry'**
+  String get addEntry;
+
+  /// No description provided for @entriesLogged.
+  ///
+  /// In en, this message translates to:
+  /// **'entries logged'**
+  String get entriesLogged;
+
+  /// No description provided for @foodLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Food Log'**
+  String get foodLog;
+
+  /// No description provided for @quickCalorieEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Calorie Entry'**
+  String get quickCalorieEntry;
+
+  /// No description provided for @nameRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Name required'**
+  String get nameRequired;
+
+  /// No description provided for @foodNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Sandwich from café'**
+  String get foodNameHint;
+
+  /// No description provided for @noJustAddToDate.
+  ///
+  /// In en, this message translates to:
+  /// **'No, just add to {date}'**
+  String noJustAddToDate(String date);
+
+  /// No description provided for @addEntryForDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Entry - {date}'**
+  String addEntryForDate(String date);
+
+  /// No description provided for @statistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Statistics'**
+  String get statistics;
+
+  /// No description provided for @deleteEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Entry'**
+  String get deleteEntry;
+
+  /// No description provided for @confirmDeleteEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete this entry?'**
+  String get confirmDeleteEntry;
+
+  /// No description provided for @entryDeletedSuccessfully.
+  ///
+  /// In en, this message translates to:
+  /// **'Entry deleted successfully'**
+  String get entryDeletedSuccessfully;
+
+  /// No description provided for @errorDeletingEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'Error deleting entry: {error}'**
+  String errorDeletingEntry(String error);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

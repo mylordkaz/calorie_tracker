@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import '../controllers/add_entry_for_date_controller.dart';
 import '../../../data/models/meal.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class MealLibraryTab extends StatefulWidget {
   final AddEntryForDateController controller;
@@ -38,6 +39,8 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Column(
       children: [
         Container(
@@ -52,7 +55,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
             child: TextField(
               controller: _searchController,
               decoration: InputDecoration(
-                hintText: 'Search meals...',
+                hintText: l10n.searchMeals,
                 hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
                 prefixIcon: Icon(
                   Icons.search,
@@ -68,7 +71,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
         ),
         Expanded(
           child: widget.controller.filteredMeals.isEmpty
-              ? Center(child: Text('No meals found'))
+              ? Center(child: Text(l10n.noMealsFound))
               : ListView.builder(
                   padding: EdgeInsets.symmetric(horizontal: 12),
                   itemCount: widget.controller.filteredMeals.length,
@@ -83,6 +86,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
   }
 
   Widget _buildMealCard(Meal meal) {
+    final l10n = L10n.of(context);
     final macros = widget.controller.calculateMealMacros(meal);
 
     return Container(
@@ -117,7 +121,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
                         overflow: TextOverflow.ellipsis,
                       ),
                       Text(
-                        '${meal.getIngredientCount()} ingredients',
+                        l10n.ingredientsCount(meal.getIngredientCount()),
                         style: TextStyle(fontSize: 11, color: Colors.grey[600]),
                       ),
                     ],
@@ -140,6 +144,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
   }
 
   void _showMealQuantityDialog(Meal meal) {
+    final l10n = L10n.of(context);
     final multiplierController = TextEditingController(text: '1');
 
     showDialog(
@@ -165,8 +170,8 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
                 FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
               ],
               decoration: InputDecoration(
-                labelText: 'Servings',
-                helperText: '1.0 = full meal, 0.5 = half meal',
+                labelText: l10n.servings,
+                helperText: l10n.servingsHelperText,
                 filled: true,
                 fillColor: Colors.grey[50],
                 border: OutlineInputBorder(
@@ -213,6 +218,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
   }
 
   void _addMealEntry(Meal meal, String multiplierText) async {
+    final l10n = L10n.of(context);
     final multiplier = double.tryParse(multiplierText);
     if (multiplier == null || multiplier <= 0) return;
 
@@ -223,9 +229,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
 
     if (mounted && success) {
       Navigator.pop(context); // Close dialog
-      widget.onEntryAdded(
-        'Added ${meal.name} to ${widget.controller.selectedDate.day}/${widget.controller.selectedDate.month}',
-      );
+      widget.onEntryAdded(l10n.addedMealToLog(meal.name));
     }
   }
 }

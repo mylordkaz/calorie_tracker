@@ -4,6 +4,7 @@ import '../controllers/add_entry_for_date_controller.dart';
 import '../widgets/food_library_tab.dart';
 import '../widgets/meal_library_tab.dart';
 import '../widgets/quick_entry_tab.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class AddEntryForDateScreen extends StatefulWidget {
   final DateTime selectedDate;
@@ -36,13 +37,17 @@ class _AddEntryForDateScreenState extends State<AddEntryForDateScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return DefaultTabController(
       length: 3,
       child: Scaffold(
         backgroundColor: Colors.grey[50],
         appBar: AppBar(
           title: Text(
-            'Add Entry - ${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}',
+            l10n.addEntryForDate(
+              '${widget.selectedDate.day}/${widget.selectedDate.month}/${widget.selectedDate.year}',
+            ),
           ),
           backgroundColor: Colors.white,
           elevation: 0,
@@ -52,9 +57,9 @@ class _AddEntryForDateScreenState extends State<AddEntryForDateScreen> {
             unselectedLabelColor: Colors.grey,
             indicatorColor: Colors.blue,
             tabs: [
-              Tab(text: 'Foods'),
-              Tab(text: 'Meals'),
-              Tab(text: 'Quick Entry'),
+              Tab(text: l10n.foods),
+              Tab(text: l10n.meals),
+              Tab(text: l10n.quickEntry),
             ],
           ),
         ),

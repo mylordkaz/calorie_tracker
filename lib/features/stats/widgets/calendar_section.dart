@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../shared/widgets/custom_card.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class CalendarSection extends StatelessWidget {
   final DateTime currentMonth;
@@ -19,6 +20,7 @@ class CalendarSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return CustomCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
@@ -28,7 +30,7 @@ class CalendarSection extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               Text(
-                '${_getMonthName(currentMonth.month)} ${currentMonth.year}',
+                '${_getMonthName(context, currentMonth.month)} ${currentMonth.year}',
                 style: TextStyle(fontSize: 18, fontWeight: FontWeight.w600),
               ),
               Row(
@@ -58,25 +60,34 @@ class CalendarSection extends StatelessWidget {
 
           // Weekday headers
           Row(
-            children: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun']
-                .map(
-                  (day) => Expanded(
-                    child: Container(
-                      height: 32,
-                      child: Center(
-                        child: Text(
-                          day,
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w600,
-                            color: Colors.grey[700],
+            children:
+                [
+                      l10n.monday,
+                      l10n.tuesday,
+                      l10n.wednesday,
+                      l10n.thursday,
+                      l10n.friday,
+                      l10n.saturday,
+                      l10n.sunday,
+                    ]
+                    .map(
+                      (day) => Expanded(
+                        child: Container(
+                          height: 32,
+                          child: Center(
+                            child: Text(
+                              day,
+                              style: TextStyle(
+                                fontSize: 14,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.grey[700],
+                              ),
+                            ),
                           ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-                .toList(),
+                    )
+                    .toList(),
           ),
 
           SizedBox(height: 8),
@@ -261,22 +272,36 @@ class CalendarSection extends StatelessWidget {
     return Column(children: weeks);
   }
 
-  String _getMonthName(int month) {
-    const months = [
-      '',
-      'January',
-      'February',
-      'March',
-      'April',
-      'May',
-      'June',
-      'July',
-      'August',
-      'September',
-      'October',
-      'November',
-      'December',
-    ];
-    return months[month];
+  String _getMonthName(BuildContext context, int month) {
+    final l10n = L10n.of(context);
+
+    switch (month) {
+      case 1:
+        return l10n.january;
+      case 2:
+        return l10n.february;
+      case 3:
+        return l10n.march;
+      case 4:
+        return l10n.april;
+      case 5:
+        return l10n.may;
+      case 6:
+        return l10n.june;
+      case 7:
+        return l10n.july;
+      case 8:
+        return l10n.august;
+      case 9:
+        return l10n.september;
+      case 10:
+        return l10n.october;
+      case 11:
+        return l10n.november;
+      case 12:
+        return l10n.december;
+      default:
+        return '';
+    }
   }
 }

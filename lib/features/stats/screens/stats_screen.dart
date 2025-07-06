@@ -5,6 +5,7 @@ import '../widgets/chart_section.dart';
 import '../widgets/calendar_section.dart';
 import '../widgets/day_details_section.dart';
 import '../screens/add_entry_for_date_screen.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
@@ -34,10 +35,12 @@ class _StatsScreenState extends State<StatsScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('Statistics'),
+        title: Text(l10n.statistics),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -108,19 +111,21 @@ class _StatsScreenState extends State<StatsScreen> {
   }
 
   Future<void> _deleteEntry(String entryId, bool isFood) async {
+    final l10n = L10n.of(context);
+
     final confirmed = await showDialog<bool>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Delete Entry'),
-        content: Text('Are you sure you want to delete this entry?'),
+        title: Text(l10n.deleteEntry),
+        content: Text(l10n.confirmDeleteEntry),
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context, false),
-            child: Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           TextButton(
             onPressed: () => Navigator.pop(context, true),
-            child: Text('Delete', style: TextStyle(color: Colors.red)),
+            child: Text(l10n.delete, style: TextStyle(color: Colors.red)),
           ),
         ],
       ),
@@ -130,15 +135,15 @@ class _StatsScreenState extends State<StatsScreen> {
       try {
         await _controller.deleteEntry(entryId, isFood);
         if (mounted) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Entry deleted successfully')));
+          ScaffoldMessenger.of(context).showSnackBar(
+            SnackBar(content: Text(l10n.entryDeletedSuccessfully)),
+          );
         }
       } catch (e) {
         if (mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
-              content: Text('Error deleting entry: $e'),
+              content: Text(l10n.errorDeletingEntry(e.toString())),
               backgroundColor: Colors.red,
             ),
           );

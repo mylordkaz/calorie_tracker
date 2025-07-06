@@ -9,7 +9,7 @@ class AppLocalizationsEn extends AppLocalizations {
   AppLocalizationsEn([String locale = 'en']) : super(locale);
 
   @override
-  String get appName => 'Calorie Tracker';
+  String get appName => 'Nibble';
 
   @override
   String get home => 'Home';
@@ -132,7 +132,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get serving => 'serving';
 
   @override
-  String get servings => 'Servings';
+  String get servings => 'servings';
 
   @override
   String get copiedEntriesFromYesterday => 'Copied entries from yesterday';
@@ -620,7 +620,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get nameRequired => 'Name required';
 
   @override
-  String get foodNameHint => 'e.g., Sandwich from café';
+  String get foodNameHint => 'e.g., Chicken Breast';
 
   @override
   String noJustAddToDate(String date) {
@@ -648,4 +648,112 @@ class AppLocalizationsEn extends AppLocalizations {
   String errorDeletingEntry(String error) {
     return 'Error deleting entry: $error';
   }
+
+  @override
+  String get perItem => 'per item';
+
+  @override
+  String get perServing => 'per serving';
+
+  @override
+  String get per100g => 'per 100g';
+
+  @override
+  String get editFood => 'Edit Food';
+
+  @override
+  String get addNewFood => 'Add New Food';
+
+  @override
+  String get basicInformation => 'Basic Information';
+
+  @override
+  String get descriptionOptional => 'Description (Optional)';
+
+  @override
+  String get briefDescription => 'Brief description of the food item';
+
+  @override
+  String get servingSize => 'Serving Size';
+
+  @override
+  String get servingSizeHint => 'e.g., 1 cup, 2 slices';
+
+  @override
+  String get servingSizeRequired => 'Serving size is required';
+
+  @override
+  String get weightOptional => 'Weight (Optional)';
+
+  @override
+  String get weightInGrams => 'Weight in grams';
+
+  @override
+  String get additionalNutrients => 'Additional Nutrients';
+
+  @override
+  String get nutrientName => 'Nutrient name';
+
+  @override
+  String get nutrientNameHint => 'e.g., Fiber, Sodium';
+
+  @override
+  String get amount => 'amount';
+
+  @override
+  String get value => 'Value';
+
+  @override
+  String get enterAmount => 'Enter amount';
+
+  @override
+  String get valueRequired => 'Value required';
+
+  @override
+  String get updateFood => 'Update Food';
+
+  @override
+  String get saveFood => 'Save Food';
+
+  @override
+  String get photoOptional => 'Photo (Optional)';
+
+  @override
+  String get tapToAdd => 'Tap to add photo';
+
+  @override
+  String get selectImageSource => 'Select Image Source';
+
+  @override
+  String get camera => 'Camera';
+
+  @override
+  String get gallery => 'Gallery';
+
+  @override
+  String get enterValidNumber => 'Enter a valid number';
+
+  @override
+  String get noFoodsYet => 'No foods in your library yet';
+
+  @override
+  String get addFirstFood => 'Add your first food to get started';
+
+  @override
+  String get tryDifferentSearch => 'Try a different search term';
+
+  @override
+  String get change => 'Change';
+
+  @override
+  String get remove => 'remove';
+
+  @override
+  String get standardNutritionInfo => 'Standard nutrition information per 100 grams';
+
+  @override
+  String get itemNutritionInfo => 'For foods like eggs, slices of bread, etc.';
+
+  @override
+  String get servingNutritionInfo => 'US-style serving size (e.g., 1 cup, 2 slices)';
 }

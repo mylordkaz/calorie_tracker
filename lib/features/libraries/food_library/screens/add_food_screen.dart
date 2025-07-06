@@ -6,6 +6,7 @@ import 'dart:io';
 import '../../../../data/services/food_database_service.dart';
 import '../../../../data/models/food_item.dart';
 import '../../../../shared/widgets/custom_card.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class AddFoodScreen extends StatefulWidget {
   final FoodItem? foodToEdit;
@@ -107,10 +108,11 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text(isEditing ? 'Edit Food' : 'Add New Food'),
+        title: Text(isEditing ? l10n.editFood : l10n.addNewFood),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -123,19 +125,19 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Basic Information
-              _buildSection('Basic Information', [
+              _buildSection(l10n.basicInformation, [
                 _buildTextField(
                   controller: _nameController,
-                  label: 'Food Name',
-                  hint: 'e.g., Chicken Breast',
+                  label: l10n.foodName,
+                  hint: l10n.foodNameHint,
                   validator: (value) =>
-                      value?.isEmpty == true ? 'Name is required' : null,
+                      value?.isEmpty == true ? l10n.nameRequired : null,
                 ),
                 SizedBox(height: 12),
                 _buildTextField(
                   controller: _descriptionController,
-                  label: 'Description (Optional)',
-                  hint: 'e.g., Skinless, boneless',
+                  label: l10n.descriptionOptional,
+                  hint: l10n.briefDescription,
                   maxLines: 2,
                 ),
               ]),
@@ -148,24 +150,24 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
               SizedBox(height: 16),
 
               // Unit Type & Nutrition
-              _buildSection('Nutrition per ${_getUnitDisplayText()}', [
+              _buildSection(_getNutritionSectionTitle(), [
                 // Unit Selection
                 SegmentedButton<String>(
                   segments: [
                     ButtonSegment<String>(
                       value: '100g',
-                      label: Text('Per 100g', style: TextStyle(fontSize: 12)),
+                      label: Text(l10n.per100g, style: TextStyle(fontSize: 12)),
                       icon: Icon(Icons.straighten, size: 16),
                     ),
                     ButtonSegment<String>(
                       value: 'item',
-                      label: Text('Per Item', style: TextStyle(fontSize: 12)),
+                      label: Text(l10n.perItem, style: TextStyle(fontSize: 12)),
                       icon: Icon(Icons.egg, size: 16),
                     ),
                     ButtonSegment<String>(
                       value: 'serving',
                       label: Text(
-                        'Per Serving',
+                        l10n.perServing,
                         style: TextStyle(fontSize: 12),
                       ),
                       icon: Icon(Icons.local_dining, size: 16),
@@ -199,10 +201,10 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                         flex: 2,
                         child: _buildTextField(
                           controller: _servingDescriptionController,
-                          label: 'Serving Size',
-                          hint: 'e.g., 1 cup, 2 slices',
+                          label: l10n.servingSize,
+                          hint: l10n.servingSizeHint,
                           validator: (value) => value?.isEmpty == true
-                              ? 'Serving size is required'
+                              ? l10n.servingSizeRequired
                               : null,
                         ),
                       ),
@@ -210,9 +212,9 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                       Expanded(
                         child: _buildNumberField(
                           controller: _servingWeightController,
-                          label: 'Weight (Optional)',
+                          label: l10n.weightOptional,
                           suffix: 'g',
-                          hint: 'Weight in grams',
+                          hint: l10n.weightInGrams,
                         ),
                       ),
                     ],
@@ -227,8 +229,8 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                     Expanded(
                       child: _buildNumberField(
                         controller: _caloriesController,
-                        label: 'Calories',
-                        suffix: 'kcal',
+                        label: l10n.calories,
+                        suffix: l10n.kcal,
                         isRequired: true,
                       ),
                     ),
@@ -236,7 +238,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                     Expanded(
                       child: _buildNumberField(
                         controller: _proteinController,
-                        label: 'Protein',
+                        label: l10n.protein,
                         suffix: 'g',
                         isRequired: true,
                       ),
@@ -249,7 +251,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                     Expanded(
                       child: _buildNumberField(
                         controller: _carbsController,
-                        label: 'Carbs',
+                        label: l10n.carbs,
                         suffix: 'g',
                         isRequired: true,
                       ),
@@ -258,7 +260,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                     Expanded(
                       child: _buildNumberField(
                         controller: _fatController,
-                        label: 'Fat',
+                        label: l10n.fat,
                         suffix: 'g',
                         isRequired: true,
                       ),
@@ -273,7 +275,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
                     Text(
-                      'Additional Nutrients',
+                      l10n.additionalNutrients,
                       style: TextStyle(
                         fontSize: 14,
                         fontWeight: FontWeight.w600,
@@ -283,7 +285,10 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                     TextButton.icon(
                       onPressed: _addCustomMacro,
                       icon: Icon(Icons.add, size: 16, color: Colors.blue),
-                      label: Text('Add', style: TextStyle(color: Colors.blue)),
+                      label: Text(
+                        l10n.add,
+                        style: TextStyle(color: Colors.blue),
+                      ),
                       style: TextButton.styleFrom(
                         padding: EdgeInsets.symmetric(
                           horizontal: 8,
@@ -313,8 +318,8 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                             child: TextFormField(
                               controller: _customMacros[index]['name'],
                               decoration: InputDecoration(
-                                labelText: 'Nutrient name',
-                                hintText: 'e.g., Fiber, Sodium',
+                                labelText: l10n.nutrientName,
+                                hintText: l10n.nutrientNameHint,
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
                                 ),
@@ -329,7 +334,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                               ),
                               style: TextStyle(fontSize: 12),
                               validator: (value) => value?.isEmpty == true
-                                  ? 'Name required'
+                                  ? l10n.nameRequired
                                   : null,
                             ),
                           ),
@@ -346,7 +351,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                                 ),
                               ],
                               decoration: InputDecoration(
-                                labelText: 'Amount',
+                                labelText: l10n.amount,
                                 suffixText: 'g',
                                 border: OutlineInputBorder(
                                   borderRadius: BorderRadius.circular(8),
@@ -362,9 +367,10 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                               ),
                               style: TextStyle(fontSize: 12),
                               validator: (value) {
-                                if (value?.isEmpty == true) return 'Required';
+                                if (value?.isEmpty == true)
+                                  return l10n.required;
                                 if (double.tryParse(value!) == null)
-                                  return 'Invalid';
+                                  return l10n.invalid;
                                 return null;
                               },
                             ),
@@ -407,7 +413,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                     elevation: 0,
                   ),
                   child: Text(
-                    isEditing ? 'Update Food' : 'Save Food',
+                    isEditing ? l10n.updateFood : l10n.saveFood,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -442,12 +448,13 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
   }
 
   Widget _buildPhotoSection() {
+    final l10n = L10n.of(context);
     return CustomCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Photo (Optional)',
+            l10n.photoOptional,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -482,7 +489,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                         Icon(Icons.add_a_photo, size: 32, color: Colors.blue),
                         SizedBox(height: 8),
                         Text(
-                          'Tap to add photo',
+                          l10n.tapToAdd,
                           style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.w500,
@@ -500,12 +507,15 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
                 TextButton.icon(
                   onPressed: _pickImage,
                   icon: Icon(Icons.edit, size: 16, color: Colors.blue),
-                  label: Text('Change', style: TextStyle(color: Colors.blue)),
+                  label: Text(
+                    l10n.change,
+                    style: TextStyle(color: Colors.blue),
+                  ),
                 ),
                 TextButton.icon(
                   onPressed: () => setState(() => _imageFile = null),
                   icon: Icon(Icons.delete, size: 16, color: Colors.red),
-                  label: Text('Remove', style: TextStyle(color: Colors.red)),
+                  label: Text(l10n.remove, style: TextStyle(color: Colors.red)),
                 ),
               ],
             ),
@@ -556,6 +566,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
     String? hint,
     bool isRequired = false,
   }) {
+    final l10n = L10n.of(context);
     return TextFormField(
       controller: controller,
       keyboardType: TextInputType.numberWithOptions(decimal: true),
@@ -564,9 +575,8 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
       ],
       validator: isRequired
           ? (value) {
-              if (value?.isEmpty == true) return '$label is required';
-              if (double.tryParse(value!) == null)
-                return 'Enter a valid number';
+              if (value?.isEmpty == true) return l10n.fieldRequired(label);
+              if (double.tryParse(value!) == null) return l10n.enterValidNumber;
               return null;
             }
           : null,
@@ -674,29 +684,31 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
     return baseDescription;
   }
 
-  String _getUnitDisplayText() {
+  String _getNutritionSectionTitle() {
+    final l10n = L10n.of(context);
     switch (_selectedUnit) {
       case '100g':
-        return '100g';
+        return "100g";
       case 'item':
-        return 'Item';
+        return l10n.items;
       case 'serving':
-        return 'Serving';
+        return l10n.serving;
       default:
-        return '100g';
+        return "100g";
     }
   }
 
   String _getUnitDescription() {
+    final l10n = L10n.of(context);
     switch (_selectedUnit) {
       case '100g':
-        return 'Standard nutrition information per 100 grams';
+        return l10n.standardNutritionInfo;
       case 'item':
-        return 'For foods like eggs, slices of bread, etc.';
+        return l10n.itemNutritionInfo;
       case 'serving':
-        return 'US-style serving size (e.g., 1 cup, 2 slices)';
+        return l10n.servingNutritionInfo;
       default:
-        return 'Standard nutrition information per 100 grams';
+        return l10n.standardNutritionInfo;
     }
   }
 
@@ -719,21 +731,22 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
   }
 
   Future<ImageSource?> _showImageSourceDialog() async {
+    final l10n = L10n.of(context);
     return showDialog<ImageSource>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Select Image Source'),
+        title: Text(l10n.selectImageSource),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
               leading: Icon(Icons.camera_alt, color: Colors.blue),
-              title: Text('Camera'),
+              title: Text(l10n.camera),
               onTap: () => Navigator.pop(context, ImageSource.camera),
             ),
             ListTile(
               leading: Icon(Icons.photo_library, color: Colors.blue),
-              title: Text('Gallery'),
+              title: Text(l10n.gallery),
               onTap: () => Navigator.pop(context, ImageSource.gallery),
             ),
           ],
@@ -741,7 +754,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
         ],
       ),

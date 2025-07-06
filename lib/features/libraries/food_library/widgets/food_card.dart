@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import '../../../../data/models/food_item.dart';
+import '../../../../l10n/app_localizations.dart';
 
 class FoodCard extends StatelessWidget {
   final FoodItem food;
@@ -11,26 +12,31 @@ class FoodCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     String calorieDisplay;
     String proteinDisplay;
     String unitDisplay;
 
     switch (food.unit) {
       case 'item':
-        calorieDisplay = '${food.calories.toInt()} cal';
-        proteinDisplay = '${food.protein.toStringAsFixed(1)}g protein';
-        unitDisplay = 'per item';
+        calorieDisplay = '${food.calories.toInt()} ${l10n.cal}';
+        proteinDisplay =
+            '${food.protein.toStringAsFixed(1)}g ${l10n.protein.toLowerCase()}';
+        unitDisplay = l10n.perItem;
         break;
       case 'serving':
-        calorieDisplay = '${food.calories.toInt()} cal';
-        proteinDisplay = '${food.protein.toStringAsFixed(1)}g protein';
-        unitDisplay = 'per serving';
+        calorieDisplay = '${food.calories.toInt()} ${l10n.cal}';
+        proteinDisplay =
+            '${food.protein.toStringAsFixed(1)}g ${l10n.protein.toLowerCase()}';
+        unitDisplay = l10n.perServing;
         break;
       case '100g':
       default:
-        calorieDisplay = '${food.calories.toInt()} cal';
-        proteinDisplay = '${food.protein.toStringAsFixed(1)}g protein';
-        unitDisplay = 'per 100g';
+        calorieDisplay = '${food.calories.toInt()} ${l10n.cal}';
+        proteinDisplay =
+            '${food.protein.toStringAsFixed(1)}g ${l10n.protein.toLowerCase()}';
+        unitDisplay = l10n.per100g;
         break;
     }
 

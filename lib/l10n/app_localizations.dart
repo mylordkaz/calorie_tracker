@@ -96,7 +96,7 @@ abstract class AppLocalizations {
   /// No description provided for @appName.
   ///
   /// In en, this message translates to:
-  /// **'Calorie Tracker'**
+  /// **'Nibble'**
   String get appName;
 
   /// No description provided for @home.
@@ -342,7 +342,7 @@ abstract class AppLocalizations {
   /// No description provided for @servings.
   ///
   /// In en, this message translates to:
-  /// **'Servings'**
+  /// **'servings'**
   String get servings;
 
   /// No description provided for @copiedEntriesFromYesterday.
@@ -1236,7 +1236,7 @@ abstract class AppLocalizations {
   /// No description provided for @foodNameHint.
   ///
   /// In en, this message translates to:
-  /// **'e.g., Sandwich from café'**
+  /// **'e.g., Chicken Breast'**
   String get foodNameHint;
 
   /// No description provided for @noJustAddToDate.
@@ -1280,6 +1280,222 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Error deleting entry: {error}'**
   String errorDeletingEntry(String error);
+
+  /// No description provided for @perItem.
+  ///
+  /// In en, this message translates to:
+  /// **'per item'**
+  String get perItem;
+
+  /// No description provided for @perServing.
+  ///
+  /// In en, this message translates to:
+  /// **'per serving'**
+  String get perServing;
+
+  /// No description provided for @per100g.
+  ///
+  /// In en, this message translates to:
+  /// **'per 100g'**
+  String get per100g;
+
+  /// No description provided for @editFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Food'**
+  String get editFood;
+
+  /// No description provided for @addNewFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Add New Food'**
+  String get addNewFood;
+
+  /// No description provided for @basicInformation.
+  ///
+  /// In en, this message translates to:
+  /// **'Basic Information'**
+  String get basicInformation;
+
+  /// No description provided for @descriptionOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Description (Optional)'**
+  String get descriptionOptional;
+
+  /// No description provided for @briefDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Brief description of the food item'**
+  String get briefDescription;
+
+  /// No description provided for @servingSize.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving Size'**
+  String get servingSize;
+
+  /// No description provided for @servingSizeHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., 1 cup, 2 slices'**
+  String get servingSizeHint;
+
+  /// No description provided for @servingSizeRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Serving size is required'**
+  String get servingSizeRequired;
+
+  /// No description provided for @weightOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight (Optional)'**
+  String get weightOptional;
+
+  /// No description provided for @weightInGrams.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight in grams'**
+  String get weightInGrams;
+
+  /// No description provided for @additionalNutrients.
+  ///
+  /// In en, this message translates to:
+  /// **'Additional Nutrients'**
+  String get additionalNutrients;
+
+  /// No description provided for @nutrientName.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrient name'**
+  String get nutrientName;
+
+  /// No description provided for @nutrientNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Fiber, Sodium'**
+  String get nutrientNameHint;
+
+  /// No description provided for @amount.
+  ///
+  /// In en, this message translates to:
+  /// **'amount'**
+  String get amount;
+
+  /// No description provided for @value.
+  ///
+  /// In en, this message translates to:
+  /// **'Value'**
+  String get value;
+
+  /// No description provided for @enterAmount.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter amount'**
+  String get enterAmount;
+
+  /// No description provided for @valueRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Value required'**
+  String get valueRequired;
+
+  /// No description provided for @updateFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Food'**
+  String get updateFood;
+
+  /// No description provided for @saveFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Food'**
+  String get saveFood;
+
+  /// No description provided for @photoOptional.
+  ///
+  /// In en, this message translates to:
+  /// **'Photo (Optional)'**
+  String get photoOptional;
+
+  /// No description provided for @tapToAdd.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap to add photo'**
+  String get tapToAdd;
+
+  /// No description provided for @selectImageSource.
+  ///
+  /// In en, this message translates to:
+  /// **'Select Image Source'**
+  String get selectImageSource;
+
+  /// No description provided for @camera.
+  ///
+  /// In en, this message translates to:
+  /// **'Camera'**
+  String get camera;
+
+  /// No description provided for @gallery.
+  ///
+  /// In en, this message translates to:
+  /// **'Gallery'**
+  String get gallery;
+
+  /// No description provided for @enterValidNumber.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter a valid number'**
+  String get enterValidNumber;
+
+  /// No description provided for @noFoodsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No foods in your library yet'**
+  String get noFoodsYet;
+
+  /// No description provided for @addFirstFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Add your first food to get started'**
+  String get addFirstFood;
+
+  /// No description provided for @tryDifferentSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search term'**
+  String get tryDifferentSearch;
+
+  /// No description provided for @change.
+  ///
+  /// In en, this message translates to:
+  /// **'Change'**
+  String get change;
+
+  /// No description provided for @remove.
+  ///
+  /// In en, this message translates to:
+  /// **'remove'**
+  String get remove;
+
+  /// No description provided for @standardNutritionInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'Standard nutrition information per 100 grams'**
+  String get standardNutritionInfo;
+
+  /// No description provided for @itemNutritionInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'For foods like eggs, slices of bread, etc.'**
+  String get itemNutritionInfo;
+
+  /// No description provided for @servingNutritionInfo.
+  ///
+  /// In en, this message translates to:
+  /// **'US-style serving size (e.g., 1 cup, 2 slices)'**
+  String get servingNutritionInfo;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

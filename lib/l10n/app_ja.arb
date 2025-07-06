@@ -1,0 +1,23 @@
+{
+  "appName": "カロリートラッカー",
+  "home": "ホーム",
+  "library": "ライブラリ",
+  "stats": "統計",
+  "tools": "ツール",
+  "foods": "食品",
+  "meals": "食事",
+  "addFood": "食品を追加",
+  "addMeal": "食事を追加",
+  "searchFoods": "食品を検索...",
+  "searchMeals": "食事を検索...",
+  "calories": "カロリー",
+  "protein": "たんぱく質",
+  "carbs": "炭水化物",
+  "fat": "脂質",
+  "grams": "グラム",
+  "save": "保存",
+  "cancel": "キャンセル",
+  "delete": "削除",
+  "edit": "編集"
+}
+

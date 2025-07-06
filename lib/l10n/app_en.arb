@@ -1,0 +1,22 @@
+{
+  "appName": "Calorie Tracker",
+  "home": "Home",
+  "library": "Library",
+  "stats": "Stats", 
+  "tools": "Tools",
+  "foods": "Foods",
+  "meals": "Meals",
+  "addFood": "Add Food",
+  "addMeal": "Add Meal",
+  "searchFoods": "Search foods...",
+  "searchMeals": "Search meals...",
+  "calories": "Calories",
+  "protein": "Protein",
+  "carbs": "Carbs",
+  "fat": "Fat",
+  "grams": "grams",
+  "save": "Save",
+  "cancel": "Cancel",
+  "delete": "Delete",
+  "edit": "Edit"
+}

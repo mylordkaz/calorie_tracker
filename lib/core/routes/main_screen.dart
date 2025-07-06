@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:calorie_tracker/l10n/app_localizations.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/libraries/library_screen.dart';
 import '../../features/stats/screens/stats_screen.dart';
@@ -21,6 +22,8 @@ class _MainScreenState extends State<MainScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = AppLocalizations.of(context)!;
+
     return Scaffold(
       body: _screens[_currentIndex],
       bottomNavigationBar: BottomNavigationBar(
@@ -34,13 +37,16 @@ class _MainScreenState extends State<MainScreen> {
         selectedItemColor: Colors.blue,
         unselectedItemColor: Colors.grey,
         items: [
-          BottomNavigationBarItem(icon: Icon(Icons.home), label: 'Home'),
+          BottomNavigationBarItem(icon: Icon(Icons.home), label: l10n.home),
           BottomNavigationBarItem(
             icon: Icon(Icons.library_books),
-            label: 'Library',
+            label: l10n.library,
           ),
-          BottomNavigationBarItem(icon: Icon(Icons.analytics), label: 'Stats'),
-          BottomNavigationBarItem(icon: Icon(Icons.build), label: 'Tools'),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.analytics),
+            label: l10n.stats,
+          ),
+          BottomNavigationBarItem(icon: Icon(Icons.build), label: l10n.tools),
         ],
       ),
     );

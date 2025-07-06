@@ -756,4 +756,57 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get servingNutritionInfo => 'US-style serving size (e.g., 1 cup, 2 slices)';
+
+  @override
+  String get deleteFood => 'Delete Food';
+
+  @override
+  String deleteFoodConfirmation(Object name) {
+    return 'Are you sure you want to delete \"$name\"? This action cannot be undone.';
+  }
+
+  @override
+  String get nutritionFacts => 'Nutrition Facts';
+
+  @override
+  String nutritionFactsPer(Object unit) {
+    return 'Nutrition Facts ($unit)';
+  }
+
+  @override
+  String get usageStats => 'Usage Statistics';
+
+  @override
+  String get created => 'Created';
+
+  @override
+  String get lastUsed => 'Last Used';
+
+  @override
+  String get timesUsed => 'Times Used';
+
+  @override
+  String totalWeight(Object weight) {
+    return 'Total Weight: ${weight}g';
+  }
+
+  @override
+  String get foodDeleted => 'Food deleted successfully';
+
+  @override
+  String unitWeight(Object weight) {
+    return 'Unit Weight: ($weight)g';
+  }
+
+  @override
+  String get noFoodInLib => 'No foods in your library yet';
+
+  @override
+  String get noFoodMatch => 'No foods match your search';
+
+  @override
+  String get tapAddFood => 'Tap the + button to add your first food';
+
+  @override
+  String get trySearchTerm => 'Try a different search term';
 }

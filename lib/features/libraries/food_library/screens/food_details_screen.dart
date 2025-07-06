@@ -4,6 +4,7 @@ import '../../../../data/models/food_item.dart';
 import '../../../../data/services/food_database_service.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import 'add_food_screen.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class FoodDetailsScreen extends StatelessWidget {
   final FoodItem food;
@@ -12,6 +13,7 @@ class FoodDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -151,7 +153,7 @@ class FoodDetailsScreen extends StatelessWidget {
                           Icon(Icons.scale, size: 16, color: Colors.grey[600]),
                           SizedBox(width: 8),
                           Text(
-                            'Unit Weight: ${food.unitWeight!.toInt()}g',
+                            l10n.unitWeight(food.unitWeight!.toInt()),
                             style: TextStyle(
                               fontSize: 13,
                               color: Colors.grey[700],
@@ -182,7 +184,7 @@ class FoodDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'Nutrition Facts (${food.getDisplayUnit()})',
+                        l10n.nutritionFactsPer(food.getDisplayUnit()),
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -198,9 +200,9 @@ class FoodDetailsScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Calories',
+                          l10n.calories,
                           food.calories,
-                          'kcal',
+                          l10n.kcal,
                           Colors.orange,
                           Icons.local_fire_department,
                         ),
@@ -208,7 +210,7 @@ class FoodDetailsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Protein',
+                          l10n.protein,
                           food.protein,
                           'g',
                           Colors.blue,
@@ -222,7 +224,7 @@ class FoodDetailsScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Carbs',
+                          l10n.carbs,
                           food.carbs,
                           'g',
                           Colors.green,
@@ -232,7 +234,7 @@ class FoodDetailsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Fat',
+                          l10n.fat,
                           food.fat,
                           'g',
                           Colors.amber,
@@ -251,7 +253,7 @@ class FoodDetailsScreen extends StatelessWidget {
                         Icon(Icons.science, color: Colors.purple, size: 18),
                         SizedBox(width: 8),
                         Text(
-                          'Additional Nutrients',
+                          l10n.additionalNutrients,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -285,7 +287,7 @@ class FoodDetailsScreen extends StatelessWidget {
                       Icon(Icons.analytics, color: Colors.grey[600], size: 20),
                       SizedBox(width: 8),
                       Text(
-                        'Usage Statistics',
+                        l10n.usageStats,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -297,21 +299,21 @@ class FoodDetailsScreen extends StatelessWidget {
                   SizedBox(height: 16),
 
                   _buildModernInfoRow(
-                    'Times Used',
+                    l10n.timesUsed,
                     food.useCount.toString(),
                     Icons.repeat,
                     Colors.blue,
                   ),
                   SizedBox(height: 12),
                   _buildModernInfoRow(
-                    'Last Used',
+                    l10n.lastUsed,
                     _formatDate(food.lastUsed),
                     Icons.access_time,
                     Colors.green,
                   ),
                   SizedBox(height: 12),
                   _buildModernInfoRow(
-                    'Created',
+                    l10n.created,
                     _formatDate(food.createdAt),
                     Icons.calendar_today,
                     Colors.orange,
@@ -462,6 +464,7 @@ class FoodDetailsScreen extends StatelessWidget {
   }
 
   void _showDeleteConfirmation(BuildContext context) {
+    final l10n = L10n.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -472,7 +475,7 @@ class FoodDetailsScreen extends StatelessWidget {
             Icon(Icons.warning, color: Colors.red, size: 24),
             SizedBox(width: 12),
             Text(
-              'Delete Food',
+              l10n.deleteFood,
               style: TextStyle(
                 fontSize: 18,
                 fontWeight: FontWeight.w600,
@@ -482,7 +485,7 @@ class FoodDetailsScreen extends StatelessWidget {
           ],
         ),
         content: Text(
-          'Are you sure you want to delete "${food.name}"? This action cannot be undone.',
+          l10n.deleteFoodConfirmation(food.name),
           style: TextStyle(fontSize: 14, color: Colors.grey[600]),
         ),
         actions: [
@@ -507,7 +510,7 @@ class FoodDetailsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),

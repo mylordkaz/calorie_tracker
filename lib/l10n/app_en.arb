@@ -354,6 +354,21 @@
 	"remove": "remove",
 	"standardNutritionInfo": "Standard nutrition information per 100 grams",
   "itemNutritionInfo": "For foods like eggs, slices of bread, etc.",
-  "servingNutritionInfo": "US-style serving size (e.g., 1 cup, 2 slices)"
+  "servingNutritionInfo": "US-style serving size (e.g., 1 cup, 2 slices)",
+	"deleteFood": "Delete Food",
+  "deleteFoodConfirmation": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+  "nutritionFacts": "Nutrition Facts",
+  "nutritionFactsPer": "Nutrition Facts ({unit})",
+  "usageStats": "Usage Statistics",
+  "created": "Created",
+  "lastUsed": "Last Used",
+  "timesUsed": "Times Used",
+  "totalWeight": "Total Weight: {weight}g",
+  "foodDeleted": "Food deleted successfully",
+	"unitWeight": "Unit Weight: ({weight})g",
+	"noFoodInLib": "No foods in your library yet",
+	"noFoodMatch": "No foods match your search",
+	"tapAddFood": "Tap the + button to add your first food",
+	"trySearchTerm": "Try a different search term"
 	
 }

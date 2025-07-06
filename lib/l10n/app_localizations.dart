@@ -1496,6 +1496,96 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'US-style serving size (e.g., 1 cup, 2 slices)'**
   String get servingNutritionInfo;
+
+  /// No description provided for @deleteFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Food'**
+  String get deleteFood;
+
+  /// No description provided for @deleteFoodConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{name}\"? This action cannot be undone.'**
+  String deleteFoodConfirmation(Object name);
+
+  /// No description provided for @nutritionFacts.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Facts'**
+  String get nutritionFacts;
+
+  /// No description provided for @nutritionFactsPer.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Facts ({unit})'**
+  String nutritionFactsPer(Object unit);
+
+  /// No description provided for @usageStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Statistics'**
+  String get usageStats;
+
+  /// No description provided for @created.
+  ///
+  /// In en, this message translates to:
+  /// **'Created'**
+  String get created;
+
+  /// No description provided for @lastUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Last Used'**
+  String get lastUsed;
+
+  /// No description provided for @timesUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Times Used'**
+  String get timesUsed;
+
+  /// No description provided for @totalWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Weight: {weight}g'**
+  String totalWeight(Object weight);
+
+  /// No description provided for @foodDeleted.
+  ///
+  /// In en, this message translates to:
+  /// **'Food deleted successfully'**
+  String get foodDeleted;
+
+  /// No description provided for @unitWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Unit Weight: ({weight})g'**
+  String unitWeight(Object weight);
+
+  /// No description provided for @noFoodInLib.
+  ///
+  /// In en, this message translates to:
+  /// **'No foods in your library yet'**
+  String get noFoodInLib;
+
+  /// No description provided for @noFoodMatch.
+  ///
+  /// In en, this message translates to:
+  /// **'No foods match your search'**
+  String get noFoodMatch;
+
+  /// No description provided for @tapAddFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the + button to add your first food'**
+  String get tapAddFood;
+
+  /// No description provided for @trySearchTerm.
+  ///
+  /// In en, this message translates to:
+  /// **'Try a different search term'**
+  String get trySearchTerm;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

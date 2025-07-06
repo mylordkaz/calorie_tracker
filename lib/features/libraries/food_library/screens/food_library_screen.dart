@@ -5,6 +5,7 @@ import '../widgets/food_card.dart';
 import '../widgets/food_search_bar.dart';
 import 'add_food_screen.dart';
 import 'food_details_screen.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class FoodLibraryScreen extends StatefulWidget {
   const FoodLibraryScreen({super.key});
@@ -94,6 +95,7 @@ class _FoodLibraryScreenState extends State<FoodLibraryScreen> {
   }
 
   Widget _buildEmptyState() {
+    final l10n = L10n.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -112,9 +114,7 @@ class _FoodLibraryScreenState extends State<FoodLibraryScreen> {
           ),
           SizedBox(height: 20),
           Text(
-            _controller.isEmpty
-                ? 'No foods in your library yet'
-                : 'No foods match your search',
+            _controller.isEmpty ? l10n.noFoodInLib : l10n.noFoodMatch,
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey[700],
@@ -123,9 +123,7 @@ class _FoodLibraryScreenState extends State<FoodLibraryScreen> {
           ),
           SizedBox(height: 8),
           Text(
-            _controller.isEmpty
-                ? 'Tap the + button to add your first food'
-                : 'Try a different search term',
+            _controller.isEmpty ? l10n.tapAddFood : l10n.trySearchTerm,
             style: TextStyle(fontSize: 14, color: Colors.grey[500]),
           ),
         ],

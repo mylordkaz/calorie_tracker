@@ -250,5 +250,11 @@
 "moderateFourToFiveDays": "Moderate (4-5 days/week)",
 "activeSixToSevenDays": "Active (6-7 days/week)",
 "veryActiveTwiceDaily": "Very Active (2x daily)",
-"extremelyActivePhysicalJob": "Extreme (physical job)"
+"extremelyActivePhysicalJob": "Extreme (physical job)",
+"healthAndFitnessCalculators": "Health & Fitness Calculators",
+"calculateImportantHealthMetrics": "Calculate important health metrics",
+"tdeeCalculatorDescription": "Calculate your daily calorie needs",
+"bmiCalculatorDescription": "Calculate your Body Mass Index",
+"idealWeightCalculatorDescription": "Find your ideal weight range",
+"bodyFatCalculatorDescription": "Estimate your body fat percentage"
 }

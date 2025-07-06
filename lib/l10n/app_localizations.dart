@@ -1004,6 +1004,42 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Extreme (physical job)'**
   String get extremelyActivePhysicalJob;
+
+  /// No description provided for @healthAndFitnessCalculators.
+  ///
+  /// In en, this message translates to:
+  /// **'Health & Fitness Calculators'**
+  String get healthAndFitnessCalculators;
+
+  /// No description provided for @calculateImportantHealthMetrics.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate important health metrics'**
+  String get calculateImportantHealthMetrics;
+
+  /// No description provided for @tdeeCalculatorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate your daily calorie needs'**
+  String get tdeeCalculatorDescription;
+
+  /// No description provided for @bmiCalculatorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate your Body Mass Index'**
+  String get bmiCalculatorDescription;
+
+  /// No description provided for @idealWeightCalculatorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your ideal weight range'**
+  String get idealWeightCalculatorDescription;
+
+  /// No description provided for @bodyFatCalculatorDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate your body fat percentage'**
+  String get bodyFatCalculatorDescription;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

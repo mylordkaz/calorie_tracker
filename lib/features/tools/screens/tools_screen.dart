@@ -4,12 +4,14 @@ import 'tdee_calculator_screen.dart';
 import 'bmi_calculator_screen.dart';
 import 'ideal_weight_calculator_screen.dart';
 import 'body_fat_calculator_screen.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class ToolsScreen extends StatelessWidget {
   const ToolsScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -24,7 +26,7 @@ class ToolsScreen extends StatelessWidget {
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             Text(
-              'Health & Fitness Calculators',
+              l10n.healthAndFitnessCalculators,
               style: TextStyle(
                 fontSize: 22,
                 fontWeight: FontWeight.bold,
@@ -33,15 +35,15 @@ class ToolsScreen extends StatelessWidget {
             ),
             SizedBox(height: 8),
             Text(
-              'Calculate important health metrics',
+              l10n.calculateImportantHealthMetrics,
               style: TextStyle(fontSize: 14, color: Colors.grey[600]),
             ),
             SizedBox(height: 24),
 
             // TDEE Calculator
             ToolCard(
-              title: 'TDEE Calculator',
-              description: 'Calculate your daily calorie needs',
+              title: l10n.tdeeCalculator,
+              description: l10n.tdeeCalculatorDescription,
               icon: Icons.local_fire_department,
               color: Colors.orange,
               onTap: () => Navigator.push(
@@ -54,8 +56,8 @@ class ToolsScreen extends StatelessWidget {
 
             // BMI Calculator
             ToolCard(
-              title: 'BMI Calculator',
-              description: 'Calculate your Body Mass Index',
+              title: l10n.bmiCalculator,
+              description: l10n.bmiCalculatorDescription,
               icon: Icons.monitor_weight,
               color: Colors.blue,
               onTap: () => Navigator.push(
@@ -68,8 +70,8 @@ class ToolsScreen extends StatelessWidget {
 
             // Ideal Weight Calculator
             ToolCard(
-              title: 'Ideal Weight Calculator',
-              description: 'Find your ideal weight range',
+              title: l10n.idealWeightCalculator,
+              description: l10n.idealWeightCalculatorDescription,
               icon: Icons.balance,
               color: Colors.green,
               onTap: () => Navigator.push(
@@ -84,8 +86,8 @@ class ToolsScreen extends StatelessWidget {
 
             // Body Fat Calculator
             ToolCard(
-              title: 'Body Fat Calculator',
-              description: 'Estimate your body fat percentage',
+              title: l10n.bodyFatCalculator,
+              description: l10n.bodyFatCalculatorDescription,
               icon: Icons.fitness_center,
               color: Colors.purple,
               onTap: () => Navigator.push(

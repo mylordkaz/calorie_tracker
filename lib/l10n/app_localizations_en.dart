@@ -504,4 +504,22 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get extremelyActivePhysicalJob => 'Extreme (physical job)';
+
+  @override
+  String get healthAndFitnessCalculators => 'Health & Fitness Calculators';
+
+  @override
+  String get calculateImportantHealthMetrics => 'Calculate important health metrics';
+
+  @override
+  String get tdeeCalculatorDescription => 'Calculate your daily calorie needs';
+
+  @override
+  String get bmiCalculatorDescription => 'Calculate your Body Mass Index';
+
+  @override
+  String get idealWeightCalculatorDescription => 'Find your ideal weight range';
+
+  @override
+  String get bodyFatCalculatorDescription => 'Estimate your body fat percentage';
 }

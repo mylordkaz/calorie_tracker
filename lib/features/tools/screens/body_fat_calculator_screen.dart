@@ -4,6 +4,7 @@ import '../../../data/repositories/repository_factory.dart';
 import '../controllers/body_fat_calculator_controller.dart';
 import '../../../shared/widgets/custom_card.dart';
 import '../../../shared/widgets/custom_dropdown.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class BodyFatCalculatorScreen extends StatefulWidget {
   const BodyFatCalculatorScreen({super.key});
@@ -34,10 +35,11 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('Body Fat Calculator'),
+        title: Text(l10n.bodyFatCalculator),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -51,7 +53,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Estimate body fat percentage (US Navy Method)',
+                  l10n.estimateBodyFatPercentage,
                   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
                 SizedBox(height: 20),
@@ -69,7 +71,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.weightController,
-                                label: 'Weight',
+                                label: l10n.weight,
                                 suffix: 'kg',
                               ),
                             ),
@@ -77,7 +79,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.heightController,
-                                label: 'Height',
+                                label: l10n.height,
                                 suffix: 'cm',
                               ),
                             ),
@@ -85,8 +87,8 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.ageController,
-                                label: 'Age',
-                                suffix: 'years',
+                                label: l10n.age,
+                                suffix: l10n.years,
                                 isInteger: true,
                               ),
                             ),
@@ -100,10 +102,10 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                           height: 44,
                           child: CustomDropdown<String>(
                             value: _controller.selectedGender,
-                            hintText: 'Gender',
+                            hintText: l10n.gender,
                             items: [
-                              DropdownItem(value: 'male', text: 'Male'),
-                              DropdownItem(value: 'female', text: 'Female'),
+                              DropdownItem(value: 'male', text: l10n.male),
+                              DropdownItem(value: 'female', text: l10n.female),
                             ],
                             onChanged: (value) => _controller.setGender(value!),
                           ),
@@ -125,7 +127,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Measurement Instructions',
+                                l10n.measurementInstructions,
                                 style: TextStyle(
                                   fontSize: 13,
                                   fontWeight: FontWeight.w600,
@@ -134,12 +136,14 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                               ),
                               SizedBox(height: 6),
                               Text(
-                                '• Neck: Measure just below the Adam\'s apple\n'
-                                        '• Waist: Measure at the narrowest point\n' +
+                                l10n.neckMeasurementTip +
+                                    '\n' +
+                                    l10n.waistMeasurementTip +
+                                    '\n' +
                                     (_controller.selectedGender == 'female'
-                                        ? '• Hip: Measure at the widest point\n'
+                                        ? l10n.hipMeasurementTip + '\n'
                                         : '') +
-                                    '• Measure without clothes for accuracy',
+                                    l10n.measurementAccuracyTip,
                                 style: TextStyle(
                                   fontSize: 11,
                                   color: Colors.grey[700],
@@ -153,7 +157,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
 
                         // Body Measurements
                         Text(
-                          'Body Measurements',
+                          l10n.bodyMeasurements,
                           style: TextStyle(
                             fontSize: 14,
                             fontWeight: FontWeight.w600,
@@ -168,7 +172,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.neckController,
-                                label: 'Neck',
+                                label: l10n.neck,
                                 suffix: 'cm',
                               ),
                             ),
@@ -176,7 +180,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.waistController,
-                                label: 'Waist',
+                                label: l10n.waist,
                                 suffix: 'cm',
                               ),
                             ),
@@ -188,7 +192,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                           SizedBox(height: 12),
                           _buildCompactTextField(
                             controller: _controller.hipController,
-                            label: 'Hip',
+                            label: l10n.hip,
                             suffix: 'cm',
                           ),
                         ],
@@ -209,7 +213,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                               ),
                             ),
                             child: Text(
-                              'Calculate Body Fat',
+                              l10n.calculateBodyFat,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -231,7 +235,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your Body Fat Result',
+                          l10n.yourBodyFatResult,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -293,7 +297,9 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Body Fat Categories (${_controller.selectedGender == 'male' ? 'Men' : 'Women'})',
+                                _controller.selectedGender == 'male'
+                                    ? l10n.bodyFatCategoriesMen
+                                    : l10n.bodyFatCategoriesWomen,
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -303,48 +309,56 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                               SizedBox(height: 8),
                               if (_controller.selectedGender == 'male') ...[
                                 _buildCategoryRow(
-                                  'Essential Fat',
+                                  l10n.essentialFat,
                                   '2-5%',
                                   Colors.blue,
                                 ),
                                 _buildCategoryRow(
-                                  'Athletes',
+                                  l10n.athletes,
                                   '6-13%',
                                   Colors.green,
                                 ),
                                 _buildCategoryRow(
-                                  'Fitness',
+                                  l10n.fitness,
                                   '14-17%',
                                   Colors.green,
                                 ),
                                 _buildCategoryRow(
-                                  'Average',
+                                  l10n.average,
                                   '18-24%',
                                   Colors.orange,
                                 ),
-                                _buildCategoryRow('Obese', '25%+', Colors.red),
+                                _buildCategoryRow(
+                                  l10n.obese,
+                                  '25%+',
+                                  Colors.red,
+                                ),
                               ] else ...[
                                 _buildCategoryRow(
-                                  'Essential Fat',
+                                  l10n.essentialFat,
                                   '10-13%',
                                   Colors.blue,
                                 ),
                                 _buildCategoryRow(
-                                  'Athletes',
+                                  l10n.athletes,
                                   '14-20%',
                                   Colors.green,
                                 ),
                                 _buildCategoryRow(
-                                  'Fitness',
+                                  l10n.fitness,
                                   '21-24%',
                                   Colors.green,
                                 ),
                                 _buildCategoryRow(
-                                  'Average',
+                                  l10n.average,
                                   '25-31%',
                                   Colors.orange,
                                 ),
-                                _buildCategoryRow('Obese', '32%+', Colors.red),
+                                _buildCategoryRow(
+                                  l10n.obese,
+                                  '32%+',
+                                  Colors.red,
+                                ),
                               ],
                             ],
                           ),
@@ -364,7 +378,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'US Navy Method',
+                                l10n.usNavyMethod,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -373,7 +387,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
                               ),
                               SizedBox(height: 4),
                               Text(
-                                'Developed by the US Navy, this method estimates body fat using body circumference measurements. Results are estimates and may vary from other methods.',
+                                l10n.usNavyDesc,
                                 style: TextStyle(
                                   fontSize: 11,
                                   color: Colors.grey[600],
@@ -400,6 +414,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
     required String suffix,
     bool isInteger = false,
   }) {
+    final l10n = L10n.of(context);
     return Container(
       height: 44,
       child: TextFormField(
@@ -411,11 +426,11 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
             ? [FilteringTextInputFormatter.digitsOnly]
             : [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))],
         validator: (value) {
-          if (value?.isEmpty == true) return 'Required';
+          if (value?.isEmpty == true) return l10n.required;
           if (isInteger) {
-            if (int.tryParse(value!) == null) return 'Invalid';
+            if (int.tryParse(value!) == null) return l10n.invalid;
           } else {
-            if (double.tryParse(value!) == null) return 'Invalid';
+            if (double.tryParse(value!) == null) return l10n.invalid;
           }
           return null;
         },
@@ -476,7 +491,7 @@ class _BodyFatCalculatorScreenState extends State<BodyFatCalculatorScreen> {
     if (!_formKey.currentState!.validate()) return;
 
     try {
-      await _controller.calculateBodyFat();
+      await _controller.calculateBodyFat(context);
     } catch (e) {
       if (mounted) {
         ScaffoldMessenger.of(context).showSnackBar(

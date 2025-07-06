@@ -312,7 +312,7 @@ abstract class AppLocalizations {
   /// No description provided for @caloriesPerDay.
   ///
   /// In en, this message translates to:
-  /// **'calories/day'**
+  /// **'calories per day'**
   String get caloriesPerDay;
 
   /// No description provided for @todaysCompleteLog.
@@ -578,6 +578,432 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'quick entry'**
   String get quickEntryLower;
+
+  /// No description provided for @bmiCalculator.
+  ///
+  /// In en, this message translates to:
+  /// **'BMI Calculator'**
+  String get bmiCalculator;
+
+  /// No description provided for @bodyMassIndex.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Mass Index'**
+  String get bodyMassIndex;
+
+  /// No description provided for @weight.
+  ///
+  /// In en, this message translates to:
+  /// **'Weight'**
+  String get weight;
+
+  /// No description provided for @height.
+  ///
+  /// In en, this message translates to:
+  /// **'Height'**
+  String get height;
+
+  /// No description provided for @yourBmiResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Your BMI Result'**
+  String get yourBmiResult;
+
+  /// No description provided for @calculateBmi.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate BMI'**
+  String get calculateBmi;
+
+  /// No description provided for @bmiCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'BMI Categories'**
+  String get bmiCategories;
+
+  /// No description provided for @underweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Underweight'**
+  String get underweight;
+
+  /// No description provided for @normalWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Normal weight'**
+  String get normalWeight;
+
+  /// No description provided for @overweight.
+  ///
+  /// In en, this message translates to:
+  /// **'Overweight'**
+  String get overweight;
+
+  /// No description provided for @obese.
+  ///
+  /// In en, this message translates to:
+  /// **'Obese'**
+  String get obese;
+
+  /// No description provided for @required.
+  ///
+  /// In en, this message translates to:
+  /// **'Required'**
+  String get required;
+
+  /// No description provided for @invalid.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid'**
+  String get invalid;
+
+  /// No description provided for @bodyFatCalculator.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Fat Calculator'**
+  String get bodyFatCalculator;
+
+  /// No description provided for @estimateBodyFatPercentage.
+  ///
+  /// In en, this message translates to:
+  /// **'Estimate body fat percentage (US Navy Method)'**
+  String get estimateBodyFatPercentage;
+
+  /// No description provided for @age.
+  ///
+  /// In en, this message translates to:
+  /// **'Age'**
+  String get age;
+
+  /// No description provided for @years.
+  ///
+  /// In en, this message translates to:
+  /// **'years'**
+  String get years;
+
+  /// No description provided for @gender.
+  ///
+  /// In en, this message translates to:
+  /// **'Gender'**
+  String get gender;
+
+  /// No description provided for @male.
+  ///
+  /// In en, this message translates to:
+  /// **'Male'**
+  String get male;
+
+  /// No description provided for @female.
+  ///
+  /// In en, this message translates to:
+  /// **'Female'**
+  String get female;
+
+  /// No description provided for @neck.
+  ///
+  /// In en, this message translates to:
+  /// **'Neck'**
+  String get neck;
+
+  /// No description provided for @waist.
+  ///
+  /// In en, this message translates to:
+  /// **'Waist'**
+  String get waist;
+
+  /// No description provided for @hip.
+  ///
+  /// In en, this message translates to:
+  /// **'Hip'**
+  String get hip;
+
+  /// No description provided for @bodyMeasurements.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Measurements'**
+  String get bodyMeasurements;
+
+  /// No description provided for @measurementInstructions.
+  ///
+  /// In en, this message translates to:
+  /// **'Measurement Instructions'**
+  String get measurementInstructions;
+
+  /// No description provided for @calculateBodyFat.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate Body Fat'**
+  String get calculateBodyFat;
+
+  /// No description provided for @bodyFatCategories.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Fat Categories'**
+  String get bodyFatCategories;
+
+  /// No description provided for @bodyFatCategoriesMen.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Fat Categories (Men)'**
+  String get bodyFatCategoriesMen;
+
+  /// No description provided for @bodyFatCategoriesWomen.
+  ///
+  /// In en, this message translates to:
+  /// **'Body Fat Categories (Women)'**
+  String get bodyFatCategoriesWomen;
+
+  /// No description provided for @essentialFat.
+  ///
+  /// In en, this message translates to:
+  /// **'Essential Fat'**
+  String get essentialFat;
+
+  /// No description provided for @athletes.
+  ///
+  /// In en, this message translates to:
+  /// **'Athletes'**
+  String get athletes;
+
+  /// No description provided for @fitness.
+  ///
+  /// In en, this message translates to:
+  /// **'Fitness'**
+  String get fitness;
+
+  /// No description provided for @average.
+  ///
+  /// In en, this message translates to:
+  /// **'Average'**
+  String get average;
+
+  /// No description provided for @yourBodyFatResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Body Fat Result'**
+  String get yourBodyFatResult;
+
+  /// No description provided for @neckMeasurementTip.
+  ///
+  /// In en, this message translates to:
+  /// **'• Neck: Measure below the larynx'**
+  String get neckMeasurementTip;
+
+  /// No description provided for @waistMeasurementTip.
+  ///
+  /// In en, this message translates to:
+  /// **'• Waist: Measure at the narrowest point'**
+  String get waistMeasurementTip;
+
+  /// No description provided for @hipMeasurementTip.
+  ///
+  /// In en, this message translates to:
+  /// **'• Hip: Measure at the widest point'**
+  String get hipMeasurementTip;
+
+  /// No description provided for @measurementAccuracyTip.
+  ///
+  /// In en, this message translates to:
+  /// **'• Measure without clothes for accuracy'**
+  String get measurementAccuracyTip;
+
+  /// No description provided for @hipMeasurementRequired.
+  ///
+  /// In en, this message translates to:
+  /// **'Hip measurement is required for women'**
+  String get hipMeasurementRequired;
+
+  /// No description provided for @usNavyMethod.
+  ///
+  /// In en, this message translates to:
+  /// **'US Navy Method'**
+  String get usNavyMethod;
+
+  /// No description provided for @usNavyDesc.
+  ///
+  /// In en, this message translates to:
+  /// **'Developed by the US Navy, this method estimates body fat using body circumference measurements. Results are estimates and may vary from other methods.'**
+  String get usNavyDesc;
+
+  /// No description provided for @idealWeightCalculator.
+  ///
+  /// In en, this message translates to:
+  /// **'Ideal Weight Calculator'**
+  String get idealWeightCalculator;
+
+  /// No description provided for @findIdealWeightRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Find your ideal weight range (Robinson Formula)'**
+  String get findIdealWeightRange;
+
+  /// No description provided for @calculateIdealWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate Ideal Weight'**
+  String get calculateIdealWeight;
+
+  /// No description provided for @yourIdealWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Your Ideal Weight'**
+  String get yourIdealWeight;
+
+  /// No description provided for @idealWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'ideal weight'**
+  String get idealWeight;
+
+  /// No description provided for @healthyWeightRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Healthy Weight Range'**
+  String get healthyWeightRange;
+
+  /// No description provided for @rangeBasedOnIdealWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Range based on ±5kg from ideal weight'**
+  String get rangeBasedOnIdealWeight;
+
+  /// No description provided for @currentWeight.
+  ///
+  /// In en, this message translates to:
+  /// **'Current Weight: {weight}kg'**
+  String currentWeight(String weight);
+
+  /// No description provided for @withinIdealRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Within ideal range'**
+  String get withinIdealRange;
+
+  /// No description provided for @aboveIdeal.
+  ///
+  /// In en, this message translates to:
+  /// **'{difference}kg above ideal'**
+  String aboveIdeal(String difference);
+
+  /// No description provided for @belowIdeal.
+  ///
+  /// In en, this message translates to:
+  /// **'{difference}kg below ideal'**
+  String belowIdeal(String difference);
+
+  /// No description provided for @robinsonFormula.
+  ///
+  /// In en, this message translates to:
+  /// **'Robinson Formula'**
+  String get robinsonFormula;
+
+  /// No description provided for @robinsonFormulaMen.
+  ///
+  /// In en, this message translates to:
+  /// **'Men: 52kg + 1.9kg per inch over 5 feet'**
+  String get robinsonFormulaMen;
+
+  /// No description provided for @robinsonFormulaWomen.
+  ///
+  /// In en, this message translates to:
+  /// **'Women: 49kg + 1.7kg per inch over 5 feet'**
+  String get robinsonFormulaWomen;
+
+  /// No description provided for @tdeeCalculator.
+  ///
+  /// In en, this message translates to:
+  /// **'TDEE Calculator'**
+  String get tdeeCalculator;
+
+  /// No description provided for @totalDailyEnergyExpenditure.
+  ///
+  /// In en, this message translates to:
+  /// **'Total Daily Energy Expenditure'**
+  String get totalDailyEnergyExpenditure;
+
+  /// No description provided for @activityLevel.
+  ///
+  /// In en, this message translates to:
+  /// **'Activity Level'**
+  String get activityLevel;
+
+  /// No description provided for @calculateTdee.
+  ///
+  /// In en, this message translates to:
+  /// **'Calculate TDEE'**
+  String get calculateTdee;
+
+  /// No description provided for @yourTdeeResult.
+  ///
+  /// In en, this message translates to:
+  /// **'Your TDEE Result'**
+  String get yourTdeeResult;
+
+  /// No description provided for @tdeeMaintenanceDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'This is your estimated daily calorie needs to maintain your current weight.'**
+  String get tdeeMaintenanceDescription;
+
+  /// No description provided for @setAsDailyCalorieTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set as Daily Calorie Target'**
+  String get setAsDailyCalorieTarget;
+
+  /// No description provided for @dailyCalorieTargetUpdatedTo.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily calorie target updated to {calories} calories'**
+  String dailyCalorieTargetUpdatedTo(int calories);
+
+  /// No description provided for @sedentaryNoExercise.
+  ///
+  /// In en, this message translates to:
+  /// **'Sedentary (no exercise)'**
+  String get sedentaryNoExercise;
+
+  /// No description provided for @lightOneToTwoDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Light (1-2 days/week)'**
+  String get lightOneToTwoDays;
+
+  /// No description provided for @lightTwoToThreeDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Light (2-3 days/week)'**
+  String get lightTwoToThreeDays;
+
+  /// No description provided for @moderateThreeToFourDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate (3-4 days/week)'**
+  String get moderateThreeToFourDays;
+
+  /// No description provided for @moderateFourToFiveDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Moderate (4-5 days/week)'**
+  String get moderateFourToFiveDays;
+
+  /// No description provided for @activeSixToSevenDays.
+  ///
+  /// In en, this message translates to:
+  /// **'Active (6-7 days/week)'**
+  String get activeSixToSevenDays;
+
+  /// No description provided for @veryActiveTwiceDaily.
+  ///
+  /// In en, this message translates to:
+  /// **'Very Active (2x daily)'**
+  String get veryActiveTwiceDaily;
+
+  /// No description provided for @extremelyActivePhysicalJob.
+  ///
+  /// In en, this message translates to:
+  /// **'Extreme (physical job)'**
+  String get extremelyActivePhysicalJob;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

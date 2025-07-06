@@ -150,5 +150,105 @@
       }
     }
   },
-  "quickEntryLower": "quick entry"
+  "quickEntryLower": "quick entry",
+	"bmiCalculator": "BMI Calculator",
+	"bodyMassIndex": "Body Mass Index", 
+	"weight": "Weight",
+	"height": "Height",
+	"yourBmiResult": "Your BMI Result",
+	"calculateBmi": "Calculate BMI",
+	"bmiCategories": "BMI Categories",
+	"underweight": "Underweight", 
+	"normalWeight": "Normal weight",
+	"overweight": "Overweight",
+	"obese": "Obese",
+	"required": "Required",
+	"invalid": "Invalid",
+	"bodyFatCalculator": "Body Fat Calculator",
+	"estimateBodyFatPercentage": "Estimate body fat percentage (US Navy Method)",
+	"age": "Age",
+	"years": "years",
+	"gender": "Gender",
+	"male": "Male",
+	"female": "Female",
+	"neck": "Neck",
+	"waist": "Waist",
+	"hip": "Hip",
+	"bodyMeasurements": "Body Measurements",
+	"measurementInstructions": "Measurement Instructions",
+	"calculateBodyFat": "Calculate Body Fat",
+	"bodyFatCategories": "Body Fat Categories",
+	"bodyFatCategoriesMen": "Body Fat Categories (Men)",
+	"bodyFatCategoriesWomen": "Body Fat Categories (Women)",
+	"essentialFat": "Essential Fat",
+	"athletes": "Athletes",
+	"fitness": "Fitness",
+	"average": "Average",
+	"yourBodyFatResult": "Your Body Fat Result",
+	"neckMeasurementTip": "• Neck: Measure below the larynx",
+	"waistMeasurementTip": "• Waist: Measure at the narrowest point",
+	"hipMeasurementTip": "• Hip: Measure at the widest point",
+	"measurementAccuracyTip": "• Measure without clothes for accuracy",
+	"hipMeasurementRequired": "Hip measurement is required for women",
+	"usNavyMethod": "US Navy Method",
+	"usNavyDesc": "Developed by the US Navy, this method estimates body fat using body circumference measurements. Results are estimates and may vary from other methods.",
+	"idealWeightCalculator": "Ideal Weight Calculator",
+"findIdealWeightRange": "Find your ideal weight range (Robinson Formula)",
+"calculateIdealWeight": "Calculate Ideal Weight",
+"yourIdealWeight": "Your Ideal Weight",
+"idealWeight": "ideal weight",
+"healthyWeightRange": "Healthy Weight Range",
+"rangeBasedOnIdealWeight": "Range based on ±5kg from ideal weight",
+"currentWeight": "Current Weight: {weight}kg",
+"@currentWeight": {
+  "placeholders": {
+    "weight": {
+      "type": "String"
+    }
+  }
+},
+"withinIdealRange": "Within ideal range",
+"aboveIdeal": "{difference}kg above ideal",
+"@aboveIdeal": {
+  "placeholders": {
+    "difference": {
+      "type": "String"
+    }
+  }
+},
+"belowIdeal": "{difference}kg below ideal",
+"@belowIdeal": {
+  "placeholders": {
+    "difference": {
+      "type": "String"
+    }
+  }
+},
+"robinsonFormula": "Robinson Formula",
+"robinsonFormulaMen": "Men: 52kg + 1.9kg per inch over 5 feet",
+"robinsonFormulaWomen": "Women: 49kg + 1.7kg per inch over 5 feet",
+"tdeeCalculator": "TDEE Calculator",
+"totalDailyEnergyExpenditure": "Total Daily Energy Expenditure",
+"activityLevel": "Activity Level",
+"calculateTdee": "Calculate TDEE",
+"yourTdeeResult": "Your TDEE Result",
+"caloriesPerDay": "calories per day",
+"tdeeMaintenanceDescription": "This is your estimated daily calorie needs to maintain your current weight.",
+"setAsDailyCalorieTarget": "Set as Daily Calorie Target",
+"dailyCalorieTargetUpdatedTo": "Daily calorie target updated to {calories} calories",
+"@dailyCalorieTargetUpdatedTo": {
+  "placeholders": {
+    "calories": {
+      "type": "int"
+    }
+  }
+},
+"sedentaryNoExercise": "Sedentary (no exercise)",
+"lightOneToTwoDays": "Light (1-2 days/week)",
+"lightTwoToThreeDays": "Light (2-3 days/week)",
+"moderateThreeToFourDays": "Moderate (3-4 days/week)",
+"moderateFourToFiveDays": "Moderate (4-5 days/week)",
+"activeSixToSevenDays": "Active (6-7 days/week)",
+"veryActiveTwiceDaily": "Very Active (2x daily)",
+"extremelyActivePhysicalJob": "Extreme (physical job)"
 }

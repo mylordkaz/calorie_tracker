@@ -4,6 +4,7 @@ import '../../../data/repositories/repository_factory.dart';
 import '../controllers/ideal_weight_calculator_controller.dart';
 import '../../../shared/widgets/custom_card.dart';
 import '../../../shared/widgets/custom_dropdown.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class IdealWeightCalculatorScreen extends StatefulWidget {
   const IdealWeightCalculatorScreen({super.key});
@@ -35,10 +36,11 @@ class _IdealWeightCalculatorScreenState
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('Ideal Weight Calculator'),
+        title: Text(l10n.idealWeightCalculator),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -52,7 +54,7 @@ class _IdealWeightCalculatorScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Find your ideal weight range (Robinson Formula)',
+                  l10n.findIdealWeightRange,
                   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
                 SizedBox(height: 20),
@@ -70,7 +72,7 @@ class _IdealWeightCalculatorScreenState
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.heightController,
-                                label: 'Height',
+                                label: l10n.height,
                                 suffix: 'cm',
                               ),
                             ),
@@ -78,10 +80,13 @@ class _IdealWeightCalculatorScreenState
                             Expanded(
                               child: CustomDropdown<String>(
                                 value: _controller.selectedGender,
-                                hintText: 'Gender',
+                                hintText: l10n.gender,
                                 items: [
-                                  DropdownItem(value: 'male', text: 'Male'),
-                                  DropdownItem(value: 'female', text: 'Female'),
+                                  DropdownItem(value: 'male', text: l10n.male),
+                                  DropdownItem(
+                                    value: 'female',
+                                    text: l10n.female,
+                                  ),
                                 ],
                                 onChanged: (value) =>
                                     _controller.setGender(value!),
@@ -106,7 +111,7 @@ class _IdealWeightCalculatorScreenState
                               ),
                             ),
                             child: Text(
-                              'Calculate Ideal Weight',
+                              l10n.calculateIdealWeight,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -128,7 +133,7 @@ class _IdealWeightCalculatorScreenState
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your Ideal Weight',
+                          l10n.yourIdealWeight,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -149,7 +154,7 @@ class _IdealWeightCalculatorScreenState
                                 ),
                               ),
                               Text(
-                                'ideal weight',
+                                l10n.idealWeight,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey[600],
@@ -175,7 +180,7 @@ class _IdealWeightCalculatorScreenState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Healthy Weight Range',
+                                l10n.healthyWeightRange,
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -193,7 +198,7 @@ class _IdealWeightCalculatorScreenState
                               ),
                               SizedBox(height: 4),
                               Text(
-                                'Range based on ±5kg from ideal weight',
+                                l10n.rangeBasedOnIdealWeight,
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey[600],
@@ -223,7 +228,7 @@ class _IdealWeightCalculatorScreenState
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'Robinson Formula',
+                                l10n.robinsonFormula,
                                 style: TextStyle(
                                   fontSize: 12,
                                   fontWeight: FontWeight.w600,
@@ -231,14 +236,18 @@ class _IdealWeightCalculatorScreenState
                                 ),
                               ),
                               SizedBox(height: 4),
-                              Text(
-                                _controller.selectedGender == 'male'
-                                    ? 'Men: 52kg + 1.9kg per inch over 5 feet'
-                                    : 'Women: 49kg + 1.7kg per inch over 5 feet',
-                                style: TextStyle(
-                                  fontSize: 11,
-                                  color: Colors.grey[600],
-                                ),
+                              Builder(
+                                builder: (context) {
+                                  return Text(
+                                    _controller.selectedGender == 'male'
+                                        ? l10n.robinsonFormulaMen
+                                        : l10n.robinsonFormulaWomen,
+                                    style: TextStyle(
+                                      fontSize: 11,
+                                      color: Colors.grey[600],
+                                    ),
+                                  );
+                                },
                               ),
                             ],
                           ),
@@ -260,6 +269,7 @@ class _IdealWeightCalculatorScreenState
     required String label,
     required String suffix,
   }) {
+    final l10n = L10n.of(context);
     return Container(
       height: 44,
       child: TextFormField(
@@ -269,8 +279,8 @@ class _IdealWeightCalculatorScreenState
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
         ],
         validator: (value) {
-          if (value?.isEmpty == true) return 'Required';
-          if (double.tryParse(value!) == null) return 'Invalid';
+          if (value?.isEmpty == true) return l10n.required;
+          if (double.tryParse(value!) == null) return l10n.invalid;
           return null;
         },
         decoration: InputDecoration(
@@ -293,6 +303,7 @@ class _IdealWeightCalculatorScreenState
         _controller.currentWeight! - _controller.idealWeightResult!;
     final isAbove = difference > 0;
     final isInRange = difference.abs() <= 5;
+    final l10n = L10n.of(context);
 
     Color statusColor;
     String statusText;
@@ -300,15 +311,16 @@ class _IdealWeightCalculatorScreenState
 
     if (isInRange) {
       statusColor = Colors.green;
-      statusText = 'Within ideal range';
+      statusText = l10n.withinIdealRange;
       statusIcon = Icons.check_circle;
     } else if (isAbove) {
       statusColor = Colors.orange;
-      statusText = '${difference.toStringAsFixed(1)}kg above ideal';
+      statusText = l10n.aboveIdeal(difference.toStringAsFixed(1));
+      ;
       statusIcon = Icons.trending_up;
     } else {
       statusColor = Colors.blue;
-      statusText = '${difference.abs().toStringAsFixed(1)}kg below ideal';
+      statusText = l10n.belowIdeal(difference.abs().toStringAsFixed(1));
       statusIcon = Icons.trending_down;
     }
 
@@ -328,7 +340,9 @@ class _IdealWeightCalculatorScreenState
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Current Weight: ${_controller.currentWeight!.toStringAsFixed(1)}kg',
+                  l10n.currentWeight(
+                    _controller.currentWeight!.toStringAsFixed(1),
+                  ),
                   style: TextStyle(
                     fontSize: 14,
                     fontWeight: FontWeight.w600,

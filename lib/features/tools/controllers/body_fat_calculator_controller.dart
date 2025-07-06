@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:math';
 import '../../../data/repositories/settings_repository.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class BodyFatCalculatorController extends ChangeNotifier {
   final SettingsRepository _settingsRepository;
@@ -73,7 +74,9 @@ class BodyFatCalculatorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> calculateBodyFat() async {
+  Future<void> calculateBodyFat(BuildContext context) async {
+    final l10n = L10n.of(context);
+
     final weight = double.parse(weightController.text);
     final height = double.parse(heightController.text);
     final age = int.parse(ageController.text);
@@ -117,36 +120,36 @@ class BodyFatCalculatorController extends ChangeNotifier {
 
     if (_selectedGender == 'male') {
       if (bodyFat < 6) {
-        category = 'Essential Fat';
+        category = l10n.essentialFat;
         color = Colors.blue;
       } else if (bodyFat < 14) {
-        category = 'Athletes';
+        category = l10n.athletes;
         color = Colors.green;
       } else if (bodyFat < 18) {
-        category = 'Fitness';
+        category = l10n.fitness;
         color = Colors.green;
       } else if (bodyFat < 25) {
-        category = 'Average';
+        category = l10n.average;
         color = Colors.orange;
       } else {
-        category = 'Obese';
+        category = l10n.obese;
         color = Colors.red;
       }
     } else {
       if (bodyFat < 14) {
-        category = 'Essential Fat';
+        category = l10n.essentialFat;
         color = Colors.blue;
       } else if (bodyFat < 21) {
-        category = 'Athletes';
+        category = l10n.athletes;
         color = Colors.green;
       } else if (bodyFat < 25) {
-        category = 'Fitness';
+        category = l10n.fitness;
         color = Colors.green;
       } else if (bodyFat < 32) {
-        category = 'Average';
+        category = l10n.average;
         color = Colors.orange;
       } else {
-        category = 'Obese';
+        category = l10n.obese;
         color = Colors.red;
       }
     }

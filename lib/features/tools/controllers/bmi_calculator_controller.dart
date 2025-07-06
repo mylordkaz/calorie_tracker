@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../data/repositories/settings_repository.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class BMICalculatorController extends ChangeNotifier {
   final SettingsRepository _settingsRepository;
@@ -40,7 +41,9 @@ class BMICalculatorController extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> calculateBMI() async {
+  Future<void> calculateBMI(BuildContext context) async {
+    final l10n = L10n.of(context);
+
     final weight = double.parse(weightController.text);
     final height = double.parse(heightController.text);
 
@@ -55,16 +58,16 @@ class BMICalculatorController extends ChangeNotifier {
     Color color;
 
     if (bmi < 18.5) {
-      category = 'Underweight';
+      category = l10n.underweight;
       color = Colors.blue;
     } else if (bmi < 25.0) {
-      category = 'Normal weight';
+      category = l10n.normalWeight;
       color = Colors.green;
     } else if (bmi < 30.0) {
-      category = 'Overweight';
+      category = l10n.overweight;
       color = Colors.orange;
     } else {
-      category = 'Obese';
+      category = l10n.obese;
       color = Colors.red;
     }
 

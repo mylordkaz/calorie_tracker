@@ -4,6 +4,7 @@ import '../../../data/repositories/repository_factory.dart';
 import '../controllers/tdee_calculator_controller.dart';
 import '../../../shared/widgets/custom_card.dart';
 import '../../../shared/widgets/custom_dropdown.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class TDEECalculatorScreen extends StatefulWidget {
   const TDEECalculatorScreen({super.key});
@@ -33,10 +34,11 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('TDEE Calculator'),
+        title: Text(l10n.tdeeCalculator),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -50,7 +52,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Total Daily Energy Expenditure',
+                  l10n.totalDailyEnergyExpenditure,
                   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
                 SizedBox(height: 20),
@@ -68,7 +70,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.weightController,
-                                label: 'Weight',
+                                label: l10n.weight,
                                 suffix: 'kg',
                                 isDecimal: true,
                               ),
@@ -77,7 +79,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.heightController,
-                                label: 'Height',
+                                label: l10n.height,
                                 suffix: 'cm',
                                 isDecimal: true,
                               ),
@@ -93,8 +95,8 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.ageController,
-                                label: 'Age',
-                                suffix: 'years',
+                                label: l10n.age,
+                                suffix: l10n.years,
                                 isDecimal: false,
                               ),
                             ),
@@ -102,10 +104,13 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                             Expanded(
                               child: CustomDropdown<String>(
                                 value: _controller.selectedGender,
-                                labelText: 'Gender',
+                                labelText: l10n.gender,
                                 items: [
-                                  DropdownItem(value: 'male', text: 'Male'),
-                                  DropdownItem(value: 'female', text: 'Female'),
+                                  DropdownItem(value: 'male', text: l10n.male),
+                                  DropdownItem(
+                                    value: 'female',
+                                    text: l10n.female,
+                                  ),
                                 ],
                                 onChanged: (value) =>
                                     _controller.setGender(value!),
@@ -119,39 +124,39 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                         // Activity Level
                         CustomDropdown<String>(
                           value: _controller.selectedActivityLevel,
-                          labelText: 'Activity Level',
+                          labelText: l10n.activityLevel,
                           items: [
                             DropdownItem(
                               value: 'sedentary',
-                              text: 'Sedentary (no exercise)',
+                              text: l10n.sedentaryNoExercise,
                             ),
                             DropdownItem(
                               value: 'light_low',
-                              text: 'Light (1-2 days/week)',
+                              text: l10n.lightOneToTwoDays,
                             ),
                             DropdownItem(
                               value: 'light',
-                              text: 'Light (2-3 days/week)',
+                              text: l10n.lightTwoToThreeDays,
                             ),
                             DropdownItem(
                               value: 'moderate_low',
-                              text: 'Moderate (3-4 days/week)',
+                              text: l10n.moderateThreeToFourDays,
                             ),
                             DropdownItem(
                               value: 'moderate',
-                              text: 'Moderate (4-5 days/week)',
+                              text: l10n.moderateFourToFiveDays,
                             ),
                             DropdownItem(
                               value: 'active',
-                              text: 'Active (6-7 days/week)',
+                              text: l10n.activeSixToSevenDays,
                             ),
                             DropdownItem(
                               value: 'very_active',
-                              text: 'Very Active (2x daily)',
+                              text: l10n.veryActiveTwiceDaily,
                             ),
                             DropdownItem(
                               value: 'extremely_active',
-                              text: 'Extreme (physical job)',
+                              text: l10n.extremelyActivePhysicalJob,
                             ),
                           ],
                           onChanged: (value) =>
@@ -174,7 +179,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                               ),
                             ),
                             child: Text(
-                              'Calculate TDEE',
+                              l10n.calculateTdee,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -196,7 +201,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your TDEE Result',
+                          l10n.yourTdeeResult,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -217,7 +222,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                                 ),
                               ),
                               Text(
-                                'calories per day',
+                                l10n.caloriesPerDay,
                                 style: TextStyle(
                                   fontSize: 14,
                                   color: Colors.grey[600],
@@ -230,7 +235,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                         SizedBox(height: 16),
 
                         Text(
-                          'This is your estimated daily calorie needs to maintain your current weight.',
+                          l10n.tdeeMaintenanceDescription,
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey[600],
@@ -254,7 +259,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
                               ),
                             ),
                             child: Text(
-                              'Set as Daily Calorie Target',
+                              l10n.setAsDailyCalorieTarget,
                               style: TextStyle(
                                 fontSize: 14,
                                 fontWeight: FontWeight.w500,
@@ -280,6 +285,7 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
     required String suffix,
     required bool isDecimal,
   }) {
+    final l10n = L10n.of(context);
     return Container(
       height: 44,
       child: TextFormField(
@@ -291,11 +297,11 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
             ? [FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*'))]
             : [FilteringTextInputFormatter.digitsOnly],
         validator: (value) {
-          if (value?.isEmpty == true) return 'Required';
+          if (value?.isEmpty == true) return l10n.required;
           if (isDecimal) {
-            if (double.tryParse(value!) == null) return 'Invalid';
+            if (double.tryParse(value!) == null) return l10n.invalid;
           } else {
-            if (int.tryParse(value!) == null) return 'Invalid';
+            if (int.tryParse(value!) == null) return l10n.invalid;
           }
           return null;
         },
@@ -320,12 +326,13 @@ class _TDEECalculatorScreenState extends State<TDEECalculatorScreen> {
   }
 
   void _setAsDailyTarget() async {
+    final l10n = L10n.of(context);
     await _controller.setAsDailyTarget();
     if (mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            'Daily calorie target updated to ${_controller.tdeeResult!.toInt()} calories',
+            l10n.dailyCalorieTargetUpdatedTo(_controller.tdeeResult!.toInt()),
           ),
           backgroundColor: Colors.blue,
         ),

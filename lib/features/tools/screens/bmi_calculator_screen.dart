@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../core/utils/localization_helper.dart';
 import '../../../data/repositories/repository_factory.dart';
 import '../controllers/bmi_calculator_controller.dart';
 import '../../../shared/widgets/custom_card.dart';
@@ -32,10 +33,11 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text('BMI Calculator'),
+        title: Text(l10n.bmiCalculator),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -49,7 +51,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Body Mass Index',
+                  l10n.bodyMassIndex,
                   style: TextStyle(fontSize: 14, color: Colors.grey[600]),
                 ),
                 SizedBox(height: 20),
@@ -67,7 +69,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.weightController,
-                                label: 'Weight',
+                                label: l10n.weight,
                                 suffix: 'kg',
                               ),
                             ),
@@ -75,7 +77,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                             Expanded(
                               child: _buildCompactTextField(
                                 controller: _controller.heightController,
-                                label: 'Height',
+                                label: l10n.height,
                                 suffix: 'cm',
                               ),
                             ),
@@ -98,7 +100,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                               ),
                             ),
                             child: Text(
-                              'Calculate BMI',
+                              l10n.calculateBmi,
                               style: TextStyle(
                                 fontSize: 15,
                                 fontWeight: FontWeight.w600,
@@ -120,7 +122,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
-                          'Your BMI Result',
+                          l10n.yourBmiResult,
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -182,7 +184,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                'BMI Categories',
+                                l10n.bmiCategories,
                                 style: TextStyle(
                                   fontSize: 14,
                                   fontWeight: FontWeight.w600,
@@ -191,21 +193,25 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
                               ),
                               SizedBox(height: 8),
                               _buildCategoryRow(
-                                'Underweight',
+                                l10n.underweight,
                                 '< 18.5',
                                 Colors.blue,
                               ),
                               _buildCategoryRow(
-                                'Normal weight',
+                                l10n.normalWeight,
                                 '18.5 - 24.9',
                                 Colors.green,
                               ),
                               _buildCategoryRow(
-                                'Overweight',
+                                l10n.overweight,
                                 '25.0 - 29.9',
                                 Colors.orange,
                               ),
-                              _buildCategoryRow('Obese', '≥ 30.0', Colors.red),
+                              _buildCategoryRow(
+                                l10n.obese,
+                                '≥ 30.0',
+                                Colors.red,
+                              ),
                             ],
                           ),
                         ),
@@ -226,6 +232,7 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
     required String label,
     required String suffix,
   }) {
+    final l10n = L10n.of(context);
     return Container(
       height: 44,
       child: TextFormField(
@@ -235,8 +242,8 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
           FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
         ],
         validator: (value) {
-          if (value?.isEmpty == true) return 'Required';
-          if (double.tryParse(value!) == null) return 'Invalid';
+          if (value?.isEmpty == true) return l10n.required;
+          if (double.tryParse(value!) == null) return l10n.invalid;
           return null;
         },
         decoration: InputDecoration(
@@ -294,6 +301,6 @@ class _BMICalculatorScreenState extends State<BMICalculatorScreen> {
 
   void _calculateBMI() async {
     if (!_formKey.currentState!.validate()) return;
-    await _controller.calculateBMI();
+    await _controller.calculateBMI(context);
   }
 }

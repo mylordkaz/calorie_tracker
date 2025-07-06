@@ -117,7 +117,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get progress => 'Progress';
 
   @override
-  String get caloriesPerDay => 'calories/day';
+  String get caloriesPerDay => 'calories per day';
 
   @override
   String get todaysCompleteLog => 'Today\'s Complete Log';
@@ -283,4 +283,225 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get quickEntryLower => 'quick entry';
+
+  @override
+  String get bmiCalculator => 'BMI Calculator';
+
+  @override
+  String get bodyMassIndex => 'Body Mass Index';
+
+  @override
+  String get weight => 'Weight';
+
+  @override
+  String get height => 'Height';
+
+  @override
+  String get yourBmiResult => 'Your BMI Result';
+
+  @override
+  String get calculateBmi => 'Calculate BMI';
+
+  @override
+  String get bmiCategories => 'BMI Categories';
+
+  @override
+  String get underweight => 'Underweight';
+
+  @override
+  String get normalWeight => 'Normal weight';
+
+  @override
+  String get overweight => 'Overweight';
+
+  @override
+  String get obese => 'Obese';
+
+  @override
+  String get required => 'Required';
+
+  @override
+  String get invalid => 'Invalid';
+
+  @override
+  String get bodyFatCalculator => 'Body Fat Calculator';
+
+  @override
+  String get estimateBodyFatPercentage => 'Estimate body fat percentage (US Navy Method)';
+
+  @override
+  String get age => 'Age';
+
+  @override
+  String get years => 'years';
+
+  @override
+  String get gender => 'Gender';
+
+  @override
+  String get male => 'Male';
+
+  @override
+  String get female => 'Female';
+
+  @override
+  String get neck => 'Neck';
+
+  @override
+  String get waist => 'Waist';
+
+  @override
+  String get hip => 'Hip';
+
+  @override
+  String get bodyMeasurements => 'Body Measurements';
+
+  @override
+  String get measurementInstructions => 'Measurement Instructions';
+
+  @override
+  String get calculateBodyFat => 'Calculate Body Fat';
+
+  @override
+  String get bodyFatCategories => 'Body Fat Categories';
+
+  @override
+  String get bodyFatCategoriesMen => 'Body Fat Categories (Men)';
+
+  @override
+  String get bodyFatCategoriesWomen => 'Body Fat Categories (Women)';
+
+  @override
+  String get essentialFat => 'Essential Fat';
+
+  @override
+  String get athletes => 'Athletes';
+
+  @override
+  String get fitness => 'Fitness';
+
+  @override
+  String get average => 'Average';
+
+  @override
+  String get yourBodyFatResult => 'Your Body Fat Result';
+
+  @override
+  String get neckMeasurementTip => '• Neck: Measure below the larynx';
+
+  @override
+  String get waistMeasurementTip => '• Waist: Measure at the narrowest point';
+
+  @override
+  String get hipMeasurementTip => '• Hip: Measure at the widest point';
+
+  @override
+  String get measurementAccuracyTip => '• Measure without clothes for accuracy';
+
+  @override
+  String get hipMeasurementRequired => 'Hip measurement is required for women';
+
+  @override
+  String get usNavyMethod => 'US Navy Method';
+
+  @override
+  String get usNavyDesc => 'Developed by the US Navy, this method estimates body fat using body circumference measurements. Results are estimates and may vary from other methods.';
+
+  @override
+  String get idealWeightCalculator => 'Ideal Weight Calculator';
+
+  @override
+  String get findIdealWeightRange => 'Find your ideal weight range (Robinson Formula)';
+
+  @override
+  String get calculateIdealWeight => 'Calculate Ideal Weight';
+
+  @override
+  String get yourIdealWeight => 'Your Ideal Weight';
+
+  @override
+  String get idealWeight => 'ideal weight';
+
+  @override
+  String get healthyWeightRange => 'Healthy Weight Range';
+
+  @override
+  String get rangeBasedOnIdealWeight => 'Range based on ±5kg from ideal weight';
+
+  @override
+  String currentWeight(String weight) {
+    return 'Current Weight: ${weight}kg';
+  }
+
+  @override
+  String get withinIdealRange => 'Within ideal range';
+
+  @override
+  String aboveIdeal(String difference) {
+    return '${difference}kg above ideal';
+  }
+
+  @override
+  String belowIdeal(String difference) {
+    return '${difference}kg below ideal';
+  }
+
+  @override
+  String get robinsonFormula => 'Robinson Formula';
+
+  @override
+  String get robinsonFormulaMen => 'Men: 52kg + 1.9kg per inch over 5 feet';
+
+  @override
+  String get robinsonFormulaWomen => 'Women: 49kg + 1.7kg per inch over 5 feet';
+
+  @override
+  String get tdeeCalculator => 'TDEE Calculator';
+
+  @override
+  String get totalDailyEnergyExpenditure => 'Total Daily Energy Expenditure';
+
+  @override
+  String get activityLevel => 'Activity Level';
+
+  @override
+  String get calculateTdee => 'Calculate TDEE';
+
+  @override
+  String get yourTdeeResult => 'Your TDEE Result';
+
+  @override
+  String get tdeeMaintenanceDescription => 'This is your estimated daily calorie needs to maintain your current weight.';
+
+  @override
+  String get setAsDailyCalorieTarget => 'Set as Daily Calorie Target';
+
+  @override
+  String dailyCalorieTargetUpdatedTo(int calories) {
+    return 'Daily calorie target updated to $calories calories';
+  }
+
+  @override
+  String get sedentaryNoExercise => 'Sedentary (no exercise)';
+
+  @override
+  String get lightOneToTwoDays => 'Light (1-2 days/week)';
+
+  @override
+  String get lightTwoToThreeDays => 'Light (2-3 days/week)';
+
+  @override
+  String get moderateThreeToFourDays => 'Moderate (3-4 days/week)';
+
+  @override
+  String get moderateFourToFiveDays => 'Moderate (4-5 days/week)';
+
+  @override
+  String get activeSixToSevenDays => 'Active (6-7 days/week)';
+
+  @override
+  String get veryActiveTwiceDaily => 'Very Active (2x daily)';
+
+  @override
+  String get extremelyActivePhysicalJob => 'Extreme (physical job)';
 }

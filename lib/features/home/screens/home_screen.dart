@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/utils/localization_helper.dart';
 import '../../../data/repositories/repository_factory.dart';
 import '../../../core/constants/app_constants.dart';
 import '../controllers/home_controller.dart';
@@ -119,9 +120,12 @@ class _HomeScreenState extends State<HomeScreen> {
     if (target != null) {
       await _controller.setDailyTarget(target);
       if (mounted) {
+        final l10n = L10n.of(context);
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
-            content: Text('Daily target updated to ${target.toInt()} calories'),
+            content: Text(
+              '${l10n.dailyTargetUpdated} ${l10n.to} ${target.toInt()} ${l10n.calories}',
+            ),
           ),
         );
       }
@@ -132,11 +136,12 @@ class _HomeScreenState extends State<HomeScreen> {
     try {
       await _controller.copyFromYesterday();
       if (mounted) {
+        final l10n = L10n.of(context);
         final todayEntries = _controller.getTodayEntries();
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text(
-              'Copied ${todayEntries.length} entries from yesterday',
+              '${l10n.copiedEntriesFromYesterday}: ${todayEntries.length}',
             ),
           ),
         );
@@ -165,6 +170,7 @@ class _FullLogDialog extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Dialog(
       child: Container(
         width: double.infinity,
@@ -182,7 +188,7 @@ class _FullLogDialog extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'Today\'s Complete Log',
+                    l10n.todaysCompleteLog,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                   IconButton(

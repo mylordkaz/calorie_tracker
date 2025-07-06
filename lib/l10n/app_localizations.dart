@@ -6,7 +6,6 @@ import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:intl/intl.dart' as intl;
 
 import 'app_localizations_en.dart';
-import 'app_localizations_ja.dart';
 
 // ignore_for_file: type=lint
 
@@ -91,8 +90,7 @@ abstract class AppLocalizations {
 
   /// A list of this localizations delegate's supported locales.
   static const List<Locale> supportedLocales = <Locale>[
-    Locale('en'),
-    Locale('ja')
+    Locale('en')
   ];
 
   /// No description provided for @appName.
@@ -214,6 +212,174 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Edit'**
   String get edit;
+
+  /// No description provided for @today.
+  ///
+  /// In en, this message translates to:
+  /// **'Today'**
+  String get today;
+
+  /// No description provided for @target.
+  ///
+  /// In en, this message translates to:
+  /// **'Target'**
+  String get target;
+
+  /// No description provided for @setTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Daily Calories Target'**
+  String get setTarget;
+
+  /// No description provided for @of.
+  ///
+  /// In en, this message translates to:
+  /// **'of'**
+  String get of;
+
+  /// No description provided for @to.
+  ///
+  /// In en, this message translates to:
+  /// **'to'**
+  String get to;
+
+  /// No description provided for @quickActions.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Actions'**
+  String get quickActions;
+
+  /// No description provided for @quickStats.
+  ///
+  /// In en, this message translates to:
+  /// **'Quick Stats'**
+  String get quickStats;
+
+  /// No description provided for @todaysLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Log'**
+  String get todaysLog;
+
+  /// No description provided for @copyFromYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Copy from Yesterday'**
+  String get copyFromYesterday;
+
+  /// No description provided for @addAllYesterdayEntries.
+  ///
+  /// In en, this message translates to:
+  /// **'Add all yesterday\'s entries to today'**
+  String get addAllYesterdayEntries;
+
+  /// No description provided for @noEntriesLoggedYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No entries logged today yet'**
+  String get noEntriesLoggedYet;
+
+  /// No description provided for @tapAddFoodToStart.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \"Add Food\" to start tracking'**
+  String get tapAddFoodToStart;
+
+  /// No description provided for @viewAll.
+  ///
+  /// In en, this message translates to:
+  /// **'View All'**
+  String get viewAll;
+
+  /// No description provided for @weeklyAverage.
+  ///
+  /// In en, this message translates to:
+  /// **'Weekly Average'**
+  String get weeklyAverage;
+
+  /// No description provided for @yesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Yesterday'**
+  String get yesterday;
+
+  /// No description provided for @remaining.
+  ///
+  /// In en, this message translates to:
+  /// **'Remaining'**
+  String get remaining;
+
+  /// No description provided for @progress.
+  ///
+  /// In en, this message translates to:
+  /// **'Progress'**
+  String get progress;
+
+  /// No description provided for @caloriesPerDay.
+  ///
+  /// In en, this message translates to:
+  /// **'calories/day'**
+  String get caloriesPerDay;
+
+  /// No description provided for @percent.
+  ///
+  /// In en, this message translates to:
+  /// **'%'**
+  String get percent;
+
+  /// No description provided for @todaysCompleteLog.
+  ///
+  /// In en, this message translates to:
+  /// **'Today\'s Complete Log'**
+  String get todaysCompleteLog;
+
+  /// No description provided for @close.
+  ///
+  /// In en, this message translates to:
+  /// **'Close'**
+  String get close;
+
+  /// No description provided for @quickEntry.
+  ///
+  /// In en, this message translates to:
+  /// **'quick entry'**
+  String get quickEntry;
+
+  /// No description provided for @serving.
+  ///
+  /// In en, this message translates to:
+  /// **'serving'**
+  String get serving;
+
+  /// No description provided for @servings.
+  ///
+  /// In en, this message translates to:
+  /// **'servings'**
+  String get servings;
+
+  /// No description provided for @copiedEntriesFromYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'Copied entries from yesterday'**
+  String get copiedEntriesFromYesterday;
+
+  /// No description provided for @noEntriesFoundYesterday.
+  ///
+  /// In en, this message translates to:
+  /// **'No entries found for yesterday'**
+  String get noEntriesFoundYesterday;
+
+  /// No description provided for @dailyCalorieTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily Calorie Target'**
+  String get dailyCalorieTarget;
+
+  /// No description provided for @dailyTargetUpdated.
+  ///
+  /// In en, this message translates to:
+  /// **'Daily target updated to {calories} calories'**
+  String dailyTargetUpdated(Object calories);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {
@@ -225,7 +391,7 @@ class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> 
   }
 
   @override
-  bool isSupported(Locale locale) => <String>['en', 'ja'].contains(locale.languageCode);
+  bool isSupported(Locale locale) => <String>['en'].contains(locale.languageCode);
 
   @override
   bool shouldReload(_AppLocalizationsDelegate old) => false;
@@ -237,7 +403,6 @@ AppLocalizations lookupAppLocalizations(Locale locale) {
   // Lookup logic when only language code is specified.
   switch (locale.languageCode) {
     case 'en': return AppLocalizationsEn();
-    case 'ja': return AppLocalizationsJa();
   }
 
   throw FlutterError(

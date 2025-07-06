@@ -7,7 +7,7 @@ import 'core/routes/main_screen.dart';
 import 'data/services/food_database_service.dart';
 import 'data/services/user_settings_service.dart';
 import 'data/services/daily_tracking_service.dart';
-import 'package:calorie_tracker/l10n/app_localizations.dart';
+import 'package:nibble/l10n/app_localizations.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();

@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:calorie_tracker/l10n/app_localizations.dart';
+import 'package:nibble/l10n/app_localizations.dart';
 import '../../features/home/screens/home_screen.dart';
 import '../../features/libraries/library_screen.dart';
 import '../../features/stats/screens/stats_screen.dart';

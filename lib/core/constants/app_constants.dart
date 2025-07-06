@@ -1,6 +1,6 @@
 class AppConstants {
   // App Info
-  static const String appName = 'Calorie Tracker';
+  static const String appName = 'Nibble';
 
   // Storage keys
   static const String foodBoxName = 'foods';

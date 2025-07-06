@@ -225,17 +225,11 @@ abstract class AppLocalizations {
   /// **'Target'**
   String get target;
 
-  /// No description provided for @setTarget.
-  ///
-  /// In en, this message translates to:
-  /// **'Set Daily Calories Target'**
-  String get setTarget;
-
-  /// No description provided for @of.
+  /// No description provided for @ofText.
   ///
   /// In en, this message translates to:
   /// **'of'**
-  String get of;
+  String get ofText;
 
   /// No description provided for @to.
   ///
@@ -321,12 +315,6 @@ abstract class AppLocalizations {
   /// **'calories/day'**
   String get caloriesPerDay;
 
-  /// No description provided for @percent.
-  ///
-  /// In en, this message translates to:
-  /// **'%'**
-  String get percent;
-
   /// No description provided for @todaysCompleteLog.
   ///
   /// In en, this message translates to:
@@ -380,6 +368,54 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Daily target updated to {calories} calories'**
   String dailyTargetUpdated(Object calories);
+
+  /// No description provided for @loading.
+  ///
+  /// In en, this message translates to:
+  /// **'Loading...'**
+  String get loading;
+
+  /// No description provided for @errorOccurred.
+  ///
+  /// In en, this message translates to:
+  /// **'An error occurred'**
+  String get errorOccurred;
+
+  /// No description provided for @entriesCount.
+  ///
+  /// In en, this message translates to:
+  /// **'{count, plural, =0{0 entries} =1{1 entry} other{{count} entries}}'**
+  String entriesCount(num count);
+
+  /// No description provided for @targetWithValue.
+  ///
+  /// In en, this message translates to:
+  /// **'Target: {value}'**
+  String targetWithValue(Object value);
+
+  /// No description provided for @setTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Target'**
+  String get setTarget;
+
+  /// No description provided for @setDailyTarget.
+  ///
+  /// In en, this message translates to:
+  /// **'Set Daily Calorie Target'**
+  String get setDailyTarget;
+
+  /// No description provided for @todayWithDate.
+  ///
+  /// In en, this message translates to:
+  /// **'Today - {date}'**
+  String todayWithDate(Object date);
+
+  /// No description provided for @cal.
+  ///
+  /// In en, this message translates to:
+  /// **'cal'**
+  String get cal;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

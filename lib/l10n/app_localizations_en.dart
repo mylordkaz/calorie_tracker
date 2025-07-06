@@ -75,10 +75,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get target => 'Target';
 
   @override
-  String get setTarget => 'Set Daily Calories Target';
-
-  @override
-  String get of => 'of';
+  String get ofText => 'of';
 
   @override
   String get to => 'to';
@@ -123,9 +120,6 @@ class AppLocalizationsEn extends AppLocalizations {
   String get caloriesPerDay => 'calories/day';
 
   @override
-  String get percent => '%';
-
-  @override
   String get todaysCompleteLog => 'Today\'s Complete Log';
 
   @override
@@ -153,4 +147,41 @@ class AppLocalizationsEn extends AppLocalizations {
   String dailyTargetUpdated(Object calories) {
     return 'Daily target updated to $calories calories';
   }
+
+  @override
+  String get loading => 'Loading...';
+
+  @override
+  String get errorOccurred => 'An error occurred';
+
+  @override
+  String entriesCount(num count) {
+    String _temp0 = intl.Intl.pluralLogic(
+      count,
+      locale: localeName,
+      other: '$count entries',
+      one: '1 entry',
+      zero: '0 entries',
+    );
+    return '$_temp0';
+  }
+
+  @override
+  String targetWithValue(Object value) {
+    return 'Target: $value';
+  }
+
+  @override
+  String get setTarget => 'Set Target';
+
+  @override
+  String get setDailyTarget => 'Set Daily Calorie Target';
+
+  @override
+  String todayWithDate(Object date) {
+    return 'Today - $date';
+  }
+
+  @override
+  String get cal => 'cal';
 }

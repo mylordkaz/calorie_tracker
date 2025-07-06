@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class TodaysLogCard extends StatelessWidget {
   final List<Map<String, dynamic>> entries;
@@ -10,7 +11,7 @@ class TodaysLogCard extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     if (entries.isEmpty) {
-      return _buildEmptyState();
+      return _buildEmptyState(context);
     }
 
     final miniList = entries.take(4).toList();
@@ -26,17 +27,19 @@ class TodaysLogCard extends StatelessWidget {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          _buildHeader(hasMore),
+          _buildHeader(context, hasMore),
           SizedBox(height: 8),
-          ...miniList.map((item) => _buildLogEntryItem(item)),
+          ...miniList.map((item) => _buildLogEntryItem(context, item)),
         ],
       ),
     );
   }
 
-  Widget _buildEmptyState() {
+  Widget _buildEmptyState(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return Container(
-			width: double.infinity,
+      width: double.infinity,
       padding: EdgeInsets.all(12),
       decoration: BoxDecoration(
         color: Colors.white,
@@ -48,7 +51,7 @@ class TodaysLogCard extends StatelessWidget {
           Icon(Icons.restaurant_menu, size: 24, color: Colors.grey[400]),
           SizedBox(height: 6),
           Text(
-            'No entries logged today yet',
+            l10n.noEntriesLoggedYet,
             style: TextStyle(
               fontSize: 14,
               fontWeight: FontWeight.w500,
@@ -56,7 +59,7 @@ class TodaysLogCard extends StatelessWidget {
             ),
           ),
           Text(
-            'Tap "Add Food" to start tracking',
+            l10n.tapAddFoodToStart,
             style: TextStyle(fontSize: 11, color: Colors.grey[500]),
           ),
         ],
@@ -64,12 +67,14 @@ class TodaysLogCard extends StatelessWidget {
     );
   }
 
-  Widget _buildHeader(bool hasMore) {
+  Widget _buildHeader(BuildContext context, bool hasMore) {
+    final l10n = L10n.of(context);
+
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Today\'s Log',
+          l10n.todaysLog,
           style: TextStyle(
             fontSize: 14,
             fontWeight: FontWeight.w600,
@@ -80,7 +85,7 @@ class TodaysLogCard extends StatelessWidget {
           GestureDetector(
             onTap: onViewAll,
             child: Text(
-              'View All (${entries.length})',
+              '${l10n.viewAll} (${entries.length})',
               style: TextStyle(
                 fontSize: 11,
                 color: Colors.blue,
@@ -92,7 +97,8 @@ class TodaysLogCard extends StatelessWidget {
     );
   }
 
-  Widget _buildLogEntryItem(Map<String, dynamic> item) {
+  Widget _buildLogEntryItem(BuildContext context, Map<String, dynamic> item) {
+    final l10n = L10n.of(context);
     final isFood = item['type'] == 'food';
     final calories = item['calories'] as double;
 
@@ -143,7 +149,7 @@ class TodaysLogCard extends StatelessWidget {
             ),
           ),
           Text(
-            '${calories.toInt()} cal',
+            '${calories.toInt()} ${l10n.cal}',
             style: TextStyle(
               fontSize: 11,
               fontWeight: FontWeight.w500,

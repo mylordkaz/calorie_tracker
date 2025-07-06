@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class CopyYesterdayButton extends StatelessWidget {
   final VoidCallback onPressed;
@@ -8,6 +9,7 @@ class CopyYesterdayButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Container(
       width: double.infinity,
       decoration: BoxDecoration(
@@ -31,7 +33,7 @@ class CopyYesterdayButton extends StatelessWidget {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
                       Text(
-                        'Copy from Yesterday',
+                        l10n.copyFromYesterday,
                         style: TextStyle(
                           fontSize: 14,
                           fontWeight: FontWeight.w600,
@@ -39,7 +41,7 @@ class CopyYesterdayButton extends StatelessWidget {
                         ),
                       ),
                       Text(
-                        'Add all yesterday\'s entries to today',
+                        l10n.addAllYesterdayEntries,
                         style: TextStyle(fontSize: 11, color: Colors.grey[600]),
                       ),
                     ],

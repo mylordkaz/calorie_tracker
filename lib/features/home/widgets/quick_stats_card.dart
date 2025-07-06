@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/utils/localization_helper.dart';
 import '../../../shared/widgets/stat_card.dart';
 
 class QuickStatsCard extends StatelessWidget {
@@ -17,11 +18,12 @@ class QuickStatsCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
         Text(
-          'Quick Stats',
+          l10n.quickStats,
           style: TextStyle(
             fontSize: 16,
             fontWeight: FontWeight.w600,
@@ -33,22 +35,22 @@ class QuickStatsCard extends StatelessWidget {
           children: [
             Expanded(
               child: StatCard(
-                title: 'Weekly Average',
+                title: l10n.weeklyAverage,
                 value: weeklyAverage > 0
                     ? weeklyAverage.toInt().toString()
                     : '--',
-                unit: 'calories/day',
+                unit: l10n.caloriesPerDay,
                 color: Colors.blue,
               ),
             ),
             SizedBox(width: 8),
             Expanded(
               child: StatCard(
-                title: 'Yesterday',
+                title: l10n.yesterday,
                 value: yesterdayCalories > 0
                     ? yesterdayCalories.toInt().toString()
                     : '--',
-                unit: 'calories',
+                unit: l10n.calories.toLowerCase(),
                 color: Colors.grey[600]!,
               ),
             ),
@@ -59,18 +61,18 @@ class QuickStatsCard extends StatelessWidget {
           children: [
             Expanded(
               child: StatCard(
-                title: 'Remaining',
+                title: l10n.remaining,
                 value: dailyTarget != null
                     ? '${(dailyTarget! - currentCalories).toInt()}'
                     : '--',
-                unit: 'calories',
+                unit: l10n.calories.toLowerCase(),
                 color: Colors.blue[300]!,
               ),
             ),
             SizedBox(width: 8),
             Expanded(
               child: StatCard(
-                title: 'Progress',
+                title: l10n.progress,
                 value: dailyTarget != null
                     ? '${((currentCalories / dailyTarget!) * 100).toInt()}'
                     : '--',

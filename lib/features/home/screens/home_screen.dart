@@ -122,11 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
       if (mounted) {
         final l10n = L10n.of(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '${l10n.dailyTargetUpdated} ${l10n.to} ${target.toInt()} ${l10n.calories}',
-            ),
-          ),
+          SnackBar(content: Text(l10n.dailyTargetUpdated(target.toInt()))),
         );
       }
     }
@@ -137,19 +133,18 @@ class _HomeScreenState extends State<HomeScreen> {
       await _controller.copyFromYesterday();
       if (mounted) {
         final l10n = L10n.of(context);
-        final todayEntries = _controller.getTodayEntries();
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(
-            content: Text(
-              '${l10n.copiedEntriesFromYesterday}: ${todayEntries.length}',
-            ),
-          ),
+          SnackBar(content: Text(l10n.copiedEntriesFromYesterday)),
         );
       }
     } catch (e) {
       if (mounted) {
+        final l10n = L10n.of(context);
         ScaffoldMessenger.of(context).showSnackBar(
-          SnackBar(content: Text(e.toString().replaceFirst('Exception: ', ''))),
+          SnackBar(
+            content: Text(l10n.errorOccurred),
+            backgroundColor: Colors.red,
+          ),
         );
       }
     }

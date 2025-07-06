@@ -21,8 +21,7 @@
   "edit": "Edit",
 	"today": "Today",
   "target": "Target",
-  "setTarget": "Set Daily Calories Target",
-  "of": "of",
+  "ofText": "of",
 	"to": "to",
   "quickActions": "Quick Actions",
   "quickStats": "Quick Stats",
@@ -37,7 +36,6 @@
   "remaining": "Remaining",
   "progress": "Progress",
   "caloriesPerDay": "calories/day",
-  "percent": "%",
   "todaysCompleteLog": "Today's Complete Log",
   "close": "Close",
   "quickEntry": "quick entry",
@@ -46,5 +44,13 @@
   "copiedEntriesFromYesterday": "Copied entries from yesterday",
   "noEntriesFoundYesterday": "No entries found for yesterday",
   "dailyCalorieTarget": "Daily Calorie Target",
-  "dailyTargetUpdated": "Daily target updated to {calories} calories"
+  "dailyTargetUpdated": "Daily target updated to {calories} calories",
+	"loading": "Loading...",
+  "errorOccurred": "An error occurred",
+  "entriesCount": "{count, plural, =0{0 entries} =1{1 entry} other{{count} entries}}",
+	"targetWithValue": "Target: {value}",
+  "setTarget": "Set Target",
+	"setDailyTarget": "Set Daily Calorie Target",
+  "todayWithDate": "Today - {date}",
+  "cal": "cal"
 }

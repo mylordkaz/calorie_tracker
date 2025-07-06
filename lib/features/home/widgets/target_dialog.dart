@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class TargetDialog extends StatefulWidget {
   final double? currentTarget;
@@ -38,11 +39,13 @@ class _TargetDialogState extends State<TargetDialog> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
+
     return AlertDialog(
       backgroundColor: Colors.white,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
       title: Text(
-        'Set Daily Calorie Target',
+        l10n.setDailyTarget,
         style: TextStyle(
           fontSize: 18,
           fontWeight: FontWeight.w600,
@@ -57,8 +60,8 @@ class _TargetDialogState extends State<TargetDialog> {
             keyboardType: TextInputType.number,
             inputFormatters: [FilteringTextInputFormatter.digitsOnly],
             decoration: InputDecoration(
-              labelText: 'Daily Calorie Target',
-              suffixText: 'calories',
+              labelText: l10n.dailyCalorieTarget,
+              suffixText: l10n.calories.toLowerCase(),
               filled: true,
               fillColor: Colors.grey[50],
               border: OutlineInputBorder(
@@ -86,7 +89,7 @@ class _TargetDialogState extends State<TargetDialog> {
         TextButton(
           onPressed: () => Navigator.pop(context),
           style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
-          child: Text('Cancel'),
+          child: Text(l10n.cancel),
         ),
         ElevatedButton(
           onPressed: _saveTarget,
@@ -98,7 +101,7 @@ class _TargetDialogState extends State<TargetDialog> {
             ),
             elevation: 0,
           ),
-          child: Text('Save'),
+          child: Text(l10n.save),
         ),
       ],
     );

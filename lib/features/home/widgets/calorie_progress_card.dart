@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../core/utils/localization_helper.dart';
 
 class CalorieProgressCard extends StatelessWidget {
   final double currentCalories;
@@ -18,6 +19,7 @@ class CalorieProgressCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     final progress = dailyTarget != null ? currentCalories / dailyTarget! : 0.0;
 
     return Container(
@@ -29,24 +31,24 @@ class CalorieProgressCard extends StatelessWidget {
       ),
       child: Column(
         children: [
-          _buildHeader(),
+          _buildHeader(l10n),
           SizedBox(height: 14),
-          _buildProgressRing(progress),
+          _buildProgressRing(progress, l10n),
           SizedBox(height: 14),
-          _buildMacrosSummary(),
+          _buildMacrosSummary(l10n),
           SizedBox(height: 14),
-          _buildAddButton(),
+          _buildAddButton(l10n),
         ],
       ),
     );
   }
 
-  Widget _buildHeader() {
+  Widget _buildHeader(l10n) {
     return Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Text(
-          'Today - ${DateTime.now().toString().split(' ')[0]}',
+          '${l10n.today} - ${DateTime.now().toString().split(' ')[0]}',
           style: TextStyle(
             fontSize: 14,
             color: Colors.grey[600],
@@ -70,8 +72,8 @@ class CalorieProgressCard extends StatelessWidget {
             ),
             child: Text(
               dailyTarget != null
-                  ? 'Target: ${dailyTarget!.toInt()}'
-                  : 'Set Target',
+                  ? '${l10n.target}: ${dailyTarget!.toInt()}'
+                  : l10n.setTarget,
               style: TextStyle(
                 fontSize: 11,
                 color: dailyTarget != null ? Colors.blue : Colors.grey[600],
@@ -84,7 +86,7 @@ class CalorieProgressCard extends StatelessWidget {
     );
   }
 
-  Widget _buildProgressRing(double progress) {
+  Widget _buildProgressRing(double progress, l10n) {
     return Container(
       width: 110,
       height: 110,
@@ -117,12 +119,14 @@ class CalorieProgressCard extends StatelessWidget {
                 ),
               ),
               Text(
-                dailyTarget != null ? 'of ${dailyTarget!.toInt()}' : 'calories',
+                dailyTarget != null
+                    ? '${l10n.ofText} ${dailyTarget!.toInt()}'
+                    : l10n.calories,
                 style: TextStyle(fontSize: 11, color: Colors.grey[600]),
               ),
               if (dailyTarget != null)
                 Text(
-                  'calories',
+                  l10n.calories,
                   style: TextStyle(fontSize: 10, color: Colors.grey[500]),
                 ),
             ],
@@ -132,9 +136,9 @@ class CalorieProgressCard extends StatelessWidget {
     );
   }
 
-  Widget _buildMacrosSummary() {
+  Widget _buildMacrosSummary(l10n) {
     return Text(
-      'Protein: ${currentMacros['protein']!.toInt()}g • Carbs: ${currentMacros['carbs']!.toInt()}g • Fat: ${currentMacros['fat']!.toInt()}g',
+      '${l10n.protein} ${currentMacros['protein']!.toInt()}g • ${l10n.carbs}: ${currentMacros['carbs']!.toInt()}g • ${l10n.fat}: ${currentMacros['fat']!.toInt()}g',
       style: TextStyle(
         fontSize: 12,
         color: Colors.grey[600],
@@ -143,7 +147,7 @@ class CalorieProgressCard extends StatelessWidget {
     );
   }
 
-  Widget _buildAddButton() {
+  Widget _buildAddButton(l10n) {
     return Center(
       child: SizedBox(
         width: 200,
@@ -159,7 +163,7 @@ class CalorieProgressCard extends StatelessWidget {
             elevation: 0,
           ),
           child: Text(
-            'Add Food',
+            l10n.addFood,
             style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
           ),
         ),

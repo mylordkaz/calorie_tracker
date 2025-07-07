@@ -198,7 +198,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
           TextButton(
             onPressed: () => Navigator.pop(context),
             style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
-            child: Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () => _addMealEntry(meal, multiplierController.text),
@@ -210,7 +210,7 @@ class _MealLibraryTabState extends State<MealLibraryTab> {
               ),
               elevation: 0,
             ),
-            child: Text('Add'),
+            child: Text(l10n.add),
           ),
         ],
       ),

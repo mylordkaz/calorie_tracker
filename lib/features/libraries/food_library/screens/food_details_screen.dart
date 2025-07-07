@@ -125,7 +125,7 @@ class FoodDetailsScreen extends StatelessWidget {
                                 borderRadius: BorderRadius.circular(8),
                               ),
                               child: Text(
-                                food.getDisplayUnit(),
+                                food.getDisplayUnit(l10n),
                                 style: TextStyle(
                                   fontSize: 12,
                                   color: Colors.grey[700],
@@ -184,7 +184,7 @@ class FoodDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        l10n.nutritionFactsPer(food.getDisplayUnit()),
+                        l10n.nutritionFactsPer(food.getDisplayUnit(l10n)),
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -492,7 +492,7 @@ class FoodDetailsScreen extends StatelessWidget {
           TextButton(
             onPressed: () => Navigator.pop(context),
             style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
-            child: Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
           ElevatedButton(
             onPressed: () async {

@@ -242,6 +242,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
   }
 
   Widget _buildFoodCard(FoodItem food, bool isSelected) {
+    final l10n = L10n.of(context);
     return Container(
       margin: EdgeInsets.only(bottom: 6),
       height: 56,
@@ -300,7 +301,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
                   ),
                 ),
                 Text(
-                  '${food.calories.toInt()} cal ${food.getDisplayUnit()}',
+                  '${food.calories.toInt()} cal ${food.getDisplayUnit(l10n)}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],

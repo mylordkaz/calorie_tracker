@@ -166,7 +166,7 @@ class _FoodLibraryTabState extends State<_FoodLibraryTab> {
                   ),
                 ),
                 Text(
-                  '${food.calories.toInt()} ${l10n.cal} ${food.getDisplayUnit()}',
+                  '${food.calories.toInt()} ${l10n.cal} ${food.getDisplayUnit(l10n)}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],

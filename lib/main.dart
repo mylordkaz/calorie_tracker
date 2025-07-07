@@ -45,7 +45,7 @@ class MyApp extends StatelessWidget {
         ],
         supportedLocales: [
           Locale('en'), // English
-          // Locale('ja'),
+          Locale('ja'),
           // Add more languages as needed
         ],
         home: FutureBuilder(

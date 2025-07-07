@@ -86,6 +86,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
   }
 
   Widget _buildFoodCard(FoodItem food) {
+    final l10n = L10n.of(context);
     return Container(
       margin: EdgeInsets.only(bottom: 6),
       height: 56,
@@ -131,7 +132,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
                   ),
                 ),
                 Text(
-                  '${food.calories.toInt()} cal ${food.getDisplayUnit()}',
+                  '${food.calories.toInt()} cal ${food.getDisplayUnit(l10n)}',
                   style: TextStyle(
                     fontSize: 12,
                     color: Colors.grey[600],
@@ -147,6 +148,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
   }
 
   void _showQuantityDialog(FoodItem food) {
+    final l10n = L10n.of(context);
     final quantityController = TextEditingController();
     String selectedUnit;
 
@@ -191,7 +193,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
                   FilteringTextInputFormatter.allow(RegExp(r'^\d*\.?\d*')),
                 ],
                 decoration: InputDecoration(
-                  labelText: 'Quantity',
+                  labelText: l10n.quantity,
                   filled: true,
                   fillColor: Colors.grey[50],
                   border: OutlineInputBorder(
@@ -226,7 +228,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
             TextButton(
               onPressed: () => Navigator.pop(context),
               style: TextButton.styleFrom(foregroundColor: Colors.grey[600]),
-              child: Text('Cancel'),
+              child: Text(l10n.cancel),
             ),
             ElevatedButton(
               onPressed: () =>
@@ -239,7 +241,7 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
                 ),
                 elevation: 0,
               ),
-              child: Text('Add'),
+              child: Text(l10n.add),
             ),
           ],
         ),
@@ -248,16 +250,17 @@ class _FoodLibraryTabState extends State<FoodLibraryTab> {
   }
 
   List<DropdownItem<String>> _getCustomUnitsForFood(FoodItem food) {
+    final l10n = L10n.of(context);
     switch (food.unit) {
       case 'item':
-        return [DropdownItem(value: 'items', text: 'Items')];
+        return [DropdownItem(value: 'items', text: l10n.items)];
       case 'serving':
         return [
-          DropdownItem(value: 'servings', text: 'Servings'),
-          DropdownItem(value: 'grams', text: 'Grams'),
+          DropdownItem(value: 'servings', text: l10n.servings),
+          DropdownItem(value: 'grams', text: l10n.grams),
         ];
       default: // '100g'
-        return [DropdownItem(value: 'grams', text: 'Grams')];
+        return [DropdownItem(value: 'grams', text: l10n.grams)];
     }
   }
 

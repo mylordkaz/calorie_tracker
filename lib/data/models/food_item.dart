@@ -1,4 +1,5 @@
 import 'package:hive/hive.dart';
+import '../../l10n/app_localizations.dart';
 
 part 'food_item.g.dart';
 
@@ -112,27 +113,27 @@ class FoodItem extends HiveObject {
   double getFatForGrams(double grams) => getMacrosForGrams(grams)['fat']!;
 
   // Display helpers
-  String getDisplayUnit() {
+  String getDisplayUnit(AppLocalizations l10n) {
     switch (unit) {
       case 'item':
-        return 'per item';
+        return l10n.perItem;
       case 'serving':
         return servingDescription != null
-            ? 'per ${servingDescription!}'
-            : 'per serving';
+            ? l10n.perServings(servingDescription!)
+            : l10n.perServings('serving');
       case '100g':
       default:
-        return 'per 100g';
+        return l10n.per100g;
     }
   }
 
-  String getFullDescription() {
+  String getFullDescription(AppLocalizations l10n) {
     if (unit == 'serving' && servingDescription != null) {
       if (unitWeight != null) {
         return '${servingDescription!} (${unitWeight!.toInt()}g)';
       }
       return servingDescription!;
     }
-    return getDisplayUnit();
+    return getDisplayUnit(l10n);
   }
 }

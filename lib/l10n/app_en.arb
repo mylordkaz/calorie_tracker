@@ -1,461 +1,469 @@
 {
-  "appName": "Nibble",
-  "home": "Home",
-  "library": "Library",
-  "stats": "Stats", 
-  "tools": "Tools",
-  "foods": "Foods",
-  "meals": "Meals",
-  "addFood": "Add Food",
-  "addMeal": "Add Meal",
-  "searchFoods": "Search foods...",
-  "searchMeals": "Search meals...",
-  "calories": "Calories",
-  "protein": "Protein",
-  "carbs": "Carbs",
-  "fat": "Fat",
-  "grams": "grams",
-  "save": "Save",
-  "cancel": "Cancel",
-  "delete": "Delete",
-  "edit": "Edit",
-	"today": "Today",
-  "target": "Target",
-  "ofText": "of",
-	"to": "to",
-  "quickActions": "Quick Actions",
-  "quickStats": "Quick Stats",
-  "todaysLog": "Today's Log",
-  "copyFromYesterday": "Copy from Yesterday",
-  "addAllYesterdayEntries": "Add all yesterday's entries to today",
-  "noEntriesLoggedYet": "No entries logged today yet",
-  "tapAddFoodToStart": "Tap \"Add Food\" to start tracking",
-  "viewAll": "View All",
-  "weeklyAverage": "Weekly Average",
-  "yesterday": "Yesterday",
-  "remaining": "Remaining",
-  "progress": "Progress",
-  "caloriesPerDay": "calories/day",
-  "todaysCompleteLog": "Today's Complete Log",
-  "close": "Close",
-  "quickEntry": "quick entry",
-  "serving": "serving",
-  "servings": "servings",
-  "copiedEntriesFromYesterday": "Copied entries from yesterday",
-  "noEntriesFoundYesterday": "No entries found for yesterday",
-  "dailyCalorieTarget": "Daily Calorie Target",
-  "dailyTargetUpdated": "Daily target updated to {calories} calories",
-	"loading": "Loading...",
-  "errorOccurred": "An error occurred",
-  "entriesCount": "{count, plural, =0{0 entries} =1{1 entry} other{{count} entries}}",
-	"targetWithValue": "Target: {value}",
-  "setTarget": "Set Target",
-	"setDailyTarget": "Set Daily Calorie Target",
-  "todayWithDate": "Today - {date}",
-  "cal": "cal",
-	"addFoodEntry": "Add Food Entry",
-  "quickEntry": "Quick Entry",
-  "foodName": "Food Name",
-  "nutritionDetailsOptional": "Nutrition Details (Optional)",
-  "nutritionEditLater": "These can be edited later in the food library",
-  "addQuickEntry": "Add Quick Entry",
-  "quantity": "Quantity",
-  "unit": "Unit",
-  "items": "Items",
-  "grams": "Grams",
-  "add": "Add",
-  "saveToLibrary": "Save to Library?",
-  "saveToLibraryPrompt": "Do you want to save \"{name}\" to your food library for future use?",
-  "@saveToLibraryPrompt": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "noJustAddToday": "No, just add today",
-  "yesSaveToLibrary": "Yes, save to library",
-  "addFoodTitle": "Add {foodName}",
-  "@addFoodTitle": {
-    "placeholders": {
-      "foodName": {
-        "type": "String"
-      }
-    }
-  },
-  "addMealTitle": "Add {mealName}",
-  "@addMealTitle": {
-    "placeholders": {
-      "mealName": {
-        "type": "String"
-      }
-    }
-  },
-  "servingsHelperText": "1.0 = full meal, 0.5 = half meal",
-  "addedFoodToLog": "Added {foodName} to today's log",
-  "@addedFoodToLog": {
-    "placeholders": {
-      "foodName": {
-        "type": "String"
-      }
-    }
-  },
-  "addedMealToLog": "Added {mealName} to today's log",
-  "@addedMealToLog": {
-    "placeholders": {
-      "mealName": {
-        "type": "String"
-      }
-    }
-  },
-  "savedToLibraryAndAdded": "{name} saved to library and added to today's log",
-  "@savedToLibraryAndAdded": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      }
-    }
-  },
-  "addedWithCalories": "Added {name} ({calories} cal) to today's log",
-  "@addedWithCalories": {
-    "placeholders": {
-      "name": {
-        "type": "String"
-      },
-      "calories": {
-        "type": "int"
-      }
-    }
-  },
-  "editInLibrary": "Edit in Library",
-  "noFoodsFound": "No foods found",
-  "noMealsFound": "No meals found",
-  "ingredientsCount": "{count} ingredients",
-  "@ingredientsCount": {
-    "placeholders": {
-      "count": {
-        "type": "int"
-      }
-    }
-  },
-  "hintZero": "0",
-  "fieldRequired": "{field} is required",
-  "@fieldRequired": {
-    "placeholders": {
-      "field": {
-        "type": "String"
-      }
-    }
-  },
-  "quickEntryLower": "quick entry",
-	"bmiCalculator": "BMI Calculator",
-	"bodyMassIndex": "Body Mass Index", 
-	"weight": "Weight",
-	"height": "Height",
-	"yourBmiResult": "Your BMI Result",
-	"calculateBmi": "Calculate BMI",
-	"bmiCategories": "BMI Categories",
-	"underweight": "Underweight", 
-	"normalWeight": "Normal weight",
-	"overweight": "Overweight",
-	"obese": "Obese",
-	"required": "Required",
-	"invalid": "Invalid",
-	"bodyFatCalculator": "Body Fat Calculator",
-	"estimateBodyFatPercentage": "Estimate body fat percentage (US Navy Method)",
-	"age": "Age",
-	"years": "years",
-	"gender": "Gender",
-	"male": "Male",
-	"female": "Female",
-	"neck": "Neck",
-	"waist": "Waist",
-	"hip": "Hip",
-	"bodyMeasurements": "Body Measurements",
-	"measurementInstructions": "Measurement Instructions",
-	"calculateBodyFat": "Calculate Body Fat",
-	"bodyFatCategories": "Body Fat Categories",
-	"bodyFatCategoriesMen": "Body Fat Categories (Men)",
-	"bodyFatCategoriesWomen": "Body Fat Categories (Women)",
-	"essentialFat": "Essential Fat",
-	"athletes": "Athletes",
-	"fitness": "Fitness",
-	"average": "Average",
-	"yourBodyFatResult": "Your Body Fat Result",
-	"neckMeasurementTip": "• Neck: Measure below the larynx",
-	"waistMeasurementTip": "• Waist: Measure at the narrowest point",
-	"hipMeasurementTip": "• Hip: Measure at the widest point",
-	"measurementAccuracyTip": "• Measure without clothes for accuracy",
-	"hipMeasurementRequired": "Hip measurement is required for women",
-	"usNavyMethod": "US Navy Method",
-	"usNavyDesc": "Developed by the US Navy, this method estimates body fat using body circumference measurements. Results are estimates and may vary from other methods.",
-	"idealWeightCalculator": "Ideal Weight Calculator",
-"findIdealWeightRange": "Find your ideal weight range (Robinson Formula)",
-"calculateIdealWeight": "Calculate Ideal Weight",
-"yourIdealWeight": "Your Ideal Weight",
-"idealWeight": "ideal weight",
-"healthyWeightRange": "Healthy Weight Range",
-"rangeBasedOnIdealWeight": "Range based on ±5kg from ideal weight",
-"currentWeight": "Current Weight: {weight}kg",
-"@currentWeight": {
-  "placeholders": {
-    "weight": {
-      "type": "String"
-    }
-  }
-},
-"withinIdealRange": "Within ideal range",
-"aboveIdeal": "{difference}kg above ideal",
-"@aboveIdeal": {
-  "placeholders": {
-    "difference": {
-      "type": "String"
-    }
-  }
-},
-"belowIdeal": "{difference}kg below ideal",
-"@belowIdeal": {
-  "placeholders": {
-    "difference": {
-      "type": "String"
-    }
-  }
-},
-"robinsonFormula": "Robinson Formula",
-"robinsonFormulaMen": "Men: 52kg + 1.9kg per inch over 5 feet",
-"robinsonFormulaWomen": "Women: 49kg + 1.7kg per inch over 5 feet",
-"tdeeCalculator": "TDEE Calculator",
-"totalDailyEnergyExpenditure": "Total Daily Energy Expenditure",
-"activityLevel": "Activity Level",
-"calculateTdee": "Calculate TDEE",
-"yourTdeeResult": "Your TDEE Result",
-"caloriesPerDay": "calories per day",
-"tdeeMaintenanceDescription": "This is your estimated daily calorie needs to maintain your current weight.",
-"setAsDailyCalorieTarget": "Set as Daily Calorie Target",
-"dailyCalorieTargetUpdatedTo": "Daily calorie target updated to {calories} calories",
-"@dailyCalorieTargetUpdatedTo": {
-  "placeholders": {
-    "calories": {
-      "type": "int"
-    }
-  }
-},
-"sedentaryNoExercise": "Sedentary (no exercise)",
-"lightOneToTwoDays": "Light (1-2 days/week)",
-"lightTwoToThreeDays": "Light (2-3 days/week)",
-"moderateThreeToFourDays": "Moderate (3-4 days/week)",
-"moderateFourToFiveDays": "Moderate (4-5 days/week)",
-"activeSixToSevenDays": "Active (6-7 days/week)",
-"veryActiveTwiceDaily": "Very Active (2x daily)",
-"extremelyActivePhysicalJob": "Extreme (physical job)",
-"healthAndFitnessCalculators": "Health & Fitness Calculators",
-"calculateImportantHealthMetrics": "Calculate important health metrics",
-"tdeeCalculatorDescription": "Calculate your daily calorie needs",
-"bmiCalculatorDescription": "Calculate your Body Mass Index",
-"idealWeightCalculatorDescription": "Find your ideal weight range",
-"bodyFatCalculatorDescription": "Estimate your body fat percentage",
-"monday": "Mon",
-"tuesday": "Tue", 
-"wednesday": "Wed",
-"thursday": "Thu",
-"friday": "Fri",
-"saturday": "Sat",
-"sunday": "Sun",
-"january": "January",
-"february": "February",
-"march": "March",
-"april": "April",
-"may": "May",
-"june": "June",
-"july": "July",
-"august": "August",
-"september": "September",
-"october": "October",
-"november": "November",
-"december": "December",
-"sevenDays": "7 Days",
-"thisWeek": "This Week",
-"thirtyDays": "30 Days",
-"noDataAvailable": "No data available",
-"average": "Avg",
-"kcal": "kcal",
-"selectDateToViewDetails": "Select a date to view details",
-"tapOnAnyDayInCalendar": "Tap on any day in the calendar above",
-"noEntriesYet": "No entries yet",
-"addEntry": "Add Entry",
-"entriesLogged": "entries logged",
-"foodLog": "Food Log",
-"quickCalorieEntry": "Quick Calorie Entry",
-"nameRequired": "Name required",
-"foodNameHint": "e.g., Sandwich from café",
-"noJustAddToDate": "No, just add to {date}",
-"@noJustAddToDate": {
-  "placeholders": {
-    "date": {
-      "type": "String"
-    }
-  }
-},
-"addEntryForDate": "Add Entry - {date}",
-"@addEntryForDate": {
-  "placeholders": {
-    "date": {
-      "type": "String"
-    }
-  }
-},
-"statistics": "Statistics",
-"deleteEntry": "Delete Entry",
-"confirmDeleteEntry": "Are you sure you want to delete this entry?",
-"entryDeletedSuccessfully": "Entry deleted successfully",
-"errorDeletingEntry": "Error deleting entry: {error}",
-"@errorDeletingEntry": {
-  "placeholders": {
-    "error": {
-      "type": "String"
-    }
-  }
-},
-"perItem": "per item",
-"perServing": "per serving", 
-"per100g": "per 100g",
-"editFood": "Edit Food",
-"addNewFood": "Add New Food", 
-"basicInformation": "Basic Information",
-"foodNameHint": "e.g., Chicken Breast",
-"descriptionOptional": "Description (Optional)",
-"briefDescription": "Brief description of the food item",
-"servingSize": "Serving Size",
-"servingSizeHint": "e.g., 1 cup, 2 slices",
-"servingSizeRequired": "Serving size is required",
-"weightOptional": "Weight (Optional)",
-  "weightInGrams": "Weight in grams",
-  "additionalNutrients": "Additional Nutrients",
-  "nutrientName": "Nutrient name",
-  "nutrientNameHint": "e.g., Fiber, Sodium",
-	"amount": "amount",
-  "value": "Value",
-  "enterAmount": "Enter amount",
-  "valueRequired": "Value required",
-  "updateFood": "Update Food",
-  "saveFood": "Save Food",
-	"photoOptional": "Photo (Optional)",
-	"tapToAdd": "Tap to add photo",
-  "selectImageSource": "Select Image Source",
-  "camera": "Camera",
-  "gallery": "Gallery",
-  "fieldRequired": "{field} is required",
-  "enterValidNumber": "Enter a valid number",
-  "noFoodsYet": "No foods in your library yet",
-  "addFirstFood": "Add your first food to get started",
-  "noFoodsFound": "No foods found",
-  "tryDifferentSearch": "Try a different search term",
-	"change": "Change",
-	"remove": "remove",
-	"standardNutritionInfo": "Standard nutrition information per 100 grams",
-  "itemNutritionInfo": "For foods like eggs, slices of bread, etc.",
-  "servingNutritionInfo": "US-style serving size (e.g., 1 cup, 2 slices)",
-	"deleteFood": "Delete Food",
-  "deleteFoodConfirmation": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
-  "nutritionFacts": "Nutrition Facts",
-  "nutritionFactsPer": "Nutrition Facts ({unit})",
-  "usageStats": "Usage Statistics",
-  "created": "Created",
-  "lastUsed": "Last Used",
-  "timesUsed": "Times Used",
-  "totalWeight": "Total Weight: {weight}g",
-  "foodDeleted": "Food deleted successfully",
-	"unitWeight": "Unit Weight: ({weight})g",
-	"noFoodInLib": "No foods in your library yet",
-	"noFoodMatch": "No foods match your search",
-	"tapAddFood": "Tap the + button to add your first food",
-	"trySearchTerm": "Try a different search term",
-	"totalWeightShort": "{weight}g total",
-	"editMeal": "Edit Meal",
-	"createNewMeal": "Create New Meal",
-	"mealName": "Meal Name",
-	"mealNameHint": "e.g., Chicken & Rice Bowl",
-	"mealDescHint": "High protein meal",
-	"category": "Category",
-	"categoryHint": "Lunch",
-	"ingredients": "Ingredients ({count})",
-	"@ingredients": {
-		"placeholders": {
-			"count": {
-				"type": "int"
+	"appName": "Nibble",
+		"home": "Home",
+		"library": "Library",
+		"stats": "Stats", 
+		"tools": "Tools",
+		"foods": "Foods",
+		"meals": "Meals",
+		"addFood": "Add Food",
+		"addMeal": "Add Meal",
+		"searchFoods": "Search foods...",
+		"searchMeals": "Search meals...",
+		"calories": "Calories",
+		"protein": "Protein",
+		"carbs": "Carbs",
+		"fat": "Fat",
+		"grams": "grams",
+		"save": "Save",
+		"cancel": "Cancel",
+		"delete": "Delete",
+		"edit": "Edit",
+		"today": "Today",
+		"target": "Target",
+		"ofText": "of",
+		"to": "to",
+		"quickActions": "Quick Actions",
+		"quickStats": "Quick Stats",
+		"todaysLog": "Today's Log",
+		"copyFromYesterday": "Copy from Yesterday",
+		"addAllYesterdayEntries": "Add all yesterday's entries to today",
+		"noEntriesLoggedYet": "No entries logged today yet",
+		"tapAddFoodToStart": "Tap \"Add Food\" to start tracking",
+		"viewAll": "View All",
+		"weeklyAverage": "Weekly Average",
+		"yesterday": "Yesterday",
+		"remaining": "Remaining",
+		"progress": "Progress",
+		"caloriesPerDay": "calories/day",
+		"todaysCompleteLog": "Today's Complete Log",
+		"close": "Close",
+		"quickEntry": "quick entry",
+		"serving": "serving",
+		"servings": "servings",
+		"copiedEntriesFromYesterday": "Copied entries from yesterday",
+		"noEntriesFoundYesterday": "No entries found for yesterday",
+		"dailyCalorieTarget": "Daily Calorie Target",
+		"dailyTargetUpdated": "Daily target updated to {calories} calories",
+		"loading": "Loading...",
+		"errorOccurred": "An error occurred",
+		"entriesCount": "{count, plural, =0{0 entries} =1{1 entry} other{{count} entries}}",
+		"targetWithValue": "Target: {value}",
+		"setTarget": "Set Target",
+		"setDailyTarget": "Set Daily Calorie Target",
+		"todayWithDate": "Today - {date}",
+		"cal": "cal",
+		"addFoodEntry": "Add Food Entry",
+		"quickEntry": "Quick Entry",
+		"foodName": "Food Name",
+		"nutritionDetailsOptional": "Nutrition Details (Optional)",
+		"nutritionEditLater": "These can be edited later in the food library",
+		"addQuickEntry": "Add Quick Entry",
+		"quantity": "Quantity",
+		"unit": "Unit",
+		"items": "Items",
+		"grams": "Grams",
+		"add": "Add",
+		"saveToLibrary": "Save to Library?",
+		"saveToLibraryPrompt": "Do you want to save \"{name}\" to your food library for future use?",
+		"@saveToLibraryPrompt": {
+			"placeholders": {
+				"name": {
+					"type": "String"
+				}
 			}
-		}
-	},
-	"noIngredientsYet": "No ingredients added yet",
-	"tapAddIngredientHint": "Tap \"Add Ingredient\" to start building your meal",
-	"pleaseAddOneIngredient": "Please add at least one ingredient",
-	"saveMeal": "Save Meal",
-	"updateMeal": "Update Meal",
-	"nutritionSummary": "Nutrition Summary",
-	"addIngredient": "Add Ingredient",
-	"selectedFood": "Selected: {foodName}",
-	"@selectedFood": {
-		"placeholders": {
-			"foodName": {
-				"type": "String"
+		},
+		"noJustAddToday": "No, just add today",
+		"yesSaveToLibrary": "Yes, save to library",
+		"addFoodTitle": "Add {foodName}",
+		"@addFoodTitle": {
+			"placeholders": {
+				"foodName": {
+					"type": "String"
+				}
 			}
-		}
-	},
-	"nutritionFor": "Nutrition for {quantity}:",
-	"@nutritionFor": {
-		"placeholders": {
-			"quantity": {
-				"type": "String"
+		},
+		"addMealTitle": "Add {mealName}",
+		"@addMealTitle": {
+			"placeholders": {
+				"mealName": {
+					"type": "String"
+				}
 			}
-		}
-	},
-	"favorite": "Favorite",
-	"totalWeight": "Total Weight: {weight}g",
-	"@totalWeight": {
-		"placeholders": {
-			"weight": {
-				"type": "int"
+		},
+		"servingsHelperText": "1.0 = full meal, 0.5 = half meal",
+		"addedFoodToLog": "Added {foodName} to today's log",
+		"@addedFoodToLog": {
+			"placeholders": {
+				"foodName": {
+					"type": "String"
+				}
 			}
-		}
-	},
-	"nutritionFactsTotal": "Nutrition Facts (Total)",
-	"kcal": "kcal",
-	"usageStatistics": "Usage Statistics",
-	"timesUsed": "Times Used",
-	"lastUsed": "Last Used",
-	"created": "Created",
-	"deleteMeal": "Delete Meal",
-	"deleteMealConfirmation": "Are you sure you want to delete \"{mealName}\"? This action cannot be undone.",
-	"@deleteMealConfirmation": {
-		"placeholders": {
-			"mealName": {
-				"type": "String"
+		},
+		"addedMealToLog": "Added {mealName} to today's log",
+		"@addedMealToLog": {
+			"placeholders": {
+				"mealName": {
+					"type": "String"
+				}
 			}
-		}
-	},
-	"addedToFavorites": "Added to favorites",
-	"removedFromFavorites": "Removed from favorites",
-	"missingFood": "Missing Food Item",
-	"foodId": "Food ID: {id}",
-	"@foodId": {
-		"placeholders": {
-			"id": {
-				"type": "String"
+		},
+		"savedToLibraryAndAdded": "{name} saved to library and added to today's log",
+		"@savedToLibraryAndAdded": {
+			"placeholders": {
+				"name": {
+					"type": "String"
+				}
 			}
-		}
-	},
-	"noMealsInLibrary": "No meals in your library yet",
-	"noMealsMatchSearch": "No meals match your search",
-	"tapPlusButtonCreateMeal": "Tap the + button to create your first meal",
-	"ingredientsWithTotal": "{count} ingredients • {weight}g total",
-	"@ingredientsWithTotal": {
-		"placeholders": {
-			"count": {
-				"type": "int"
-			},
-			"weight": {
-				"type": "int"
+		},
+		"addedWithCalories": "Added {name} ({calories} cal) to today's log",
+		"@addedWithCalories": {
+			"placeholders": {
+				"name": {
+					"type": "String"
+				},
+				"calories": {
+					"type": "int"
+				}
 			}
-		}
-	}
+		},
+		"editInLibrary": "Edit in Library",
+		"noFoodsFound": "No foods found",
+		"noMealsFound": "No meals found",
+		"ingredientsCount": "{count} ingredients",
+		"@ingredientsCount": {
+			"placeholders": {
+				"count": {
+					"type": "int"
+				}
+			}
+		},
+		"hintZero": "0",
+		"fieldRequired": "{field} is required",
+		"@fieldRequired": {
+			"placeholders": {
+				"field": {
+					"type": "String"
+				}
+			}
+		},
+		"quickEntryLower": "quick entry",
+		"bmiCalculator": "BMI Calculator",
+		"bodyMassIndex": "Body Mass Index", 
+		"weight": "Weight",
+		"height": "Height",
+		"yourBmiResult": "Your BMI Result",
+		"calculateBmi": "Calculate BMI",
+		"bmiCategories": "BMI Categories",
+		"underweight": "Underweight", 
+		"normalWeight": "Normal weight",
+		"overweight": "Overweight",
+		"obese": "Obese",
+		"required": "Required",
+		"invalid": "Invalid",
+		"bodyFatCalculator": "Body Fat Calculator",
+		"estimateBodyFatPercentage": "Estimate body fat percentage (US Navy Method)",
+		"age": "Age",
+		"years": "years",
+		"gender": "Gender",
+		"male": "Male",
+		"female": "Female",
+		"neck": "Neck",
+		"waist": "Waist",
+		"hip": "Hip",
+		"bodyMeasurements": "Body Measurements",
+		"measurementInstructions": "Measurement Instructions",
+		"calculateBodyFat": "Calculate Body Fat",
+		"bodyFatCategories": "Body Fat Categories",
+		"bodyFatCategoriesMen": "Body Fat Categories (Men)",
+		"bodyFatCategoriesWomen": "Body Fat Categories (Women)",
+		"essentialFat": "Essential Fat",
+		"athletes": "Athletes",
+		"fitness": "Fitness",
+		"average": "Average",
+		"yourBodyFatResult": "Your Body Fat Result",
+		"neckMeasurementTip": "• Neck: Measure below the larynx",
+		"waistMeasurementTip": "• Waist: Measure at the narrowest point",
+		"hipMeasurementTip": "• Hip: Measure at the widest point",
+		"measurementAccuracyTip": "• Measure without clothes for accuracy",
+		"hipMeasurementRequired": "Hip measurement is required for women",
+		"usNavyMethod": "US Navy Method",
+		"usNavyDesc": "Developed by the US Navy, this method estimates body fat using body circumference measurements. Results are estimates and may vary from other methods.",
+		"idealWeightCalculator": "Ideal Weight Calculator",
+		"findIdealWeightRange": "Find your ideal weight range (Robinson Formula)",
+		"calculateIdealWeight": "Calculate Ideal Weight",
+		"yourIdealWeight": "Your Ideal Weight",
+		"idealWeight": "ideal weight",
+		"healthyWeightRange": "Healthy Weight Range",
+		"rangeBasedOnIdealWeight": "Range based on ±5kg from ideal weight",
+		"currentWeight": "Current Weight: {weight}kg",
+		"@currentWeight": {
+			"placeholders": {
+				"weight": {
+					"type": "String"
+				}
+			}
+		},
+		"withinIdealRange": "Within ideal range",
+		"aboveIdeal": "{difference}kg above ideal",
+		"@aboveIdeal": {
+			"placeholders": {
+				"difference": {
+					"type": "String"
+				}
+			}
+		},
+		"belowIdeal": "{difference}kg below ideal",
+		"@belowIdeal": {
+			"placeholders": {
+				"difference": {
+					"type": "String"
+				}
+			}
+		},
+		"robinsonFormula": "Robinson Formula",
+		"robinsonFormulaMen": "Men: 52kg + 1.9kg per inch over 5 feet",
+		"robinsonFormulaWomen": "Women: 49kg + 1.7kg per inch over 5 feet",
+		"tdeeCalculator": "TDEE Calculator",
+		"totalDailyEnergyExpenditure": "Total Daily Energy Expenditure",
+		"activityLevel": "Activity Level",
+		"calculateTdee": "Calculate TDEE",
+		"yourTdeeResult": "Your TDEE Result",
+		"caloriesPerDay": "calories per day",
+		"tdeeMaintenanceDescription": "This is your estimated daily calorie needs to maintain your current weight.",
+		"setAsDailyCalorieTarget": "Set as Daily Calorie Target",
+		"dailyCalorieTargetUpdatedTo": "Daily calorie target updated to {calories} calories",
+		"@dailyCalorieTargetUpdatedTo": {
+			"placeholders": {
+				"calories": {
+					"type": "int"
+				}
+			}
+		},
+		"sedentaryNoExercise": "Sedentary (no exercise)",
+		"lightOneToTwoDays": "Light (1-2 days/week)",
+		"lightTwoToThreeDays": "Light (2-3 days/week)",
+		"moderateThreeToFourDays": "Moderate (3-4 days/week)",
+		"moderateFourToFiveDays": "Moderate (4-5 days/week)",
+		"activeSixToSevenDays": "Active (6-7 days/week)",
+		"veryActiveTwiceDaily": "Very Active (2x daily)",
+		"extremelyActivePhysicalJob": "Extreme (physical job)",
+		"healthAndFitnessCalculators": "Health & Fitness Calculators",
+		"calculateImportantHealthMetrics": "Calculate important health metrics",
+		"tdeeCalculatorDescription": "Calculate your daily calorie needs",
+		"bmiCalculatorDescription": "Calculate your Body Mass Index",
+		"idealWeightCalculatorDescription": "Find your ideal weight range",
+		"bodyFatCalculatorDescription": "Estimate your body fat percentage",
+		"monday": "Mon",
+		"tuesday": "Tue", 
+		"wednesday": "Wed",
+		"thursday": "Thu",
+		"friday": "Fri",
+		"saturday": "Sat",
+		"sunday": "Sun",
+		"january": "January",
+		"february": "February",
+		"march": "March",
+		"april": "April",
+		"may": "May",
+		"june": "June",
+		"july": "July",
+		"august": "August",
+		"september": "September",
+		"october": "October",
+		"november": "November",
+		"december": "December",
+		"sevenDays": "7 Days",
+		"thisWeek": "This Week",
+		"thirtyDays": "30 Days",
+		"noDataAvailable": "No data available",
+		"average": "Avg",
+		"kcal": "kcal",
+		"selectDateToViewDetails": "Select a date to view details",
+		"tapOnAnyDayInCalendar": "Tap on any day in the calendar above",
+		"noEntriesYet": "No entries yet",
+		"addEntry": "Add Entry",
+		"entriesLogged": "entries logged",
+		"foodLog": "Food Log",
+		"quickCalorieEntry": "Quick Calorie Entry",
+		"nameRequired": "Name required",
+		"foodNameHint": "e.g., Sandwich from café",
+		"noJustAddToDate": "No, just add to {date}",
+		"@noJustAddToDate": {
+			"placeholders": {
+				"date": {
+					"type": "String"
+				}
+			}
+		},
+		"addEntryForDate": "Add Entry - {date}",
+		"@addEntryForDate": {
+			"placeholders": {
+				"date": {
+					"type": "String"
+				}
+			}
+		},
+		"statistics": "Statistics",
+		"deleteEntry": "Delete Entry",
+		"confirmDeleteEntry": "Are you sure you want to delete this entry?",
+		"entryDeletedSuccessfully": "Entry deleted successfully",
+		"errorDeletingEntry": "Error deleting entry: {error}",
+		"@errorDeletingEntry": {
+			"placeholders": {
+				"error": {
+					"type": "String"
+				}
+			}
+		},
+		"perItem": "per item",
+		"perServing": "per serving", 
+		"per100g": "per 100g",
+		"editFood": "Edit Food",
+		"addNewFood": "Add New Food", 
+		"basicInformation": "Basic Information",
+		"foodNameHint": "e.g., Chicken Breast",
+		"descriptionOptional": "Description (Optional)",
+		"briefDescription": "Brief description of the food item",
+		"servingSize": "Serving Size",
+		"servingSizeHint": "e.g., 1 cup, 2 slices",
+		"servingSizeRequired": "Serving size is required",
+		"weightOptional": "Weight (Optional)",
+		"weightInGrams": "Weight in grams",
+		"additionalNutrients": "Additional Nutrients",
+		"nutrientName": "Nutrient name",
+		"nutrientNameHint": "e.g., Fiber, Sodium",
+		"amount": "amount",
+		"value": "Value",
+		"enterAmount": "Enter amount",
+		"valueRequired": "Value required",
+		"updateFood": "Update Food",
+		"saveFood": "Save Food",
+		"photoOptional": "Photo (Optional)",
+		"tapToAdd": "Tap to add photo",
+		"selectImageSource": "Select Image Source",
+		"camera": "Camera",
+		"gallery": "Gallery",
+		"fieldRequired": "{field} is required",
+		"enterValidNumber": "Enter a valid number",
+		"noFoodsYet": "No foods in your library yet",
+		"addFirstFood": "Add your first food to get started",
+		"noFoodsFound": "No foods found",
+		"tryDifferentSearch": "Try a different search term",
+		"change": "Change",
+		"remove": "remove",
+		"standardNutritionInfo": "Standard nutrition information per 100 grams",
+		"itemNutritionInfo": "For foods like eggs, slices of bread, etc.",
+		"servingNutritionInfo": "US-style serving size (e.g., 1 cup, 2 slices)",
+		"deleteFood": "Delete Food",
+		"deleteFoodConfirmation": "Are you sure you want to delete \"{name}\"? This action cannot be undone.",
+		"nutritionFacts": "Nutrition Facts",
+		"nutritionFactsPer": "Nutrition Facts ({unit})",
+		"usageStats": "Usage Statistics",
+		"created": "Created",
+		"lastUsed": "Last Used",
+		"timesUsed": "Times Used",
+		"totalWeight": "Total Weight: {weight}g",
+		"foodDeleted": "Food deleted successfully",
+		"unitWeight": "Unit Weight: ({weight})g",
+		"noFoodInLib": "No foods in your library yet",
+		"noFoodMatch": "No foods match your search",
+		"tapAddFood": "Tap the + button to add your first food",
+		"trySearchTerm": "Try a different search term",
+		"totalWeightShort": "{weight}g total",
+		"editMeal": "Edit Meal",
+		"createNewMeal": "Create New Meal",
+		"mealName": "Meal Name",
+		"mealNameHint": "e.g., Chicken & Rice Bowl",
+		"mealDescHint": "High protein meal",
+		"category": "Category",
+		"categoryHint": "Lunch",
+		"ingredients": "Ingredients ({count})",
+		"@ingredients": {
+			"placeholders": {
+				"count": {
+					"type": "int"
+				}
+			}
+		},
+		"noIngredientsYet": "No ingredients added yet",
+		"tapAddIngredientHint": "Tap \"Add Ingredient\" to start building your meal",
+		"pleaseAddOneIngredient": "Please add at least one ingredient",
+		"saveMeal": "Save Meal",
+		"updateMeal": "Update Meal",
+		"nutritionSummary": "Nutrition Summary",
+		"addIngredient": "Add Ingredient",
+		"selectedFood": "Selected: {foodName}",
+		"@selectedFood": {
+			"placeholders": {
+				"foodName": {
+					"type": "String"
+				}
+			}
+		},
+		"nutritionFor": "Nutrition for {quantity}:",
+		"@nutritionFor": {
+			"placeholders": {
+				"quantity": {
+					"type": "String"
+				}
+			}
+		},
+		"favorite": "Favorite",
+		"totalWeight": "Total Weight: {weight}g",
+		"@totalWeight": {
+			"placeholders": {
+				"weight": {
+					"type": "int"
+				}
+			}
+		},
+		"nutritionFactsTotal": "Nutrition Facts (Total)",
+		"kcal": "kcal",
+		"usageStatistics": "Usage Statistics",
+		"timesUsed": "Times Used",
+		"lastUsed": "Last Used",
+		"created": "Created",
+		"deleteMeal": "Delete Meal",
+		"deleteMealConfirmation": "Are you sure you want to delete \"{mealName}\"? This action cannot be undone.",
+		"@deleteMealConfirmation": {
+			"placeholders": {
+				"mealName": {
+					"type": "String"
+				}
+			}
+		},
+		"addedToFavorites": "Added to favorites",
+		"removedFromFavorites": "Removed from favorites",
+		"missingFood": "Missing Food Item",
+		"foodId": "Food ID: {id}",
+		"@foodId": {
+			"placeholders": {
+				"id": {
+					"type": "String"
+				}
+			}
+		},
+		"noMealsInLibrary": "No meals in your library yet",
+		"noMealsMatchSearch": "No meals match your search",
+		"tapPlusButtonCreateMeal": "Tap the + button to create your first meal",
+		"ingredientsWithTotal": "{count} ingredients • {weight}g total",
+		"@ingredientsWithTotal": {
+			"placeholders": {
+				"count": {
+					"type": "int"
+				},
+				"weight": {
+					"type": "int"
+				}
+			}
+		},
+	"perServings": "per {serving}",
+		"@perServings": {
+			"placeholders": {
+				"serving": {
+					"type": "String"
+				}
+			}
+		} 
 }

@@ -916,4 +916,9 @@ class AppLocalizationsEn extends AppLocalizations {
   String ingredientsWithTotal(int count, int weight) {
     return '$count ingredients • ${weight}g total';
   }
+
+  @override
+  String perServings(String serving) {
+    return 'per $serving';
+  }
 }

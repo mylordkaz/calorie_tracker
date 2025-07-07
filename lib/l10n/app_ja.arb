@@ -1,0 +1,469 @@
+{
+	"appName": "Nibble",
+		"home": "ホーム",
+		"library": "ライブラリー",
+		"stats": "統計", 
+		"tools": "ツール",
+		"foods": "食品",
+		"meals": "食事",
+		"addFood": "食品を追加",
+		"addMeal": "食事を追加",
+		"searchFoods": "食品を検索...",
+		"searchMeals": "食事を検索...",
+		"calories": "カロリー",
+		"protein": "タンパク質",
+		"carbs": "炭水化物",
+		"fat": "脂質",
+		"grams": "グラム",
+		"save": "保存",
+		"cancel": "キャンセル",
+		"delete": "削除",
+		"edit": "編集",
+		"today": "今日",
+		"target": "目標",
+		"ofText": "の",
+		"to": "まで",
+		"quickActions": "クイックアクション",
+		"quickStats": "クイック統計",
+		"todaysLog": "今日のログ",
+		"copyFromYesterday": "昨日からコピー",
+		"addAllYesterdayEntries": "昨日の全エントリーを今日に追加",
+		"noEntriesLoggedYet": "まだ今日のエントリーがありません",
+		"tapAddFoodToStart": "「食品を追加」をタップして記録を開始",
+		"viewAll": "すべて表示",
+		"weeklyAverage": "週平均",
+		"yesterday": "昨日",
+		"remaining": "残り",
+		"progress": "進捗",
+		"caloriesPerDay": "カロリー/日",
+		"todaysCompleteLog": "今日の完全なログ",
+		"close": "閉じる",
+		"quickEntry": "クイック入力",
+		"serving": "人分",
+		"servings": "人分",
+		"copiedEntriesFromYesterday": "昨日のエントリーをコピーしました",
+		"noEntriesFoundYesterday": "昨日のエントリーが見つかりません",
+		"dailyCalorieTarget": "1日のカロリー目標",
+		"dailyTargetUpdated": "1日の目標を{calories}カロリーに更新しました",
+		"loading": "読み込み中...",
+		"errorOccurred": "エラーが発生しました",
+		"entriesCount": "{count}件のエントリー",
+		"targetWithValue": "目標: {value}",
+		"setTarget": "目標を設定",
+		"setDailyTarget": "1日のカロリー目標を設定",
+		"todayWithDate": "今日 - {date}",
+		"cal": "cal",
+		"addFoodEntry": "食品エントリーを追加",
+		"quickEntry": "クイック入力",
+		"foodName": "食品名",
+		"nutritionDetailsOptional": "栄養詳細（任意）",
+		"nutritionEditLater": "これらは後で食品ライブラリーで編集できます",
+		"addQuickEntry": "クイック入力を追加",
+		"quantity": "数量",
+		"unit": "単位",
+		"items": "個",
+		"grams": "グラム",
+		"add": "追加",
+		"saveToLibrary": "ライブラリーに保存？",
+		"saveToLibraryPrompt": "今後の使用のために「{name}」を食品ライブラリーに保存しますか？",
+		"@saveToLibraryPrompt": {
+			"placeholders": {
+				"name": {
+					"type": "String"
+				}
+			}
+		},
+		"noJustAddToday": "いいえ、今日だけ追加",
+		"yesSaveToLibrary": "はい、ライブラリーに保存",
+		"addFoodTitle": "{foodName}を追加",
+		"@addFoodTitle": {
+			"placeholders": {
+				"foodName": {
+					"type": "String"
+				}
+			}
+		},
+		"addMealTitle": "{mealName}を追加",
+		"@addMealTitle": {
+			"placeholders": {
+				"mealName": {
+					"type": "String"
+				}
+			}
+		},
+		"servingsHelperText": "1.0 = 完全な食事、0.5 = 半分の食事",
+		"addedFoodToLog": "{foodName}を今日のログに追加しました",
+		"@addedFoodToLog": {
+			"placeholders": {
+				"foodName": {
+					"type": "String"
+				}
+			}
+		},
+		"addedMealToLog": "{mealName}を今日のログに追加しました",
+		"@addedMealToLog": {
+			"placeholders": {
+				"mealName": {
+					"type": "String"
+				}
+			}
+		},
+		"savedToLibraryAndAdded": "{name}をライブラリーに保存し、今日のログに追加しました",
+		"@savedToLibraryAndAdded": {
+			"placeholders": {
+				"name": {
+					"type": "String"
+				}
+			}
+		},
+		"addedWithCalories": "{name}（{calories} cal）を今日のログに追加しました",
+		"@addedWithCalories": {
+			"placeholders": {
+				"name": {
+					"type": "String"
+				},
+				"calories": {
+					"type": "int"
+				}
+			}
+		},
+		"editInLibrary": "ライブラリーで編集",
+		"noFoodsFound": "食品が見つかりません",
+		"noMealsFound": "食事が見つかりません",
+		"ingredientsCount": "{count}個の材料",
+		"@ingredientsCount": {
+			"placeholders": {
+				"count": {
+					"type": "int"
+				}
+			}
+		},
+		"hintZero": "0",
+		"fieldRequired": "{field}は必須です",
+		"@fieldRequired": {
+			"placeholders": {
+				"field": {
+					"type": "String"
+				}
+			}
+		},
+		"quickEntryLower": "クイック入力",
+		"bmiCalculator": "BMI計算機",
+		"bodyMassIndex": "体格指数", 
+		"weight": "体重",
+		"height": "身長",
+		"yourBmiResult": "あなたのBMI結果",
+		"calculateBmi": "BMIを計算",
+		"bmiCategories": "BMIカテゴリー",
+		"underweight": "低体重", 
+		"normalWeight": "標準体重",
+		"overweight": "過体重",
+		"obese": "肥満",
+		"required": "必須",
+		"invalid": "無効",
+		"bodyFatCalculator": "体脂肪計算機",
+		"estimateBodyFatPercentage": "体脂肪率を推定（米国海軍式）",
+		"age": "年齢",
+		"years": "歳",
+		"gender": "性別",
+		"male": "男性",
+		"female": "女性",
+		"neck": "首",
+		"waist": "ウエスト",
+		"hip": "ヒップ",
+		"bodyMeasurements": "身体測定",
+		"measurementInstructions": "測定方法",
+		"calculateBodyFat": "体脂肪を計算",
+		"bodyFatCategories": "体脂肪カテゴリー",
+		"bodyFatCategoriesMen": "体脂肪カテゴリー（男性）",
+		"bodyFatCategoriesWomen": "体脂肪カテゴリー（女性）",
+		"essentialFat": "必須脂肪",
+		"athletes": "アスリート",
+		"fitness": "フィットネス",
+		"average": "平均",
+		"yourBodyFatResult": "あなたの体脂肪結果",
+		"neckMeasurementTip": "• 首：のどぼとけの下を測定",
+		"waistMeasurementTip": "• ウエスト：最も細い部分を測定",
+		"hipMeasurementTip": "• ヒップ：最も広い部分を測定",
+		"measurementAccuracyTip": "• 正確性のため、衣服を着用せずに測定",
+		"hipMeasurementRequired": "女性にはヒップの測定が必要です",
+		"usNavyMethod": "米国海軍式",
+		"usNavyDesc": "米国海軍によって開発されたこの方法は、身体の周囲測定を使用して体脂肪を推定します。結果は推定値であり、他の方法とは異なる場合があります。",
+		"idealWeightCalculator": "理想体重計算機",
+		"findIdealWeightRange": "理想体重範囲を見つける（ロビンソン公式）",
+		"calculateIdealWeight": "理想体重を計算",
+		"yourIdealWeight": "あなたの理想体重",
+		"idealWeight": "理想体重",
+		"healthyWeightRange": "健康的な体重範囲",
+		"rangeBasedOnIdealWeight": "理想体重から±5kgの範囲に基づく",
+		"currentWeight": "現在の体重: {weight}kg",
+		"@currentWeight": {
+			"placeholders": {
+				"weight": {
+					"type": "String"
+				}
+			}
+		},
+		"withinIdealRange": "理想範囲内",
+		"aboveIdeal": "理想より{difference}kg上",
+		"@aboveIdeal": {
+			"placeholders": {
+				"difference": {
+					"type": "String"
+				}
+			}
+		},
+		"belowIdeal": "理想より{difference}kg下",
+		"@belowIdeal": {
+			"placeholders": {
+				"difference": {
+					"type": "String"
+				}
+			}
+		},
+		"robinsonFormula": "ロビンソン公式",
+		"robinsonFormulaMen": "男性: 52kg + 5フィート超過1インチごとに1.9kg",
+		"robinsonFormulaWomen": "女性: 49kg + 5フィート超過1インチごとに1.7kg",
+		"tdeeCalculator": "TDEE計算機",
+		"totalDailyEnergyExpenditure": "総日常エネルギー消費量",
+		"activityLevel": "活動レベル",
+		"calculateTdee": "TDEEを計算",
+		"yourTdeeResult": "あなたのTDEE結果",
+		"caloriesPerDay": "カロリー/日",
+		"tdeeMaintenanceDescription": "これは現在の体重を維持するための推定日常カロリー必要量です。",
+		"setAsDailyCalorieTarget": "1日のカロリー目標として設定",
+		"dailyCalorieTargetUpdatedTo": "1日のカロリー目標を{calories}カロリーに更新しました",
+		"@dailyCalorieTargetUpdatedTo": {
+			"placeholders": {
+				"calories": {
+					"type": "int"
+				}
+			}
+		},
+		"sedentaryNoExercise": "座位中心（運動なし）",
+		"lightOneToTwoDays": "軽度（週1-2日）",
+		"lightTwoToThreeDays": "軽度（週2-3日）",
+		"moderateThreeToFourDays": "中程度（週3-4日）",
+		"moderateFourToFiveDays": "中程度（週4-5日）",
+		"activeSixToSevenDays": "活発（週6-7日）",
+		"veryActiveTwiceDaily": "非常に活発（1日2回）",
+		"extremelyActivePhysicalJob": "極度（肉体労働）",
+		"healthAndFitnessCalculators": "健康・フィットネス計算機",
+		"calculateImportantHealthMetrics": "重要な健康指標を計算",
+		"tdeeCalculatorDescription": "1日のカロリー必要量を計算",
+		"bmiCalculatorDescription": "体格指数を計算",
+		"idealWeightCalculatorDescription": "理想体重範囲を見つける",
+		"bodyFatCalculatorDescription": "体脂肪率を推定",
+		"monday": "月",
+		"tuesday": "火", 
+		"wednesday": "水",
+		"thursday": "木",
+		"friday": "金",
+		"saturday": "土",
+		"sunday": "日",
+		"january": "1月",
+		"february": "2月",
+		"march": "3月",
+		"april": "4月",
+		"may": "5月",
+		"june": "6月",
+		"july": "7月",
+		"august": "8月",
+		"september": "9月",
+		"october": "10月",
+		"november": "11月",
+		"december": "12月",
+		"sevenDays": "7日間",
+		"thisWeek": "今週",
+		"thirtyDays": "30日間",
+		"noDataAvailable": "データがありません",
+		"average": "平均",
+		"kcal": "kcal",
+		"selectDateToViewDetails": "詳細を表示する日付を選択",
+		"tapOnAnyDayInCalendar": "上のカレンダーの任意の日をタップ",
+		"noEntriesYet": "まだエントリーがありません",
+		"addEntry": "追加",
+		"entriesLogged": "件のエントリーが記録済み",
+		"foodLog": "食事ログ",
+		"quickCalorieEntry": "クイックカロリー入力",
+		"nameRequired": "名前が必要です",
+		"foodNameHint": "例：カフェのサンドイッチ",
+		"noJustAddToDate": "いいえ、{date}にのみ追加",
+		"@noJustAddToDate": {
+			"placeholders": {
+				"date": {
+					"type": "String"
+				}
+			}
+		},
+		"addEntryForDate": "追加 - {date}",
+		"@addEntryForDate": {
+			"placeholders": {
+				"date": {
+					"type": "String"
+				}
+			}
+		},
+		"statistics": "統計",
+		"deleteEntry": "エントリーを削除",
+		"confirmDeleteEntry": "このエントリーを削除してもよろしいですか？",
+		"entryDeletedSuccessfully": "エントリーを正常に削除しました",
+		"errorDeletingEntry": "エントリーの削除エラー: {error}",
+		"@errorDeletingEntry": {
+			"placeholders": {
+				"error": {
+					"type": "String"
+				}
+			}
+		},
+		"perItem": "1個あたり",
+		"perServing": "1人分あたり", 
+		"per100g": "100gあたり",
+		"editFood": "食品を編集",
+		"addNewFood": "新しい食品を追加", 
+		"basicInformation": "基本情報",
+		"foodNameHint": "例：鶏胸肉",
+		"descriptionOptional": "説明（任意）",
+		"briefDescription": "食品の簡単な説明",
+		"servingSize": "1人分のサイズ",
+		"servingSizeHint": "例：1カップ、2切れ",
+		"servingSizeRequired": "1人分のサイズは必須です",
+		"weightOptional": "重量（任意）",
+		"weightInGrams": "グラム単位の重量",
+		"additionalNutrients": "追加栄養素",
+		"nutrientName": "栄養素名",
+		"nutrientNameHint": "例：食物繊維、ナトリウム",
+		"amount": "量",
+		"value": "値",
+		"enterAmount": "量を入力",
+		"valueRequired": "値が必要です",
+		"updateFood": "食品を更新",
+		"saveFood": "食品を保存",
+		"photoOptional": "写真（任意）",
+		"tapToAdd": "タップして写真を追加",
+		"selectImageSource": "画像ソースを選択",
+		"camera": "カメラ",
+		"gallery": "ギャラリー",
+		"fieldRequired": "{field}は必須です",
+		"enterValidNumber": "有効な数値を入力してください",
+		"noFoodsYet": "まだライブラリーに食品がありません",
+		"addFirstFood": "最初の食品を追加して開始",
+		"noFoodsFound": "食品が見つかりません",
+		"tryDifferentSearch": "別の検索用語を試してください",
+		"change": "変更",
+		"remove": "削除",
+		"standardNutritionInfo": "100gあたりの標準栄養情報",
+		"itemNutritionInfo": "卵、パンのスライスなどの食品用",
+		"servingNutritionInfo": "米国式サービングサイズ（例：1カップ、2切れ）",
+		"deleteFood": "食品を削除",
+		"deleteFoodConfirmation": "「{name}」を削除してもよろしいですか？この操作は元に戻せません。",
+		"nutritionFacts": "栄養成分",
+		"nutritionFactsPer": "栄養成分（{unit}）",
+		"usageStats": "使用統計",
+		"created": "作成日",
+		"lastUsed": "最終使用日",
+		"timesUsed": "使用回数",
+		"totalWeight": "総重量: {weight}g",
+		"foodDeleted": "食品を正常に削除しました",
+		"unitWeight": "単位重量: （{weight}）g",
+		"noFoodInLib": "まだライブラリーに食品がありません",
+		"noFoodMatch": "検索に一致する食品がありません",
+		"tapAddFood": "+ ボタンをタップして最初の食品を追加",
+		"trySearchTerm": "別の検索用語を試してください",
+		"totalWeightShort": "{weight}g 合計",
+		"editMeal": "食事を編集",
+		"createNewMeal": "新しい食事を作成",
+		"mealName": "食事名",
+		"mealNameHint": "例：鶏肉＆ライスボウル",
+		"mealDescHint": "高タンパク食事",
+		"category": "カテゴリー",
+		"categoryHint": "昼食",
+		"ingredients": "食材 ({count})",
+		"@ingredients": {
+			"placeholders": {
+				"count": {
+					"type": "int"
+				}
+			}
+		},
+		"noIngredientsYet": "まだ食材が追加されていません",
+		"tapAddIngredientHint": "「食材を追加」をタップして食事の作成を開始",
+		"pleaseAddOneIngredient": "少なくとも1つの食材を追加してください",
+		"saveMeal": "食事を保存",
+		"updateMeal": "食事を更新",
+		"nutritionSummary": "栄養概要",
+		"addIngredient": "食材を追加",
+		"selectedFood": "選択済み: {foodName}",
+		"@selectedFood": {
+			"placeholders": {
+				"foodName": {
+					"type": "String"
+				}
+			}
+		},
+		"nutritionFor": "{quantity}の栄養:",
+		"@nutritionFor": {
+			"placeholders": {
+				"quantity": {
+					"type": "String"
+				}
+			}
+		},
+		"favorite": "お気に入り",
+		"totalWeight": "総重量: {weight}g",
+		"@totalWeight": {
+			"placeholders": {
+				"weight": {
+					"type": "int"
+				}
+			}
+		},
+		"nutritionFactsTotal": "栄養成分（合計）",
+		"kcal": "kcal",
+		"usageStatistics": "使用統計",
+		"timesUsed": "使用回数",
+		"lastUsed": "最終使用日",
+		"created": "作成日",
+		"deleteMeal": "食事を削除",
+		"deleteMealConfirmation": "「{mealName}」を削除してもよろしいですか？この操作は元に戻せません。",
+		"@deleteMealConfirmation": {
+			"placeholders": {
+				"mealName": {
+					"type": "String"
+				}
+			}
+		},
+		"addedToFavorites": "お気に入りに追加しました",
+		"removedFromFavorites": "お気に入りから削除しました",
+		"missingFood": "食品項目が見つかりません",
+		"foodId": "食品ID: {id}",
+		"@foodId": {
+			"placeholders": {
+				"id": {
+					"type": "String"
+				}
+			}
+		},
+		"noMealsInLibrary": "まだライブラリーに食事がありません",
+		"noMealsMatchSearch": "検索に一致する食事がありません",
+		"tapPlusButtonCreateMeal": "+ ボタンをタップして最初の食事を作成",
+		"ingredientsWithTotal": "{count}個の食材 • 合計{weight}g",
+		"@ingredientsWithTotal": {
+			"placeholders": {
+				"count": {
+					"type": "int"
+				},
+				"weight": {
+					"type": "int"
+				}
+			}
+		},
+		"perServings": "{serving}あたり",
+		"@perServings": {
+			"placeholders": {
+				"serving": {
+					"type": "String"
+				}
+			}
+		}
+}

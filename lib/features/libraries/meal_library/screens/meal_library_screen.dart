@@ -5,6 +5,7 @@ import '../widgets/meal_card.dart';
 import '../widgets/meal_search_bar.dart';
 import 'add_meal_screen.dart';
 import 'meal_details_screen.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class MealLibraryScreen extends StatefulWidget {
   const MealLibraryScreen({super.key});
@@ -97,6 +98,7 @@ class _MealLibraryScreenState extends State<MealLibraryScreen> {
   }
 
   Widget _buildEmptyState() {
+    final l10n = L10n.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -116,8 +118,8 @@ class _MealLibraryScreenState extends State<MealLibraryScreen> {
           SizedBox(height: 20),
           Text(
             _controller.isEmpty
-                ? 'No meals in your library yet'
-                : 'No meals match your search',
+                ? l10n.noMealsInLibrary
+                : l10n.noMealsMatchSearch,
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey[700],
@@ -127,8 +129,8 @@ class _MealLibraryScreenState extends State<MealLibraryScreen> {
           SizedBox(height: 8),
           Text(
             _controller.isEmpty
-                ? 'Tap the + button to create your first meal'
-                : 'Try a different search term',
+                ? l10n.tapPlusButtonCreateMeal
+                : l10n.tryDifferentSearch,
             style: TextStyle(fontSize: 14, color: Colors.grey[500]),
           ),
         ],

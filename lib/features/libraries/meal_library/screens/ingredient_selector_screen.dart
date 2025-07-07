@@ -5,6 +5,7 @@ import '../../../../data/models/meal.dart';
 import '../../../../data/services/food_database_service.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import '../../../../shared/widgets/custom_dropdown.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class IngredientSelectorScreen extends StatefulWidget {
   final FoodItem? selectedFood;
@@ -66,6 +67,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
@@ -77,7 +79,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
           TextButton(
             onPressed: _canSave() ? _saveIngredient : null,
             child: Text(
-              'Add',
+              l10n.add,
               style: TextStyle(
                 color: _canSave() ? Colors.blue : Colors.grey,
                 fontWeight: FontWeight.w600,
@@ -102,7 +104,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
               child: TextField(
                 controller: _searchController,
                 decoration: InputDecoration(
-                  hintText: 'Search foods...',
+                  hintText: l10n.searchFoods,
                   hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
                   prefixIcon: Icon(
                     Icons.search,
@@ -132,7 +134,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
                         SizedBox(width: 8),
                         Expanded(
                           child: Text(
-                            'Selected: ${_selectedFood!.name}',
+                            l10n.selectedFood(_selectedFood!.name),
                             style: TextStyle(
                               fontSize: 14,
                               fontWeight: FontWeight.w600,
@@ -160,7 +162,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
                               ),
                             ],
                             decoration: InputDecoration(
-                              labelText: 'Quantity',
+                              labelText: l10n.quantity,
                               filled: true,
                               fillColor: Colors.grey[50],
                               border: OutlineInputBorder(
@@ -196,7 +198,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
                         Expanded(
                           child: CustomDropdown<String>(
                             value: _selectedUnit,
-                            hintText: 'Unit',
+                            hintText: l10n.unit,
                             items: _getCustomAvailableUnits(),
                             onChanged: (value) {
                               setState(() {
@@ -314,6 +316,8 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
   }
 
   Widget _buildNutritionPreview() {
+    final l10n = L10n.of(context);
+
     if (_selectedFood == null || _quantityController.text.isEmpty) {
       return Container();
     }
@@ -345,7 +349,9 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
               Icon(Icons.info_outline, size: 16, color: Colors.blue),
               SizedBox(width: 6),
               Text(
-                'Nutrition for ${ingredient.getDisplayQuantity(_selectedFood!)}:',
+                l10n.nutritionFor(
+                  ingredient.getDisplayQuantity(_selectedFood!),
+                ),
                 style: TextStyle(
                   fontWeight: FontWeight.w600,
                   fontSize: 12,
@@ -364,15 +370,15 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
                 Colors.orange,
               ),
               _buildPreviewChip(
-                '${macros['protein']!.toStringAsFixed(1)}g protein',
+                '${macros['protein']!.toStringAsFixed(1)}g ${l10n.protein}',
                 Colors.blue,
               ),
               _buildPreviewChip(
-                '${macros['carbs']!.toStringAsFixed(1)}g carbs',
+                '${macros['carbs']!.toStringAsFixed(1)}g ${l10n.carbs}',
                 Colors.green,
               ),
               _buildPreviewChip(
-                '${macros['fat']!.toStringAsFixed(1)}g fat',
+                '${macros['fat']!.toStringAsFixed(1)}g ${l10n.fat}',
                 Colors.red,
               ),
             ],
@@ -402,6 +408,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
   }
 
   Widget _buildEmptyState() {
+    final l10n = L10n.of(context);
     return Center(
       child: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -409,7 +416,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
           Icon(Icons.restaurant_outlined, size: 64, color: Colors.grey[400]),
           SizedBox(height: 16),
           Text(
-            'No foods found',
+            l10n.noFoodsFound,
             style: TextStyle(
               fontSize: 18,
               color: Colors.grey[600],
@@ -418,7 +425,7 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
           ),
           SizedBox(height: 8),
           Text(
-            'Try a different search term',
+            l10n.tryDifferentSearch,
             style: TextStyle(fontSize: 14, color: Colors.grey[500]),
           ),
         ],
@@ -427,22 +434,23 @@ class _IngredientSelectorScreenState extends State<IngredientSelectorScreen> {
   }
 
   List<DropdownItem<String>> _getCustomAvailableUnits() {
+    final l10n = L10n.of(context);
     if (_selectedFood == null) {
-      return [DropdownItem(value: 'grams', text: 'Grams')];
+      return [DropdownItem(value: 'grams', text: l10n.grams)];
     }
 
     switch (_selectedFood!.unit) {
       case '100g':
-        return [DropdownItem(value: 'grams', text: 'Grams')];
+        return [DropdownItem(value: 'grams', text: l10n.grams)];
       case 'item':
-        return [DropdownItem(value: 'items', text: 'Items')];
+        return [DropdownItem(value: 'items', text: l10n.items)];
       case 'serving':
         return [
-          DropdownItem(value: 'servings', text: 'Servings'),
-          DropdownItem(value: 'grams', text: 'Grams'),
+          DropdownItem(value: 'servings', text: l10n.servings),
+          DropdownItem(value: 'grams', text: l10n.grams),
         ];
       default:
-        return [DropdownItem(value: 'grams', text: 'Grams')];
+        return [DropdownItem(value: 'grams', text: l10n.grams)];
     }
   }
 

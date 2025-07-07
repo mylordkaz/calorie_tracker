@@ -369,6 +369,93 @@
 	"noFoodInLib": "No foods in your library yet",
 	"noFoodMatch": "No foods match your search",
 	"tapAddFood": "Tap the + button to add your first food",
-	"trySearchTerm": "Try a different search term"
-	
+	"trySearchTerm": "Try a different search term",
+	"totalWeightShort": "{weight}g total",
+	"editMeal": "Edit Meal",
+	"createNewMeal": "Create New Meal",
+	"mealName": "Meal Name",
+	"mealNameHint": "e.g., Chicken & Rice Bowl",
+	"mealDescHint": "High protein meal",
+	"category": "Category",
+	"categoryHint": "Lunch",
+	"ingredients": "Ingredients ({count})",
+	"@ingredients": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			}
+		}
+	},
+	"noIngredientsYet": "No ingredients added yet",
+	"tapAddIngredientHint": "Tap \"Add Ingredient\" to start building your meal",
+	"pleaseAddOneIngredient": "Please add at least one ingredient",
+	"saveMeal": "Save Meal",
+	"updateMeal": "Update Meal",
+	"nutritionSummary": "Nutrition Summary",
+	"addIngredient": "Add Ingredient",
+	"selectedFood": "Selected: {foodName}",
+	"@selectedFood": {
+		"placeholders": {
+			"foodName": {
+				"type": "String"
+			}
+		}
+	},
+	"nutritionFor": "Nutrition for {quantity}:",
+	"@nutritionFor": {
+		"placeholders": {
+			"quantity": {
+				"type": "String"
+			}
+		}
+	},
+	"favorite": "Favorite",
+	"totalWeight": "Total Weight: {weight}g",
+	"@totalWeight": {
+		"placeholders": {
+			"weight": {
+				"type": "int"
+			}
+		}
+	},
+	"nutritionFactsTotal": "Nutrition Facts (Total)",
+	"kcal": "kcal",
+	"usageStatistics": "Usage Statistics",
+	"timesUsed": "Times Used",
+	"lastUsed": "Last Used",
+	"created": "Created",
+	"deleteMeal": "Delete Meal",
+	"deleteMealConfirmation": "Are you sure you want to delete \"{mealName}\"? This action cannot be undone.",
+	"@deleteMealConfirmation": {
+		"placeholders": {
+			"mealName": {
+				"type": "String"
+			}
+		}
+	},
+	"addedToFavorites": "Added to favorites",
+	"removedFromFavorites": "Removed from favorites",
+	"missingFood": "Missing Food Item",
+	"foodId": "Food ID: {id}",
+	"@foodId": {
+		"placeholders": {
+			"id": {
+				"type": "String"
+			}
+		}
+	},
+	"noMealsInLibrary": "No meals in your library yet",
+	"noMealsMatchSearch": "No meals match your search",
+	"tapPlusButtonCreateMeal": "Tap the + button to create your first meal",
+	"ingredientsWithTotal": "{count} ingredients • {weight}g total",
+	"@ingredientsWithTotal": {
+		"placeholders": {
+			"count": {
+				"type": "int"
+			},
+			"weight": {
+				"type": "int"
+			}
+		}
+	}
 }

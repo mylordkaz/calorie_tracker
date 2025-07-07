@@ -6,6 +6,7 @@ import '../../../../data/models/meal.dart';
 import '../../../../data/services/food_database_service.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import 'ingredient_selector_screen.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class AddMealScreen extends StatefulWidget {
   final Meal? mealToEdit;
@@ -58,13 +59,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     final macros = _calculateTotalMacros();
     final totalWeight = _calculateTotalWeight();
 
     return Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
-        title: Text(isEditing ? 'Edit Meal' : 'Create New Meal'),
+        title: Text(isEditing ? l10n.editMeal : l10n.createNewMeal),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
@@ -77,13 +79,13 @@ class _AddMealScreenState extends State<AddMealScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               // Basic Information
-              _buildSection('Basic Information', [
+              _buildSection(l10n.basicInformation, [
                 _buildTextField(
                   controller: _nameController,
-                  label: 'Meal Name',
-                  hint: 'e.g., Chicken & Rice Bowl',
+                  label: l10n.mealName,
+                  hint: l10n.mealNameHint,
                   validator: (value) =>
-                      value?.isEmpty == true ? 'Name is required' : null,
+                      value?.isEmpty == true ? l10n.nameRequired : null,
                 ),
                 SizedBox(height: 12),
                 Row(
@@ -92,16 +94,16 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       flex: 2,
                       child: _buildTextField(
                         controller: _descriptionController,
-                        label: 'Description (Optional)',
-                        hint: 'High protein meal',
+                        label: l10n.descriptionOptional,
+                        hint: l10n.mealDescHint,
                       ),
                     ),
                     SizedBox(width: 12),
                     Expanded(
                       child: _buildTextField(
                         controller: _categoryController,
-                        label: 'Category',
-                        hint: 'Lunch',
+                        label: l10n.category,
+                        hint: l10n.categoryHint,
                       ),
                     ),
                   ],
@@ -124,7 +126,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
                         Text(
-                          'Ingredients (${_ingredients.length})',
+                          l10n.ingredients(_ingredients.length),
                           style: TextStyle(
                             fontSize: 16,
                             fontWeight: FontWeight.w600,
@@ -134,7 +136,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                         ElevatedButton.icon(
                           onPressed: _addIngredient,
                           icon: Icon(Icons.add, size: 16),
-                          label: Text('Add', style: TextStyle(fontSize: 12)),
+                          label: Text(l10n.add, style: TextStyle(fontSize: 12)),
                           style: ElevatedButton.styleFrom(
                             backgroundColor: Colors.blue,
                             foregroundColor: Colors.white,
@@ -169,7 +171,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                 SizedBox(height: 16),
 
                 // Nutrition Summary
-                _buildSection('Nutrition Summary', [
+                _buildSection(l10n.nutritionSummary, [
                   Row(
                     mainAxisAlignment: MainAxisAlignment.spaceBetween,
                     children: [
@@ -188,16 +190,16 @@ class _AddMealScreenState extends State<AddMealScreen> {
                     children: [
                       Expanded(
                         child: _buildMacroCard(
-                          'Calories',
+                          l10n.calories,
                           macros['calories']!,
-                          'kcal',
+                          l10n.kcal,
                           Colors.orange,
                         ),
                       ),
                       SizedBox(width: 8),
                       Expanded(
                         child: _buildMacroCard(
-                          'Protein',
+                          l10n.protein,
                           macros['protein']!,
                           'g',
                           Colors.blue,
@@ -210,7 +212,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                     children: [
                       Expanded(
                         child: _buildMacroCard(
-                          'Carbs',
+                          l10n.carbs,
                           macros['carbs']!,
                           'g',
                           Colors.green,
@@ -219,7 +221,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                       SizedBox(width: 8),
                       Expanded(
                         child: _buildMacroCard(
-                          'Fat',
+                          l10n.fat,
                           macros['fat']!,
                           'g',
                           Colors.red,
@@ -247,7 +249,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                     elevation: 0,
                   ),
                   child: Text(
-                    isEditing ? 'Update Meal' : 'Save Meal',
+                    isEditing ? l10n.updateMeal : l10n.saveMeal,
                     style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
                   ),
                 ),
@@ -282,12 +284,13 @@ class _AddMealScreenState extends State<AddMealScreen> {
   }
 
   Widget _buildPhotoSection() {
+    final l10n = L10n.of(context);
     return CustomCard(
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
           Text(
-            'Photo (Optional)',
+            l10n.photoOptional,
             style: TextStyle(
               fontSize: 16,
               fontWeight: FontWeight.w600,
@@ -322,7 +325,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
                         Icon(Icons.add_a_photo, size: 32, color: Colors.blue),
                         SizedBox(height: 8),
                         Text(
-                          'Tap to add photo',
+                          l10n.tapToAdd,
                           style: TextStyle(
                             color: Colors.blue,
                             fontWeight: FontWeight.w500,
@@ -340,12 +343,15 @@ class _AddMealScreenState extends State<AddMealScreen> {
                 TextButton.icon(
                   onPressed: _pickImage,
                   icon: Icon(Icons.edit, size: 16, color: Colors.blue),
-                  label: Text('Change', style: TextStyle(color: Colors.blue)),
+                  label: Text(
+                    l10n.change,
+                    style: TextStyle(color: Colors.blue),
+                  ),
                 ),
                 TextButton.icon(
                   onPressed: () => setState(() => _imageFile = null),
                   icon: Icon(Icons.delete, size: 16, color: Colors.red),
-                  label: Text('Remove', style: TextStyle(color: Colors.red)),
+                  label: Text(l10n.remove, style: TextStyle(color: Colors.red)),
                 ),
               ],
             ),
@@ -390,6 +396,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
   }
 
   Widget _buildEmptyIngredientsState() {
+    final l10n = L10n.of(context);
     return Container(
       padding: EdgeInsets.all(24),
       child: Column(
@@ -397,7 +404,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
           Icon(Icons.restaurant_menu, size: 36, color: Colors.grey[400]),
           SizedBox(height: 12),
           Text(
-            'No ingredients added yet',
+            l10n.noIngredientsYet,
             style: TextStyle(
               fontSize: 14,
               color: Colors.grey[600],
@@ -406,7 +413,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
           ),
           SizedBox(height: 6),
           Text(
-            'Tap "Add Ingredient" to start building your meal',
+            l10n.tapAddIngredientHint,
             textAlign: TextAlign.center,
             style: TextStyle(fontSize: 12, color: Colors.grey[500]),
           ),
@@ -604,6 +611,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
   }
 
   void _editIngredient(int index) async {
+    final l10n = L10n.of(context);
     final ingredient = _ingredients[index];
     final food = FoodDatabaseService.getFood(ingredient.foodId);
     if (food == null) return;
@@ -614,7 +622,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
         builder: (context) => IngredientSelectorScreen(
           selectedFood: food,
           initialQuantity: ingredient.originalQuantity ?? ingredient.grams,
-          initialUnit: ingredient.originalUnit ?? 'grams',
+          initialUnit: ingredient.originalUnit ?? l10n.grams,
         ),
       ),
     );
@@ -633,12 +641,14 @@ class _AddMealScreenState extends State<AddMealScreen> {
   }
 
   void _saveMeal() async {
+    final l10n = L10n.of(context);
+
     if (!_formKey.currentState!.validate()) return;
 
     if (_ingredients.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        SnackBar(content: Text('Please add at least one ingredient')),
-      );
+      ScaffoldMessenger.of(
+        context,
+      ).showSnackBar(SnackBar(content: Text(l10n.pleaseAddOneIngredient)));
       return;
     }
 
@@ -695,21 +705,23 @@ class _AddMealScreenState extends State<AddMealScreen> {
   }
 
   Future<ImageSource?> _showImageSourceDialog() async {
+    final l10n = L10n.of(context);
+
     return showDialog<ImageSource>(
       context: context,
       builder: (context) => AlertDialog(
-        title: Text('Select Image Source'),
+        title: Text(l10n.selectImageSource),
         content: Column(
           mainAxisSize: MainAxisSize.min,
           children: [
             ListTile(
               leading: Icon(Icons.camera_alt, color: Colors.blue),
-              title: Text('Camera'),
+              title: Text(l10n.camera),
               onTap: () => Navigator.pop(context, ImageSource.camera),
             ),
             ListTile(
               leading: Icon(Icons.photo_library, color: Colors.blue),
-              title: Text('Gallery'),
+              title: Text(l10n.gallery),
               onTap: () => Navigator.pop(context, ImageSource.gallery),
             ),
           ],
@@ -717,7 +729,7 @@ class _AddMealScreenState extends State<AddMealScreen> {
         actions: [
           TextButton(
             onPressed: () => Navigator.pop(context),
-            child: Text('Cancel'),
+            child: Text(l10n.cancel),
           ),
         ],
       ),

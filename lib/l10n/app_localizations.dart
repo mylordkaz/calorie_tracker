@@ -1549,7 +1549,7 @@ abstract class AppLocalizations {
   ///
   /// In en, this message translates to:
   /// **'Total Weight: {weight}g'**
-  String totalWeight(Object weight);
+  String totalWeight(int weight);
 
   /// No description provided for @foodDeleted.
   ///
@@ -1586,6 +1586,192 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Try a different search term'**
   String get trySearchTerm;
+
+  /// No description provided for @totalWeightShort.
+  ///
+  /// In en, this message translates to:
+  /// **'{weight}g total'**
+  String totalWeightShort(Object weight);
+
+  /// No description provided for @editMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Edit Meal'**
+  String get editMeal;
+
+  /// No description provided for @createNewMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Create New Meal'**
+  String get createNewMeal;
+
+  /// No description provided for @mealName.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal Name'**
+  String get mealName;
+
+  /// No description provided for @mealNameHint.
+  ///
+  /// In en, this message translates to:
+  /// **'e.g., Chicken & Rice Bowl'**
+  String get mealNameHint;
+
+  /// No description provided for @mealDescHint.
+  ///
+  /// In en, this message translates to:
+  /// **'High protein meal'**
+  String get mealDescHint;
+
+  /// No description provided for @category.
+  ///
+  /// In en, this message translates to:
+  /// **'Category'**
+  String get category;
+
+  /// No description provided for @categoryHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Lunch'**
+  String get categoryHint;
+
+  /// No description provided for @ingredients.
+  ///
+  /// In en, this message translates to:
+  /// **'Ingredients ({count})'**
+  String ingredients(int count);
+
+  /// No description provided for @noIngredientsYet.
+  ///
+  /// In en, this message translates to:
+  /// **'No ingredients added yet'**
+  String get noIngredientsYet;
+
+  /// No description provided for @tapAddIngredientHint.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap \"Add Ingredient\" to start building your meal'**
+  String get tapAddIngredientHint;
+
+  /// No description provided for @pleaseAddOneIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'Please add at least one ingredient'**
+  String get pleaseAddOneIngredient;
+
+  /// No description provided for @saveMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Save Meal'**
+  String get saveMeal;
+
+  /// No description provided for @updateMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Update Meal'**
+  String get updateMeal;
+
+  /// No description provided for @nutritionSummary.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Summary'**
+  String get nutritionSummary;
+
+  /// No description provided for @addIngredient.
+  ///
+  /// In en, this message translates to:
+  /// **'Add Ingredient'**
+  String get addIngredient;
+
+  /// No description provided for @selectedFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Selected: {foodName}'**
+  String selectedFood(String foodName);
+
+  /// No description provided for @nutritionFor.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition for {quantity}:'**
+  String nutritionFor(String quantity);
+
+  /// No description provided for @favorite.
+  ///
+  /// In en, this message translates to:
+  /// **'Favorite'**
+  String get favorite;
+
+  /// No description provided for @nutritionFactsTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'Nutrition Facts (Total)'**
+  String get nutritionFactsTotal;
+
+  /// No description provided for @usageStatistics.
+  ///
+  /// In en, this message translates to:
+  /// **'Usage Statistics'**
+  String get usageStatistics;
+
+  /// No description provided for @deleteMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Delete Meal'**
+  String get deleteMeal;
+
+  /// No description provided for @deleteMealConfirmation.
+  ///
+  /// In en, this message translates to:
+  /// **'Are you sure you want to delete \"{mealName}\"? This action cannot be undone.'**
+  String deleteMealConfirmation(String mealName);
+
+  /// No description provided for @addedToFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Added to favorites'**
+  String get addedToFavorites;
+
+  /// No description provided for @removedFromFavorites.
+  ///
+  /// In en, this message translates to:
+  /// **'Removed from favorites'**
+  String get removedFromFavorites;
+
+  /// No description provided for @missingFood.
+  ///
+  /// In en, this message translates to:
+  /// **'Missing Food Item'**
+  String get missingFood;
+
+  /// No description provided for @foodId.
+  ///
+  /// In en, this message translates to:
+  /// **'Food ID: {id}'**
+  String foodId(String id);
+
+  /// No description provided for @noMealsInLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'No meals in your library yet'**
+  String get noMealsInLibrary;
+
+  /// No description provided for @noMealsMatchSearch.
+  ///
+  /// In en, this message translates to:
+  /// **'No meals match your search'**
+  String get noMealsMatchSearch;
+
+  /// No description provided for @tapPlusButtonCreateMeal.
+  ///
+  /// In en, this message translates to:
+  /// **'Tap the + button to create your first meal'**
+  String get tapPlusButtonCreateMeal;
+
+  /// No description provided for @ingredientsWithTotal.
+  ///
+  /// In en, this message translates to:
+  /// **'{count} ingredients • {weight}g total'**
+  String ingredientsWithTotal(int count, int weight);
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

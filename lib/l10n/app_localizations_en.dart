@@ -786,7 +786,7 @@ class AppLocalizationsEn extends AppLocalizations {
   String get timesUsed => 'Times Used';
 
   @override
-  String totalWeight(Object weight) {
+  String totalWeight(int weight) {
     return 'Total Weight: ${weight}g';
   }
 
@@ -809,4 +809,111 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get trySearchTerm => 'Try a different search term';
+
+  @override
+  String totalWeightShort(Object weight) {
+    return '${weight}g total';
+  }
+
+  @override
+  String get editMeal => 'Edit Meal';
+
+  @override
+  String get createNewMeal => 'Create New Meal';
+
+  @override
+  String get mealName => 'Meal Name';
+
+  @override
+  String get mealNameHint => 'e.g., Chicken & Rice Bowl';
+
+  @override
+  String get mealDescHint => 'High protein meal';
+
+  @override
+  String get category => 'Category';
+
+  @override
+  String get categoryHint => 'Lunch';
+
+  @override
+  String ingredients(int count) {
+    return 'Ingredients ($count)';
+  }
+
+  @override
+  String get noIngredientsYet => 'No ingredients added yet';
+
+  @override
+  String get tapAddIngredientHint => 'Tap \"Add Ingredient\" to start building your meal';
+
+  @override
+  String get pleaseAddOneIngredient => 'Please add at least one ingredient';
+
+  @override
+  String get saveMeal => 'Save Meal';
+
+  @override
+  String get updateMeal => 'Update Meal';
+
+  @override
+  String get nutritionSummary => 'Nutrition Summary';
+
+  @override
+  String get addIngredient => 'Add Ingredient';
+
+  @override
+  String selectedFood(String foodName) {
+    return 'Selected: $foodName';
+  }
+
+  @override
+  String nutritionFor(String quantity) {
+    return 'Nutrition for $quantity:';
+  }
+
+  @override
+  String get favorite => 'Favorite';
+
+  @override
+  String get nutritionFactsTotal => 'Nutrition Facts (Total)';
+
+  @override
+  String get usageStatistics => 'Usage Statistics';
+
+  @override
+  String get deleteMeal => 'Delete Meal';
+
+  @override
+  String deleteMealConfirmation(String mealName) {
+    return 'Are you sure you want to delete \"$mealName\"? This action cannot be undone.';
+  }
+
+  @override
+  String get addedToFavorites => 'Added to favorites';
+
+  @override
+  String get removedFromFavorites => 'Removed from favorites';
+
+  @override
+  String get missingFood => 'Missing Food Item';
+
+  @override
+  String foodId(String id) {
+    return 'Food ID: $id';
+  }
+
+  @override
+  String get noMealsInLibrary => 'No meals in your library yet';
+
+  @override
+  String get noMealsMatchSearch => 'No meals match your search';
+
+  @override
+  String get tapPlusButtonCreateMeal => 'Tap the + button to create your first meal';
+
+  @override
+  String ingredientsWithTotal(int count, int weight) {
+    return '$count ingredients • ${weight}g total';
+  }
 }

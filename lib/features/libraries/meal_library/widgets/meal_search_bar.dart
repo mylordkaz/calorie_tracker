@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class MealSearchBar extends StatelessWidget {
   final TextEditingController controller;
@@ -7,6 +8,7 @@ class MealSearchBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     return Container(
       padding: EdgeInsets.symmetric(horizontal: 16, vertical: 8),
       child: Container(
@@ -27,7 +29,7 @@ class MealSearchBar extends StatelessWidget {
         child: TextField(
           controller: controller,
           decoration: InputDecoration(
-            hintText: 'Search meals...',
+            hintText: l10n.searchMeals,
             hintStyle: TextStyle(fontSize: 14, color: Colors.grey[500]),
             prefixIcon: Icon(Icons.search, color: Colors.grey[400], size: 20),
             border: InputBorder.none,

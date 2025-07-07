@@ -5,6 +5,7 @@ import '../../../../data/models/food_item.dart';
 import '../../../../data/services/food_database_service.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import 'add_meal_screen.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class MealDetailsScreen extends StatelessWidget {
   final Meal meal;
@@ -13,6 +14,7 @@ class MealDetailsScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     final macros = FoodDatabaseService.calculateMealMacros(meal);
     final totalWeight = meal.getTotalWeight();
 
@@ -149,7 +151,7 @@ class MealDetailsScreen extends StatelessWidget {
                                         ),
                                         SizedBox(width: 4),
                                         Text(
-                                          'Favorite',
+                                          l10n.favorite,
                                           style: TextStyle(
                                             fontSize: 10,
                                             color: Colors.red,
@@ -204,7 +206,9 @@ class MealDetailsScreen extends StatelessWidget {
                                     borderRadius: BorderRadius.circular(8),
                                   ),
                                   child: Text(
-                                    '${meal.getIngredientCount()} ingredients',
+                                    l10n.ingredientsCount(
+                                      meal.getIngredientCount(),
+                                    ),
                                     style: TextStyle(
                                       fontSize: 12,
                                       color: Colors.grey[700],
@@ -233,7 +237,7 @@ class MealDetailsScreen extends StatelessWidget {
                         Icon(Icons.scale, size: 16, color: Colors.grey[600]),
                         SizedBox(width: 8),
                         Text(
-                          'Total Weight: ${totalWeight.toInt()}g',
+                          l10n.totalWeight(totalWeight.toInt()),
                           style: TextStyle(
                             fontSize: 13,
                             color: Colors.grey[700],
@@ -263,7 +267,7 @@ class MealDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'Nutrition Facts (Total)',
+                        l10n.nutritionFactsTotal,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -279,9 +283,9 @@ class MealDetailsScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Calories',
+                          l10n.calories,
                           macros['calories']!,
-                          'kcal',
+                          l10n.kcal,
                           Colors.orange,
                           Icons.local_fire_department,
                         ),
@@ -289,7 +293,7 @@ class MealDetailsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Protein',
+                          l10n.protein,
                           macros['protein']!,
                           'g',
                           Colors.blue,
@@ -303,7 +307,7 @@ class MealDetailsScreen extends StatelessWidget {
                     children: [
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Carbs',
+                          l10n.carbs,
                           macros['carbs']!,
                           'g',
                           Colors.green,
@@ -313,7 +317,7 @@ class MealDetailsScreen extends StatelessWidget {
                       SizedBox(width: 8),
                       Expanded(
                         child: _buildModernMacroCard(
-                          'Fat',
+                          l10n.fat,
                           macros['fat']!,
                           'g',
                           Colors.amber,
@@ -342,7 +346,7 @@ class MealDetailsScreen extends StatelessWidget {
                       ),
                       SizedBox(width: 8),
                       Text(
-                        'Ingredients (${meal.getIngredientCount()})',
+                        l10n.ingredients(meal.getIngredientCount()),
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -356,9 +360,13 @@ class MealDetailsScreen extends StatelessWidget {
                   ...meal.ingredients.map((ingredient) {
                     final food = FoodDatabaseService.getFood(ingredient.foodId);
                     if (food == null) {
-                      return _buildMissingIngredientCard(ingredient);
+                      return _buildMissingIngredientCard(ingredient, context);
                     }
-                    return _buildModernIngredientCard(ingredient, food);
+                    return _buildModernIngredientCard(
+                      ingredient,
+                      food,
+                      context,
+                    );
                   }).toList(),
                 ],
               ),
@@ -376,7 +384,7 @@ class MealDetailsScreen extends StatelessWidget {
                       Icon(Icons.analytics, color: Colors.grey[600], size: 20),
                       SizedBox(width: 8),
                       Text(
-                        'Usage Statistics',
+                        l10n.usageStatistics,
                         style: TextStyle(
                           fontSize: 18,
                           fontWeight: FontWeight.w600,
@@ -388,21 +396,21 @@ class MealDetailsScreen extends StatelessWidget {
                   SizedBox(height: 16),
 
                   _buildModernInfoRow(
-                    'Times Used',
+                    l10n.timesUsed,
                     meal.useCount.toString(),
                     Icons.repeat,
                     Colors.blue,
                   ),
                   SizedBox(height: 12),
                   _buildModernInfoRow(
-                    'Last Used',
+                    l10n.lastUsed,
                     _formatDate(meal.lastUsed),
                     Icons.access_time,
                     Colors.green,
                   ),
                   SizedBox(height: 12),
                   _buildModernInfoRow(
-                    'Created',
+                    l10n.created,
                     _formatDate(meal.createdAt),
                     Icons.calendar_today,
                     Colors.orange,
@@ -466,7 +474,12 @@ class MealDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildModernIngredientCard(MealIngredient ingredient, FoodItem food) {
+  Widget _buildModernIngredientCard(
+    MealIngredient ingredient,
+    FoodItem food,
+    BuildContext context,
+  ) {
+    final l10n = L10n.of(context);
     final macros = ingredient.calculateMacros(food);
 
     return Container(
@@ -546,15 +559,15 @@ class MealDetailsScreen extends StatelessWidget {
                 Colors.orange,
               ),
               _buildSmallMacroChip(
-                '${macros['protein']!.toStringAsFixed(1)}g protein',
+                '${macros['protein']!.toStringAsFixed(1)}g ${l10n.protein}',
                 Colors.blue,
               ),
               _buildSmallMacroChip(
-                '${macros['carbs']!.toStringAsFixed(1)}g carbs',
+                '${macros['carbs']!.toStringAsFixed(1)}g ${l10n.carbs}',
                 Colors.green,
               ),
               _buildSmallMacroChip(
-                '${macros['fat']!.toStringAsFixed(1)}g fat',
+                '${macros['fat']!.toStringAsFixed(1)}g ${l10n.fat}',
                 Colors.amber,
               ),
             ],
@@ -564,7 +577,11 @@ class MealDetailsScreen extends StatelessWidget {
     );
   }
 
-  Widget _buildMissingIngredientCard(MealIngredient ingredient) {
+  Widget _buildMissingIngredientCard(
+    MealIngredient ingredient,
+    BuildContext context,
+  ) {
+    final l10n = L10n.of(context);
     return Container(
       margin: EdgeInsets.only(bottom: 12),
       padding: EdgeInsets.all(12),
@@ -589,7 +606,7 @@ class MealDetailsScreen extends StatelessWidget {
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
                 Text(
-                  'Missing Food Item',
+                  l10n.missingFood,
                   style: TextStyle(
                     fontWeight: FontWeight.w600,
                     fontSize: 14,
@@ -597,7 +614,7 @@ class MealDetailsScreen extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'Food ID: ${ingredient.foodId}',
+                  l10n.foodId(ingredient.foodId),
                   style: TextStyle(color: Colors.red[300], fontSize: 12),
                 ),
               ],
@@ -682,13 +699,14 @@ class MealDetailsScreen extends StatelessWidget {
   }
 
   void _toggleFavorite(BuildContext context) async {
+    final l10n = L10n.of(context);
     await FoodDatabaseService.toggleMealFavorite(meal.id);
 
     if (context.mounted) {
       ScaffoldMessenger.of(context).showSnackBar(
         SnackBar(
           content: Text(
-            meal.isFavorite ? 'Removed from favorites' : 'Added to favorites',
+            meal.isFavorite ? l10n.removedFromFavorites : l10n.addedToFavorites,
           ),
           backgroundColor: Colors.blue,
         ),
@@ -698,6 +716,7 @@ class MealDetailsScreen extends StatelessWidget {
   }
 
   void _showDeleteConfirmation(BuildContext context) {
+    final l10n = L10n.of(context);
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -718,7 +737,7 @@ class MealDetailsScreen extends StatelessWidget {
           ],
         ),
         content: Text(
-          'Are you sure you want to delete "${meal.name}"? This action cannot be undone.',
+          l10n.deleteMealConfirmation(meal.name),
           style: TextStyle(fontSize: 14, color: Colors.grey[600]),
         ),
         actions: [
@@ -743,7 +762,7 @@ class MealDetailsScreen extends StatelessWidget {
                 borderRadius: BorderRadius.circular(8),
               ),
             ),
-            child: Text('Delete'),
+            child: Text(l10n.delete),
           ),
         ],
       ),

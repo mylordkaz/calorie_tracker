@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'dart:io';
 import '../../../../data/models/meal.dart';
+import '../../../../core/utils/localization_helper.dart';
 
 class MealCard extends StatelessWidget {
   final Meal meal;
@@ -18,6 +19,7 @@ class MealCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = L10n.of(context);
     final macros = calculateMacros(meal);
     final totalWeight = meal.getTotalWeight();
     final hasImage =
@@ -94,7 +96,7 @@ class MealCard extends StatelessWidget {
 
                         SizedBox(height: 2),
                         Text(
-                          '${meal.getIngredientCount()} ingredients • ${totalWeight.toInt()}g total',
+                          '${l10n.ingredientsCount(meal.getIngredientCount())} • ${l10n.totalWeightShort(totalWeight.toInt())}',
                           style: TextStyle(
                             fontSize: 11,
                             color: Colors.grey[500],
@@ -114,7 +116,7 @@ class MealCard extends StatelessWidget {
                                 Colors.orange,
                               ),
                               _buildMacroChip(
-                                '${macros['protein']!.toStringAsFixed(1)}g protein',
+                                '${macros['protein']!.toStringAsFixed(1)}g ${l10n.protein}',
                                 Colors.blue,
                               ),
                               if (meal.category != null)

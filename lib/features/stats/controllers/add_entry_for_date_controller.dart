@@ -1,9 +1,9 @@
-
 import 'package:flutter/material.dart';
 import '../../../data/repositories/food_repository.dart';
 import '../../../data/repositories/tracking_repository.dart';
 import '../../../data/models/food_item.dart';
 import '../../../data/models/meal.dart';
+import '../../../l10n/app_localizations.dart';
 
 class AddEntryForDateController extends ChangeNotifier {
   final FoodRepository _foodRepository;
@@ -118,6 +118,7 @@ class AddEntryForDateController extends ChangeNotifier {
     double carbs = 0.0,
     double fat = 0.0,
     required bool saveToLibrary,
+    required AppLocalizations l10n,
   }) async {
     try {
       if (saveToLibrary) {
@@ -125,7 +126,7 @@ class AddEntryForDateController extends ChangeNotifier {
         final quickFood = FoodItem(
           id: 'quick_${DateTime.now().millisecondsSinceEpoch}',
           name: name,
-          description: 'Quick entry',
+          description: l10n.quickEntry,
           calories: calories,
           protein: protein,
           carbs: carbs,

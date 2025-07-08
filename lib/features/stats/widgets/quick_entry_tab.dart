@@ -365,6 +365,7 @@ class _QuickEntryTabState extends State<QuickEntryTab> {
       carbs: carbs,
       fat: fat,
       saveToLibrary: shouldSaveToLibrary,
+      l10n: l10n,
     );
 
     if (mounted && success) {

@@ -64,10 +64,11 @@ class _AccessControlWrapperState extends State<AccessControlWrapper> {
     }
   }
 
-  void _refreshAccess() {
+  void _refreshAccess() async {
     setState(() {
       _isLoading = true;
     });
+    await Future.delayed(Duration(milliseconds: 100));
     _checkAccess();
   }
 

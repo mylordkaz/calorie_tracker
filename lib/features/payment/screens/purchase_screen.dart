@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nibble/core/utils/localization_helper.dart';
+import 'package:nibble/features/payment/widgets/promo_confirmation_dialog.dart';
 import '../../../data/services/access_control_service.dart';
 import '../../../data/services/user_status_service.dart';
 import '../../../core/utils/trial_status_helper.dart';
@@ -65,6 +66,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           builder: (context) => TrialConfirmationDialog(
             onContinue: () {
               Navigator.of(context).pop();
+              Navigator.of(context).pop();
               widget.onPurchaseComplete?.call();
             },
           ),
@@ -116,19 +118,32 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     });
 
     try {
-      // TODO: Implement actual promo code validation with server
-      await Future.delayed(Duration(seconds: 1));
+      final promoCode = _promoCodeController.text.trim();
 
-      await UserStatusService.redeemPromoCodeWithServer(
-        _promoCodeController.text.trim(),
-      );
-      widget.onPurchaseComplete?.call();
-    } catch (e) {
-      _showMessage('Invalid promo code');
-    } finally {
+      await UserStatusService.redeemPromoCodeWithServer(promoCode);
+
       setState(() {
         _isLoading = false;
       });
+
+      // Show promo confirmation dialog
+      await showDialog(
+        context: context,
+        barrierDismissible: false,
+        builder: (context) => PromoConfirmationDialog(
+          promoCode: promoCode,
+          onContinue: () {
+            Navigator.of(context).pop(); // Close dialog
+            Navigator.of(context).pop(); // Pop the PurchaseScreen
+            widget.onPurchaseComplete?.call();
+          },
+        ),
+      );
+    } catch (e) {
+      setState(() {
+        _isLoading = false;
+      });
+      _showMessage('Invalid promo code');
     }
   }
 

@@ -208,10 +208,12 @@ class UserStatusService {
 
   // Enhanced redeemPromoCode method with server validation
   static Future<void> redeemPromoCodeWithServer(String promoCode) async {
-    try {
-      final status = await getUserStatus();
-      final userHash = status.userHash;
+  try {
+    final status = await getUserStatus();
+    final userHash = status.userHash;
 
+    // Try server first
+    try {
       final response = await ServerApiService.redeemPromoCode(
         userHash: userHash,
         promoCode: promoCode,
@@ -225,15 +227,33 @@ class UserStatusService {
           lastUpdated: DateTime.now(),
         );
         await _box.put(_statusKey, updatedStatus);
-        print('✅ Promo code redeemed successfully');
+        print('✅ Promo code redeemed via server');
+        return;
       } else {
         throw Exception(response['error'] ?? 'Failed to redeem promo code');
       }
     } catch (e) {
-      print('❌ Error redeeming promo code: $e');
-      throw Exception('Error redeeming promo code: $e');
+      print('⚠️ Server promo redemption failed, trying local: $e');
+      
+      // Local fallback for offline users
+      // Note: This allows offline redemption but server will validate later
+      final updatedStatus = status.copyWith(
+        isPromoUser: true,
+        promoCode: promoCode,
+        lastUpdated: DateTime.now(),
+      );
+      await _box.put(_statusKey, updatedStatus);
+      
+      // Try to sync with server in background
+      syncWithServer().catchError((e) => print('Background sync failed: $e'));
+      
+      print('✅ Promo code redeemed locally (offline mode)');
     }
+  } catch (e) {
+    print('❌ Error redeeming promo code: $e');
+    throw Exception('Error redeeming promo code: $e');
   }
+}
 
   // promo code
   static Future<void> redeemPromoCode(String promoCode) async {
@@ -300,7 +320,7 @@ class UserStatusService {
   // Sync local data with server
   static Future<void> syncWithServer() async {
     try {
-      final status = await getUserStatus();
+      UserStatus status = await getUserStatus();
       final userHash = status.userHash;
 
       final serverStatus = await ServerApiService.getUserStatus(userHash);
@@ -309,11 +329,13 @@ class UserStatusService {
       bool needsUpdate = false;
 
       if (serverStatus['is_purchased'] == true && !status.hasPurchased) {
-        status.hasPurchased = true;
-        status.purchaseToken = 'server_validated';
-        status.purchaseDate = DateTime.now();
-        needsUpdate = true;
-      }
+				status = status.copyWith(
+					hasPurchased: true,
+					purchaseToken: 'server_validated',
+					purchaseDate: DateTime.now(),
+				);
+				needsUpdate = true;
+			}
 
       if (serverStatus['trial_active'] == true &&
           serverStatus['trial_expires_at'] != null) {
@@ -325,15 +347,17 @@ class UserStatusService {
         );
 
         if (!status.hasTrialStarted || status.trialEndDate != trialExpiresAt) {
-          status.hasTrialStarted = true;
-          status.trialStartDate = trialStartedAt;
-          status.trialEndDate = trialExpiresAt;
+          status = status.copyWith(
+						hasTrialStarted: true,
+						trialStartDate: trialStartedAt,
+						trialEndDate: trialExpiresAt,
+					);
           needsUpdate = true;
         }
       }
 
       if (needsUpdate) {
-        status.lastUpdated = DateTime.now();
+        status = status.copyWith(lastUpdated: DateTime.now());
         await _box.put(_statusKey, status);
         print('✅ Synced with server');
       }

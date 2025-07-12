@@ -5,6 +5,10 @@ class AppRoutes {
   static const String stats = '/stats';
   static const String tools = '/tools';
 
+  // Onboarding routes
+  static const String welcome = '/welcome';
+  static const String purchase = '/purchase';
+
   // Home feature routes
   static const String addFoodEntry = '/add-food-entry';
 

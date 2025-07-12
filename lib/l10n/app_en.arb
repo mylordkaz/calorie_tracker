@@ -51,7 +51,7 @@
 		"targetWithValue": "Target: {value}",
 		"setTarget": "Set Target",
 		"setDailyTarget": "Set Daily Calorie Target",
-		"todayWithDate": "Today - {date}",
+"todayWithDate": "Today - {date}",
 		"cal": "cal",
 		"addFoodEntry": "Add Food Entry",
 		"quickEntry": "Quick Entry",
@@ -510,17 +510,33 @@
 		"purchaseStartFreeTrial": "Start 14-Day Free Trial",
 		"purchaseUnlockFullAccess": "Unlock Full Access",
 		"purchaseOneTimePayment": "{price} - One time payment",
-  "@purchaseOneTimePayment": {
-    "placeholders": {
-      "price": {
-        "type": "String"
-      }
-    }
-  },
+		"@purchaseOneTimePayment": {
+			"placeholders": {
+				"price": {
+					"type": "String"
+				}
+			}
+		},
 		"purchaseBenefitNoSubscriptions": "No subscriptions - pay once, use forever",
 		"purchaseBenefitDataPrivacy": "Your data stays on your device",
 		"purchaseBenefitNoAds": "No ads, no tracking",
 		"purchaseBenefitUnlimited": "Unlimited custom foods and meals",
-		"purchaseTermsAndPrivacy": "By purchasing, you agree to our Terms of Service and Privacy Policy"
+		"purchaseTermsAndPrivacy": "By purchasing, you agree to our Terms of Service and Privacy Policy",
+		"havePromoCode": "Have a promo code?",
+		"enterPromoCode": "Enter promo code",
+		"redeemCode": "Redeem Code",
+		"trialStarted": "Trial Started!",
+		"yourTrialBegun": "Your 14-days free trial has begun",
+		"trialEndOn": "Trial ends on",
+		"startUsing": "Start using Nibble",
+		"welcome": "Welcome to Nibble",
+		"yourPrivateCalTracker": "Your private calorie tracker",
+		"yourDataStaysPrivate": "Your data stays private",
+		"noCloudAllLocal": "No cloud servers, everything local",
+		"fastSimpleTracking": "Fast & simple tracking",
+		"customLibsByYou": "Custom food library built by you",
+		"payOnceUseForever": "Pay once, use forever",
+		"noSubNoHiddenFee": "No subscriptions or hidden fees",
+		"getStarted": "Get Started"
 
 }

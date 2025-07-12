@@ -987,4 +987,52 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get purchaseTermsAndPrivacy => '購入することで、利用規約およびプライバシーポリシーに同意したものとみなされます';
+
+  @override
+  String get havePromoCode => 'プロモコードをお持ちですか？';
+
+  @override
+  String get enterPromoCode => 'プロモコードを入力';
+
+  @override
+  String get redeemCode => 'コードを使用する';
+
+  @override
+  String get trialStarted => 'トライアルを開始しました！';
+
+  @override
+  String get yourTrialBegun => '14日間の無料トライアルが始まりました';
+
+  @override
+  String get trialEndOn => 'トライアル終了日';
+
+  @override
+  String get startUsing => 'Nibbleを使い始める';
+
+  @override
+  String get welcome => 'Nibbleへようこそ';
+
+  @override
+  String get yourPrivateCalTracker => 'あなた専用のカロリートラッカー';
+
+  @override
+  String get yourDataStaysPrivate => 'あなたのデータはプライベートなまま';
+
+  @override
+  String get noCloudAllLocal => 'クラウドなし、すべてローカルで管理';
+
+  @override
+  String get fastSimpleTracking => '高速かつシンプルな記録';
+
+  @override
+  String get customLibsByYou => '自分で作るカスタムフードライブラリ';
+
+  @override
+  String get payOnceUseForever => '一度の支払いでずっと使える';
+
+  @override
+  String get noSubNoHiddenFee => 'サブスクリプションや隠れた料金はなし';
+
+  @override
+  String get getStarted => '始める';
 }

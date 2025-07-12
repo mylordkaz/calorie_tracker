@@ -521,6 +521,24 @@
 		"purchaseBenefitDataPrivacy": "あなたのデータは端末内に保存されます",
 		"purchaseBenefitNoAds": "広告なし・トラッキングなし",
 		"purchaseBenefitUnlimited": "カスタム食品や食事の登録が無制限",
-		"purchaseTermsAndPrivacy": "購入することで、利用規約およびプライバシーポリシーに同意したものとみなされます"
+		"purchaseTermsAndPrivacy": "購入することで、利用規約およびプライバシーポリシーに同意したものとみなされます",
+		"havePromoCode": "プロモコードをお持ちですか？",
+		"enterPromoCode": "プロモコードを入力",
+		"redeemCode": "コードを使用する",
+		"trialStarted": "トライアルを開始しました！",
+		"yourTrialBegun": "14日間の無料トライアルが始まりました",
+		"trialEndOn": "トライアル終了日",
+		"startUsing": "Nibbleを使い始める",
+		"welcome": "Nibbleへようこそ",
+"yourPrivateCalTracker": "あなた専用のカロリートラッカー",
+"yourDataStaysPrivate": "あなたのデータはプライベートなまま",
+"noCloudAllLocal": "クラウドなし、すべてローカルで管理",
+"fastSimpleTracking": "高速かつシンプルな記録",
+"customLibsByYou": "自分で作るカスタムフードライブラリ",
+"payOnceUseForever": "一度の支払いでずっと使える",
+"noSubNoHiddenFee": "サブスクリプションや隠れた料金はなし",
+"getStarted": "始める"
+
+
 
 }

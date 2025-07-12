@@ -3,6 +3,7 @@ import 'package:nibble/core/utils/localization_helper.dart';
 import '../../../data/services/access_control_service.dart';
 import '../../../data/services/user_status_service.dart';
 import '../../../core/utils/trial_status_helper.dart';
+import '../widgets/trial_confirmation_dialog.dart';
 
 class PurchaseScreen extends StatefulWidget {
   final VoidCallback? onPurchaseComplete;
@@ -18,6 +19,8 @@ class PurchaseScreen extends StatefulWidget {
 class _PurchaseScreenState extends State<PurchaseScreen> {
   bool _isLoading = false;
   TrialStatusData? _statusData;
+  final _promoCodeController = TextEditingController();
+  bool _showPromoCode = false;
 
   @override
   void initState() {
@@ -26,6 +29,12 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     if (_statusData == null) {
       _loadStatusData();
     }
+  }
+
+  @override
+  void dispose() {
+    _promoCodeController.dispose();
+    super.dispose();
   }
 
   Future<void> _loadStatusData() async {
@@ -45,16 +54,32 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     try {
       final started = await UserStatusService.startTrial();
       if (started) {
-        widget.onPurchaseComplete?.call();
+        setState(() {
+          _isLoading = false;
+        });
+
+        // Show trial confirmation dialog
+        await showDialog(
+          context: context,
+          barrierDismissible: false,
+          builder: (context) => TrialConfirmationDialog(
+            onContinue: () {
+              Navigator.of(context).pop();
+              widget.onPurchaseComplete?.call();
+            },
+          ),
+        );
       } else {
+        setState(() {
+          _isLoading = false;
+        });
         _showMessage(l10n.accessControlTrialAlreadyUsed);
       }
     } catch (e) {
-      _showMessage(l10n.accessControlErrorStartingTrial(e.toString()));
-    } finally {
       setState(() {
         _isLoading = false;
       });
+      _showMessage(l10n.accessControlErrorStartingTrial(e.toString()));
     }
   }
 
@@ -83,10 +108,37 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     }
   }
 
+  Future<void> _redeemPromoCode() async {
+    if (_promoCodeController.text.trim().isEmpty) return;
+
+    setState(() {
+      _isLoading = true;
+    });
+
+    try {
+      // TODO: Implement actual promo code validation with server
+      await Future.delayed(Duration(seconds: 1));
+
+      await UserStatusService.redeemPromoCode(_promoCodeController.text.trim());
+      widget.onPurchaseComplete?.call();
+    } catch (e) {
+      _showMessage('Invalid promo code');
+    } finally {
+      setState(() {
+        _isLoading = false;
+      });
+    }
+  }
+
   void _showMessage(String message) {
-    ScaffoldMessenger.of(
-      context,
-    ).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(
+        content: Text(message),
+        backgroundColor: Colors.grey[800],
+        behavior: SnackBarBehavior.floating,
+        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(8)),
+      ),
+    );
   }
 
   @override
@@ -101,166 +153,373 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     final basicPrice = '';
 
     return Scaffold(
+      backgroundColor: Colors.grey[50],
       body: SafeArea(
         child: Padding(
-          padding: EdgeInsets.all(24),
+          padding: EdgeInsets.symmetric(horizontal: 24, vertical: 16),
           child: Column(
             children: [
-              Spacer(),
-
-              // App logo/icon
-              Container(
-                width: 80,
-                height: 80,
-                decoration: BoxDecoration(
-                  color: Colors.blue,
-                  borderRadius: BorderRadius.circular(16),
-                ),
-                child: Icon(
-                  Icons.restaurant_menu,
-                  color: Colors.white,
-                  size: 40,
-                ),
-              ),
-
-              SizedBox(height: 24),
-
-              Text(
-                l10n.appName,
-                style: TextStyle(fontSize: 32, fontWeight: FontWeight.bold),
-              ),
-
-              SizedBox(height: 8),
-
-              Text(
-                l10n.appTagline,
-                style: TextStyle(fontSize: 16, color: Colors.grey[600]),
-              ),
-
-              SizedBox(height: 32),
-
-              // Status message
-              if (statusMessage.isNotEmpty)
-                Container(
-                  padding: EdgeInsets.all(16),
-                  decoration: BoxDecoration(
-                    color: Colors.blue.shade50,
-                    borderRadius: BorderRadius.circular(12),
-                    border: Border.all(color: Colors.blue.shade200),
-                  ),
-                  child: Row(
+              Expanded(
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
-                      Icon(Icons.info_outline, color: Colors.blue),
-                      SizedBox(width: 12),
-                      Expanded(
+                      SizedBox(height: 40),
+
+                      Container(
+                        width: 130,
+                        height: 130,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(20),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.black.withOpacity(0.1),
+                              blurRadius: 20,
+                              offset: Offset(0, 8),
+                            ),
+                          ],
+                        ),
+                        child: ClipRRect(
+                          borderRadius: BorderRadius.circular(20),
+                          child: Image.asset(
+                            'assets/icon/app_icon.png',
+                            fit: BoxFit.cover,
+                            errorBuilder: (context, error, stackTrace) {
+                              // Fallback if logo not found
+                              return Container(
+                                decoration: BoxDecoration(
+                                  gradient: LinearGradient(
+                                    colors: [
+                                      Colors.blue[400]!,
+                                      Colors.blue[600]!,
+                                    ],
+                                    begin: Alignment.topLeft,
+                                    end: Alignment.bottomRight,
+                                  ),
+                                  borderRadius: BorderRadius.circular(20),
+                                ),
+                                child: Icon(
+                                  Icons.restaurant_menu,
+                                  color: Colors.white,
+                                  size: 50,
+                                ),
+                              );
+                            },
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 32),
+
+                      Text(
+                        l10n.appName,
+                        style: TextStyle(
+                          fontSize: 28,
+                          fontWeight: FontWeight.w700,
+                          color: Colors.grey[800],
+                          letterSpacing: -0.5,
+                        ),
+                      ),
+
+                      SizedBox(height: 8),
+
+                      Text(
+                        l10n.appTagline,
+                        style: TextStyle(
+                          fontSize: 16,
+                          color: Colors.grey[600],
+                          fontWeight: FontWeight.w400,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+
+                      SizedBox(height: 40),
+
+                      // Status message
+                      if (statusMessage.isNotEmpty)
+                        Container(
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 12,
+                            vertical: 8,
+                          ),
+                          margin: EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.blue.shade50,
+                            borderRadius: BorderRadius.circular(8),
+                            border: Border.all(color: Colors.blue.shade200),
+                          ),
+                          child: Row(
+                            children: [
+                              Icon(
+                                Icons.info_outline,
+                                color: Colors.blue[600],
+                                size: 16,
+                              ),
+                              SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  statusMessage,
+                                  style: TextStyle(
+                                    color: Colors.blue[700],
+                                    fontWeight: FontWeight.w500,
+                                    fontSize: 13,
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+
+                      // Trial button (only show for new users)
+                      FutureBuilder<bool>(
+                        future: UserStatusService.isNewUser(),
+                        builder: (context, snapshot) {
+                          if (snapshot.data == true) {
+                            return Column(
+                              children: [
+                                Container(
+                                  width: double.infinity,
+                                  height: 56,
+                                  decoration: BoxDecoration(
+                                    borderRadius: BorderRadius.circular(16),
+                                    boxShadow: [
+                                      BoxShadow(
+                                        color: Colors.green.withOpacity(0.3),
+                                        blurRadius: 12,
+                                        offset: Offset(0, 6),
+                                      ),
+                                    ],
+                                  ),
+                                  child: ElevatedButton(
+                                    onPressed: _isLoading ? null : _startTrial,
+                                    style: ElevatedButton.styleFrom(
+                                      backgroundColor: Colors.green[500],
+                                      foregroundColor: Colors.white,
+                                      shape: RoundedRectangleBorder(
+                                        borderRadius: BorderRadius.circular(16),
+                                      ),
+                                      elevation: 0,
+                                    ),
+                                    child: _isLoading
+                                        ? SizedBox(
+                                            width: 20,
+                                            height: 20,
+                                            child: CircularProgressIndicator(
+                                              color: Colors.white,
+                                              strokeWidth: 2,
+                                            ),
+                                          )
+                                        : Text(
+                                            l10n.purchaseStartFreeTrial,
+                                            style: TextStyle(
+                                              fontSize: 16,
+                                              fontWeight: FontWeight.w600,
+                                            ),
+                                          ),
+                                  ),
+                                ),
+                                SizedBox(height: 20),
+                              ],
+                            );
+                          }
+                          return SizedBox.shrink();
+                        },
+                      ),
+
+                      // Purchase button
+                      Container(
+                        width: double.infinity,
+                        height: 56,
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(16),
+                          boxShadow: [
+                            BoxShadow(
+                              color: Colors.blue.withOpacity(0.25),
+                              blurRadius: 12,
+                              offset: Offset(0, 6),
+                            ),
+                          ],
+                        ),
+                        child: ElevatedButton(
+                          onPressed: _isLoading ? null : _purchaseBasic,
+                          style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.blue[600],
+                            foregroundColor: Colors.white,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(16),
+                            ),
+                            elevation: 0,
+                          ),
+                          child: _isLoading
+                              ? SizedBox(
+                                  width: 20,
+                                  height: 20,
+                                  child: CircularProgressIndicator(
+                                    color: Colors.white,
+                                    strokeWidth: 2,
+                                  ),
+                                )
+                              : Column(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    Text(
+                                      l10n.purchaseUnlockFullAccess,
+                                      style: TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
+                                      ),
+                                    ),
+                                    if (basicPrice.isNotEmpty)
+                                      Text(
+                                        l10n.purchaseOneTimePayment(basicPrice),
+                                        style: TextStyle(
+                                          fontSize: 13,
+                                          color: Colors.white.withOpacity(0.9),
+                                        ),
+                                      ),
+                                  ],
+                                ),
+                        ),
+                      ),
+
+                      SizedBox(height: 20),
+
+                      // Promo code section
+                      TextButton(
+                        onPressed: () {
+                          setState(() {
+                            _showPromoCode = !_showPromoCode;
+                          });
+                        },
+                        style: TextButton.styleFrom(
+                          foregroundColor: Colors.grey[600],
+                          padding: EdgeInsets.symmetric(
+                            horizontal: 16,
+                            vertical: 8,
+                          ),
+                        ),
                         child: Text(
-                          statusMessage,
+                          l10n.havePromoCode,
                           style: TextStyle(
-                            color: Colors.blue.shade700,
+                            fontSize: 14,
                             fontWeight: FontWeight.w500,
                           ),
                         ),
                       ),
+
+                      if (_showPromoCode) ...[
+                        SizedBox(height: 12),
+                        Container(
+                          padding: EdgeInsets.all(20),
+                          decoration: BoxDecoration(
+                            color: Colors.white,
+                            borderRadius: BorderRadius.circular(16),
+                            border: Border.all(color: Colors.grey[200]!),
+                          ),
+                          child: Column(
+                            children: [
+                              TextField(
+                                controller: _promoCodeController,
+                                textAlign: TextAlign.center,
+                                style: TextStyle(
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w600,
+                                  letterSpacing: 2,
+                                ),
+                                decoration: InputDecoration(
+                                  hintText: l10n.enterPromoCode,
+                                  hintStyle: TextStyle(
+                                    color: Colors.grey[400],
+                                    fontWeight: FontWeight.w400,
+                                    letterSpacing: 0,
+                                  ),
+                                  border: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: Colors.grey[300]!,
+                                    ),
+                                  ),
+                                  focusedBorder: OutlineInputBorder(
+                                    borderRadius: BorderRadius.circular(12),
+                                    borderSide: BorderSide(
+                                      color: Colors.blue[600]!,
+                                    ),
+                                  ),
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 16,
+                                  ),
+                                ),
+                                textCapitalization:
+                                    TextCapitalization.characters,
+                              ),
+                              SizedBox(height: 16),
+                              SizedBox(
+                                width: double.infinity,
+                                height: 48,
+                                child: ElevatedButton(
+                                  onPressed: _isLoading
+                                      ? null
+                                      : _redeemPromoCode,
+                                  style: ElevatedButton.styleFrom(
+                                    backgroundColor: Colors.grey[800],
+                                    foregroundColor: Colors.white,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(12),
+                                    ),
+                                    elevation: 0,
+                                  ),
+                                  child: Text(
+                                    l10n.redeemCode,
+                                    style: TextStyle(
+                                      fontSize: 15,
+                                      fontWeight: FontWeight.w600,
+                                    ),
+                                  ),
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+
+                      SizedBox(height: 32),
+
+                      // Benefits
+                      Container(
+                        padding: EdgeInsets.all(24),
+                        decoration: BoxDecoration(
+                          color: Colors.white,
+                          borderRadius: BorderRadius.circular(16),
+                          border: Border.all(color: Colors.grey[100]!),
+                        ),
+                        child: Column(
+                          children: [
+                            _buildBenefit(l10n.purchaseBenefitNoSubscriptions),
+                            _buildBenefit(l10n.purchaseBenefitDataPrivacy),
+                            _buildBenefit(l10n.purchaseBenefitNoAds),
+                            _buildBenefit(l10n.purchaseBenefitUnlimited),
+                          ],
+                        ),
+                      ),
+
+                      SizedBox(height: 32),
                     ],
                   ),
                 ),
-
-              SizedBox(height: 32),
-
-              // Trial button (only show for new users)
-              FutureBuilder<bool>(
-                future: UserStatusService.isNewUser(),
-                builder: (context, snapshot) {
-                  if (snapshot.data == true) {
-                    return Column(
-                      children: [
-                        SizedBox(
-                          width: double.infinity,
-                          height: 56,
-                          child: ElevatedButton(
-                            onPressed: _isLoading ? null : _startTrial,
-                            style: ElevatedButton.styleFrom(
-                              backgroundColor: Colors.green,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(12),
-                              ),
-                            ),
-                            child: _isLoading
-                                ? CircularProgressIndicator(color: Colors.white)
-                                : Text(
-                                    l10n.purchaseStartFreeTrial,
-                                    style: TextStyle(
-                                      fontSize: 18,
-                                      fontWeight: FontWeight.w600,
-                                      color: Colors.white,
-                                    ),
-                                  ),
-                          ),
-                        ),
-                        SizedBox(height: 16),
-                      ],
-                    );
-                  }
-                  return SizedBox.shrink();
-                },
               ),
-
-              // Purchase button
-              SizedBox(
-                width: double.infinity,
-                height: 56,
-                child: ElevatedButton(
-                  onPressed: _isLoading ? null : _purchaseBasic,
-                  style: ElevatedButton.styleFrom(
-                    backgroundColor: Colors.blue,
-                    shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
-                    ),
-                  ),
-                  child: _isLoading
-                      ? CircularProgressIndicator(color: Colors.white)
-                      : Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Text(
-                              l10n.purchaseUnlockFullAccess,
-                              style: TextStyle(
-                                fontSize: 18,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.white,
-                              ),
-                            ),
-                            Text(
-                              l10n.purchaseOneTimePayment(basicPrice),
-                              style: TextStyle(
-                                fontSize: 14,
-                                color: Colors.white.withOpacity(0.9),
-                              ),
-                            ),
-                          ],
-                        ),
-                ),
-              ),
-
-              SizedBox(height: 24),
-
-              // Benefits
-              Column(
-                children: [
-                  _buildBenefit(l10n.purchaseBenefitNoSubscriptions),
-                  _buildBenefit(l10n.purchaseBenefitDataPrivacy),
-                  _buildBenefit(l10n.purchaseBenefitNoAds),
-                  _buildBenefit(l10n.purchaseBenefitUnlimited),
-                ],
-              ),
-
-              Spacer(),
 
               // Terms and privacy
-              Text(
-                l10n.purchaseTermsAndPrivacy,
-                style: TextStyle(fontSize: 12, color: Colors.grey[600]),
-                textAlign: TextAlign.center,
+              Padding(
+                padding: EdgeInsets.symmetric(horizontal: 16),
+                child: Text(
+                  l10n.purchaseTermsAndPrivacy,
+                  style: TextStyle(
+                    fontSize: 12,
+                    color: Colors.grey[500],
+                    height: 1.4,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
               ),
             ],
           ),
@@ -271,12 +530,29 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
 
   Widget _buildBenefit(String text) {
     return Padding(
-      padding: EdgeInsets.symmetric(vertical: 4),
+      padding: EdgeInsets.symmetric(vertical: 8),
       child: Row(
         children: [
-          Icon(Icons.check_circle, color: Colors.green, size: 20),
-          SizedBox(width: 12),
-          Expanded(child: Text(text, style: TextStyle(fontSize: 14))),
+          Container(
+            padding: EdgeInsets.all(4),
+            decoration: BoxDecoration(
+              color: Colors.green.shade50,
+              borderRadius: BorderRadius.circular(6),
+            ),
+            child: Icon(Icons.check, color: Colors.green[600], size: 16),
+          ),
+          SizedBox(width: 16),
+          Expanded(
+            child: Text(
+              text,
+              style: TextStyle(
+                fontSize: 14,
+                color: Colors.grey[700],
+                fontWeight: FontWeight.w500,
+                height: 1.3,
+              ),
+            ),
+          ),
         ],
       ),
     );

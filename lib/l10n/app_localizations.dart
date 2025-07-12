@@ -1906,6 +1906,102 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'By purchasing, you agree to our Terms of Service and Privacy Policy'**
   String get purchaseTermsAndPrivacy;
+
+  /// No description provided for @havePromoCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Have a promo code?'**
+  String get havePromoCode;
+
+  /// No description provided for @enterPromoCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Enter promo code'**
+  String get enterPromoCode;
+
+  /// No description provided for @redeemCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Redeem Code'**
+  String get redeemCode;
+
+  /// No description provided for @trialStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial Started!'**
+  String get trialStarted;
+
+  /// No description provided for @yourTrialBegun.
+  ///
+  /// In en, this message translates to:
+  /// **'Your 14-days free trial has begun'**
+  String get yourTrialBegun;
+
+  /// No description provided for @trialEndOn.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial ends on'**
+  String get trialEndOn;
+
+  /// No description provided for @startUsing.
+  ///
+  /// In en, this message translates to:
+  /// **'Start using Nibble'**
+  String get startUsing;
+
+  /// No description provided for @welcome.
+  ///
+  /// In en, this message translates to:
+  /// **'Welcome to Nibble'**
+  String get welcome;
+
+  /// No description provided for @yourPrivateCalTracker.
+  ///
+  /// In en, this message translates to:
+  /// **'Your private calorie tracker'**
+  String get yourPrivateCalTracker;
+
+  /// No description provided for @yourDataStaysPrivate.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data stays private'**
+  String get yourDataStaysPrivate;
+
+  /// No description provided for @noCloudAllLocal.
+  ///
+  /// In en, this message translates to:
+  /// **'No cloud servers, everything local'**
+  String get noCloudAllLocal;
+
+  /// No description provided for @fastSimpleTracking.
+  ///
+  /// In en, this message translates to:
+  /// **'Fast & simple tracking'**
+  String get fastSimpleTracking;
+
+  /// No description provided for @customLibsByYou.
+  ///
+  /// In en, this message translates to:
+  /// **'Custom food library built by you'**
+  String get customLibsByYou;
+
+  /// No description provided for @payOnceUseForever.
+  ///
+  /// In en, this message translates to:
+  /// **'Pay once, use forever'**
+  String get payOnceUseForever;
+
+  /// No description provided for @noSubNoHiddenFee.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscriptions or hidden fees'**
+  String get noSubNoHiddenFee;
+
+  /// No description provided for @getStarted.
+  ///
+  /// In en, this message translates to:
+  /// **'Get Started'**
+  String get getStarted;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

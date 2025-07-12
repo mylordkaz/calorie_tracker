@@ -1,73 +1,61 @@
 import 'package:flutter/material.dart';
-import 'package:nibble/core/utils/localization_helper.dart';
-import '../../data/services/access_control_service.dart';
 import '../../features/payment/screens/purchase_screen.dart';
+import '../../features/onboarding/screens/welcome_screen.dart';
+import '../../data/services/access_control_service.dart';
+import '../../data/services/user_status_service.dart';
 import '../../core/utils/trial_status_helper.dart';
+import '../../core/utils/localization_helper.dart';
 
 class AccessControlWrapper extends StatefulWidget {
   final Widget child;
-  final bool showTrialWarning;
 
-  const AccessControlWrapper({
-    Key? key,
-    required this.child,
-    this.showTrialWarning = true,
-  }) : super(key: key);
+  const AccessControlWrapper({required this.child});
 
   @override
   _AccessControlWrapperState createState() => _AccessControlWrapperState();
 }
 
-class _AccessControlWrapperState extends State<AccessControlWrapper>
-    with WidgetsBindingObserver {
-  bool _hasAccess = false;
+class _AccessControlWrapperState extends State<AccessControlWrapper> {
   bool _isLoading = true;
+  bool _hasAccess = false;
+  bool _isNewUser = false;
   bool _showWarning = false;
   TrialStatusData? _statusData;
 
   @override
   void initState() {
     super.initState();
-    WidgetsBinding.instance.addObserver(this);
     _checkAccess();
   }
 
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    super.dispose();
-  }
-
-  @override
-  void didChangeAppLifecycleState(AppLifecycleState state) {
-    if (state == AppLifecycleState.resumed) {
-      _checkAccess();
-    }
-  }
-
   Future<void> _checkAccess() async {
-    try {
-      await AccessControlService.handleFirstLaunch();
+    setState(() {
+      _isLoading = true;
+    });
 
+    try {
+      // Check if user is new
+      final isNewUser = await UserStatusService.isNewUser();
+
+      // Get access status
       final hasAccess = await AccessControlService.canAccessApp();
-      final shouldWarn =
-          widget.showTrialWarning &&
-          await AccessControlService.shouldShowTrialWarning();
       final statusData = await AccessControlService.getTrialStatusData();
+      final showWarning = await AccessControlService.shouldShowTrialWarning();
 
       if (mounted) {
         setState(() {
+          _isNewUser = isNewUser;
           _hasAccess = hasAccess;
-          _showWarning = shouldWarn;
           _statusData = statusData;
+          _showWarning = showWarning;
           _isLoading = false;
         });
       }
     } catch (e) {
-      print('Error checking access: $e');
       if (mounted) {
         setState(() {
           _hasAccess = false;
+          _isNewUser = true;
           _isLoading = false;
         });
       }
@@ -87,11 +75,12 @@ class _AccessControlWrapperState extends State<AccessControlWrapper>
 
     if (_isLoading) {
       return Scaffold(
+        backgroundColor: Colors.white,
         body: Center(
           child: Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              CircularProgressIndicator(),
+              CircularProgressIndicator(color: Colors.blue),
               SizedBox(height: 16),
               Text(l10n.accessControlCheckingAccess),
             ],
@@ -100,6 +89,12 @@ class _AccessControlWrapperState extends State<AccessControlWrapper>
       );
     }
 
+    // Show welcome screen for new users
+    if (_isNewUser) {
+      return WelcomeScreen(onComplete: _refreshAccess);
+    }
+
+    // Show purchase screen if no access
     if (!_hasAccess) {
       return PurchaseScreen(
         onPurchaseComplete: _refreshAccess,
@@ -107,6 +102,7 @@ class _AccessControlWrapperState extends State<AccessControlWrapper>
       );
     }
 
+    // Show trial warning if needed
     if (_showWarning && _statusData != null) {
       final statusMessage = TrialStatusHelper.getStatusMessage(
         context,
@@ -153,6 +149,7 @@ class _AccessControlWrapperState extends State<AccessControlWrapper>
       );
     }
 
+    // Show main app
     return widget.child;
   }
 }

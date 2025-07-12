@@ -1780,6 +1780,132 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'per {serving}'**
   String perServings(String serving);
+
+  /// No description provided for @accessControlFullAccessPurchased.
+  ///
+  /// In en, this message translates to:
+  /// **'Full access purchased'**
+  String get accessControlFullAccessPurchased;
+
+  /// No description provided for @accessControlPromoActive.
+  ///
+  /// In en, this message translates to:
+  /// **'Promo access active'**
+  String get accessControlPromoActive;
+
+  /// No description provided for @accessControlTrialAvailable.
+  ///
+  /// In en, this message translates to:
+  /// **'14-day free trial available'**
+  String get accessControlTrialAvailable;
+
+  /// No description provided for @accessControlTrialExpiresIn.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial expires in {days} days'**
+  String accessControlTrialExpiresIn(int days);
+
+  /// No description provided for @accessControlTrialExpiresToday.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial expires today'**
+  String get accessControlTrialExpiresToday;
+
+  /// No description provided for @accessControlDaysRemaining.
+  ///
+  /// In en, this message translates to:
+  /// **'{days} days remaining in trial'**
+  String accessControlDaysRemaining(int days);
+
+  /// No description provided for @accessControlTrialExpired.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial expired - purchase required'**
+  String get accessControlTrialExpired;
+
+  /// No description provided for @accessControlCheckingAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Checking access...'**
+  String get accessControlCheckingAccess;
+
+  /// No description provided for @accessControlUpgrade.
+  ///
+  /// In en, this message translates to:
+  /// **'Upgrade'**
+  String get accessControlUpgrade;
+
+  /// No description provided for @accessControlTrialAlreadyUsed.
+  ///
+  /// In en, this message translates to:
+  /// **'Trial already used on this account'**
+  String get accessControlTrialAlreadyUsed;
+
+  /// No description provided for @accessControlErrorStartingTrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Error starting trial: {error}'**
+  String accessControlErrorStartingTrial(String error);
+
+  /// No description provided for @accessControlPurchaseFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Purchase failed: {error}'**
+  String accessControlPurchaseFailed(String error);
+
+  /// No description provided for @appTagline.
+  ///
+  /// In en, this message translates to:
+  /// **'Track calories, own your data'**
+  String get appTagline;
+
+  /// No description provided for @purchaseStartFreeTrial.
+  ///
+  /// In en, this message translates to:
+  /// **'Start 14-Day Free Trial'**
+  String get purchaseStartFreeTrial;
+
+  /// No description provided for @purchaseUnlockFullAccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlock Full Access'**
+  String get purchaseUnlockFullAccess;
+
+  /// No description provided for @purchaseOneTimePayment.
+  ///
+  /// In en, this message translates to:
+  /// **'{price} - One time payment'**
+  String purchaseOneTimePayment(String price);
+
+  /// No description provided for @purchaseBenefitNoSubscriptions.
+  ///
+  /// In en, this message translates to:
+  /// **'No subscriptions - pay once, use forever'**
+  String get purchaseBenefitNoSubscriptions;
+
+  /// No description provided for @purchaseBenefitDataPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'Your data stays on your device'**
+  String get purchaseBenefitDataPrivacy;
+
+  /// No description provided for @purchaseBenefitNoAds.
+  ///
+  /// In en, this message translates to:
+  /// **'No ads, no tracking'**
+  String get purchaseBenefitNoAds;
+
+  /// No description provided for @purchaseBenefitUnlimited.
+  ///
+  /// In en, this message translates to:
+  /// **'Unlimited custom foods and meals'**
+  String get purchaseBenefitUnlimited;
+
+  /// No description provided for @purchaseTermsAndPrivacy.
+  ///
+  /// In en, this message translates to:
+  /// **'By purchasing, you agree to our Terms of Service and Privacy Policy'**
+  String get purchaseTermsAndPrivacy;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

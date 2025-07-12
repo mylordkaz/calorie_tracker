@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nibble/shared/widgets/access_control_wrapper.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
 import 'core/routes/main_screen.dart';
 import 'data/services/food_database_service.dart';
 import 'data/services/user_settings_service.dart';
 import 'data/services/daily_tracking_service.dart';
+import 'data/services/user_status_service.dart';
+import 'data/services/access_control_service.dart';
 import 'package:nibble/l10n/app_localizations.dart';
 
 void main() async {
@@ -15,10 +18,19 @@ void main() async {
   // Initialize Hive
   await Hive.initFlutter();
 
+  // TEMPORARY: Reset user status for testing
+  try {
+    await Hive.deleteBoxFromDisk('user_status_encrypted');
+    print('✅ User status reset for testing');
+  } catch (e) {
+    print('Reset error: $e');
+  }
+
   // Initialize services
   await FoodDatabaseService.init();
   await UserSettingsService.init();
   await DailyTrackingService.init();
+  await UserStatusService.init();
 
   runApp(MyApp());
 }
@@ -72,7 +84,7 @@ class MyApp extends StatelessWidget {
               );
             }
 
-            return MainScreen();
+            return AccessControlWrapper(child: MainScreen());
           },
         ),
       ),
@@ -81,5 +93,6 @@ class MyApp extends StatelessWidget {
 
   Future<void> _initializeApp() async {
     await Future.delayed(Duration(milliseconds: 100));
+    await AccessControlService.initialize();
   }
 }

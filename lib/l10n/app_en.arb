@@ -458,12 +458,69 @@
 				}
 			}
 		},
-	"perServings": "per {serving}",
+		"perServings": "per {serving}",
 		"@perServings": {
 			"placeholders": {
 				"serving": {
 					"type": "String"
 				}
 			}
-		} 
+		},
+		"accessControlFullAccessPurchased": "Full access purchased",
+		"accessControlPromoActive": "Promo access active",
+		"accessControlTrialAvailable": "14-day free trial available",
+		"accessControlTrialExpiresIn": "Trial expires in {days} days",
+		"@accessControlTrialExpiresIn": {
+			"placeholders": {
+				"days": {
+					"type": "int"
+				}
+			}
+		},
+		"accessControlTrialExpiresToday": "Trial expires today",
+		"accessControlDaysRemaining": "{days} days remaining in trial",
+		"@accessControlDaysRemaining": {
+			"placeholders": {
+				"days": {
+					"type": "int"
+				}
+			}
+		},
+		"accessControlTrialExpired": "Trial expired - purchase required",
+		"accessControlCheckingAccess": "Checking access...",
+		"accessControlUpgrade": "Upgrade",
+		"accessControlTrialAlreadyUsed": "Trial already used on this account",
+		"accessControlErrorStartingTrial": "Error starting trial: {error}",
+		"@accessControlErrorStartingTrial": {
+			"placeholders": {
+				"error": {
+					"type": "String"
+				}
+			}
+		},
+		"accessControlPurchaseFailed": "Purchase failed: {error}",
+		"@accessControlPurchaseFailed": {
+			"placeholders": {
+				"error": {
+					"type": "String"
+				}
+			}
+		},
+		"appTagline": "Track calories, own your data",
+		"purchaseStartFreeTrial": "Start 14-Day Free Trial",
+		"purchaseUnlockFullAccess": "Unlock Full Access",
+		"purchaseOneTimePayment": "{price} - One time payment",
+  "@purchaseOneTimePayment": {
+    "placeholders": {
+      "price": {
+        "type": "String"
+      }
+    }
+  },
+		"purchaseBenefitNoSubscriptions": "No subscriptions - pay once, use forever",
+		"purchaseBenefitDataPrivacy": "Your data stays on your device",
+		"purchaseBenefitNoAds": "No ads, no tracking",
+		"purchaseBenefitUnlimited": "Unlimited custom foods and meals",
+		"purchaseTermsAndPrivacy": "By purchasing, you agree to our Terms of Service and Privacy Policy"
+
 }

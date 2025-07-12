@@ -921,4 +921,77 @@ class AppLocalizationsEn extends AppLocalizations {
   String perServings(String serving) {
     return 'per $serving';
   }
+
+  @override
+  String get accessControlFullAccessPurchased => 'Full access purchased';
+
+  @override
+  String get accessControlPromoActive => 'Promo access active';
+
+  @override
+  String get accessControlTrialAvailable => '14-day free trial available';
+
+  @override
+  String accessControlTrialExpiresIn(int days) {
+    return 'Trial expires in $days days';
+  }
+
+  @override
+  String get accessControlTrialExpiresToday => 'Trial expires today';
+
+  @override
+  String accessControlDaysRemaining(int days) {
+    return '$days days remaining in trial';
+  }
+
+  @override
+  String get accessControlTrialExpired => 'Trial expired - purchase required';
+
+  @override
+  String get accessControlCheckingAccess => 'Checking access...';
+
+  @override
+  String get accessControlUpgrade => 'Upgrade';
+
+  @override
+  String get accessControlTrialAlreadyUsed => 'Trial already used on this account';
+
+  @override
+  String accessControlErrorStartingTrial(String error) {
+    return 'Error starting trial: $error';
+  }
+
+  @override
+  String accessControlPurchaseFailed(String error) {
+    return 'Purchase failed: $error';
+  }
+
+  @override
+  String get appTagline => 'Track calories, own your data';
+
+  @override
+  String get purchaseStartFreeTrial => 'Start 14-Day Free Trial';
+
+  @override
+  String get purchaseUnlockFullAccess => 'Unlock Full Access';
+
+  @override
+  String purchaseOneTimePayment(String price) {
+    return '$price - One time payment';
+  }
+
+  @override
+  String get purchaseBenefitNoSubscriptions => 'No subscriptions - pay once, use forever';
+
+  @override
+  String get purchaseBenefitDataPrivacy => 'Your data stays on your device';
+
+  @override
+  String get purchaseBenefitNoAds => 'No ads, no tracking';
+
+  @override
+  String get purchaseBenefitUnlimited => 'Unlimited custom foods and meals';
+
+  @override
+  String get purchaseTermsAndPrivacy => 'By purchasing, you agree to our Terms of Service and Privacy Policy';
 }

@@ -465,5 +465,62 @@
 					"type": "String"
 				}
 			}
-		}
+		},
+		"accessControlFullAccessPurchased": "フルアクセスを購入済み",
+		"accessControlPromoActive": "プロモーションアクセスが有効",
+		"accessControlTrialAvailable": "14日間の無料トライアルが利用可能",
+		"accessControlTrialExpiresIn": "トライアルはあと{days}日で終了します",
+		"@accessControlTrialExpiresIn": {
+			"placeholders": {
+				"days": {
+					"type": "int"
+				}
+			}
+		},
+		"accessControlTrialExpiresToday": "トライアルは本日終了します",
+		"accessControlDaysRemaining": "トライアル終了まであと{days}日",
+		"@accessControlDaysRemaining": {
+			"placeholders": {
+				"days": {
+					"type": "int"
+				}
+			}
+		},
+		"accessControlTrialExpired": "トライアルが終了しました - 購入が必要です",
+		"accessControlCheckingAccess": "アクセス状況を確認中...",
+		"accessControlUpgrade": "アップグレード",
+		"accessControlTrialAlreadyUsed": "このアカウントでは既にトライアルを使用済みです",
+		"accessControlErrorStartingTrial": "トライアルの開始時にエラーが発生しました: {error}",
+		"@accessControlErrorStartingTrial": {
+			"placeholders": {
+				"error": {
+					"type": "String"
+				}
+			}
+		},
+		"accessControlPurchaseFailed": "購入に失敗しました: {error}",
+		"@accessControlPurchaseFailed": {
+			"placeholders": {
+				"error": {
+					"type": "String"
+				}
+			}
+		},
+		"appTagline": "カロリーを記録し、データを自分で管理しよう",
+		"purchaseStartFreeTrial": "14日間の無料トライアルを開始",
+		"purchaseUnlockFullAccess": "フルアクセスをアンロック",
+		"purchaseOneTimePayment": "{price} - 一回限りのお支払い",
+		"@purchaseOneTimePayment": {
+			"placeholders": {
+				"price": {
+					"type": "String"
+				}
+			}
+		},
+		"purchaseBenefitNoSubscriptions": "サブスクリプション不要 - 一度の支払いで永久使用可能",
+		"purchaseBenefitDataPrivacy": "あなたのデータは端末内に保存されます",
+		"purchaseBenefitNoAds": "広告なし・トラッキングなし",
+		"purchaseBenefitUnlimited": "カスタム食品や食事の登録が無制限",
+		"purchaseTermsAndPrivacy": "購入することで、利用規約およびプライバシーポリシーに同意したものとみなされます"
+
 }

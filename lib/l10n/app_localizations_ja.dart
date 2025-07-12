@@ -914,4 +914,77 @@ class AppLocalizationsJa extends AppLocalizations {
   String perServings(String serving) {
     return '$servingあたり';
   }
+
+  @override
+  String get accessControlFullAccessPurchased => 'フルアクセスを購入済み';
+
+  @override
+  String get accessControlPromoActive => 'プロモーションアクセスが有効';
+
+  @override
+  String get accessControlTrialAvailable => '14日間の無料トライアルが利用可能';
+
+  @override
+  String accessControlTrialExpiresIn(int days) {
+    return 'トライアルはあと$days日で終了します';
+  }
+
+  @override
+  String get accessControlTrialExpiresToday => 'トライアルは本日終了します';
+
+  @override
+  String accessControlDaysRemaining(int days) {
+    return 'トライアル終了まであと$days日';
+  }
+
+  @override
+  String get accessControlTrialExpired => 'トライアルが終了しました - 購入が必要です';
+
+  @override
+  String get accessControlCheckingAccess => 'アクセス状況を確認中...';
+
+  @override
+  String get accessControlUpgrade => 'アップグレード';
+
+  @override
+  String get accessControlTrialAlreadyUsed => 'このアカウントでは既にトライアルを使用済みです';
+
+  @override
+  String accessControlErrorStartingTrial(String error) {
+    return 'トライアルの開始時にエラーが発生しました: $error';
+  }
+
+  @override
+  String accessControlPurchaseFailed(String error) {
+    return '購入に失敗しました: $error';
+  }
+
+  @override
+  String get appTagline => 'カロリーを記録し、データを自分で管理しよう';
+
+  @override
+  String get purchaseStartFreeTrial => '14日間の無料トライアルを開始';
+
+  @override
+  String get purchaseUnlockFullAccess => 'フルアクセスをアンロック';
+
+  @override
+  String purchaseOneTimePayment(String price) {
+    return '$price - 一回限りのお支払い';
+  }
+
+  @override
+  String get purchaseBenefitNoSubscriptions => 'サブスクリプション不要 - 一度の支払いで永久使用可能';
+
+  @override
+  String get purchaseBenefitDataPrivacy => 'あなたのデータは端末内に保存されます';
+
+  @override
+  String get purchaseBenefitNoAds => '広告なし・トラッキングなし';
+
+  @override
+  String get purchaseBenefitUnlimited => 'カスタム食品や食事の登録が無制限';
+
+  @override
+  String get purchaseTermsAndPrivacy => '購入することで、利用規約およびプライバシーポリシーに同意したものとみなされます';
 }

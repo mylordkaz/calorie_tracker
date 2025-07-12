@@ -530,14 +530,14 @@
 		"trialEndOn": "トライアル終了日",
 		"startUsing": "Nibbleを使い始める",
 		"welcome": "Nibbleへようこそ",
-"yourPrivateCalTracker": "あなた専用のカロリートラッカー",
-"yourDataStaysPrivate": "あなたのデータはプライベートなまま",
-"noCloudAllLocal": "クラウドなし、すべてローカルで管理",
-"fastSimpleTracking": "高速かつシンプルな記録",
-"customLibsByYou": "自分で作るカスタムフードライブラリ",
-"payOnceUseForever": "一度の支払いでずっと使える",
-"noSubNoHiddenFee": "サブスクリプションや隠れた料金はなし",
-"getStarted": "始める"
+		"yourPrivateCalTracker": "あなた専用のカロリートラッカー",
+		"yourDataStaysPrivate": "あなたのデータはプライベートなまま",
+		"noCloudAllLocal": "クラウドなし、すべてローカルで管理",
+		"fastSimpleTracking": "高速かつシンプルな記録",
+		"customLibsByYou": "自分で作るカスタムフードライブラリ",
+		"payOnceUseForever": "一度の支払いでずっと使える",
+		"noSubNoHiddenFee": "サブスクリプションや隠れた料金はなし",
+		"getStarted": "始める"
 
 
 

@@ -4,6 +4,8 @@ import 'dart:convert';
 import 'dart:typed_data';
 import '../models/user_status.dart';
 import 'user_identification_service.dart';
+import 'server_api_service.dart';
+import 'dart:io';
 
 class UserStatusService {
   static const String _statusBoxName = 'user_status_encrypted';
@@ -84,22 +86,64 @@ class UserStatusService {
   }
 
   // start trial for new user
-  static Future<bool> startTrial() async {
-    final status = await getUserStatus();
-    if (status.hasTrialStarted) {
+  static Future<bool> startTrialWithServer() async {
+    try {
+      final status = await getUserStatus();
+      final userHash = status.userHash;
+
+      // Check server first
+      try {
+        final serverResponse = await ServerApiService.startTrial(userHash);
+        if (serverResponse['success'] == true) {
+          // Update local status with server data
+          final trialStartedAt = DateTime.fromMillisecondsSinceEpoch(
+            serverResponse['trial_started_at'] * 1000,
+          );
+          final trialExpiresAt = DateTime.fromMillisecondsSinceEpoch(
+            serverResponse['trial_expires_at'] * 1000,
+          );
+
+          final updatedStatus = status.copyWith(
+            hasTrialStarted: true,
+            trialStartDate: trialStartedAt,
+            trialEndDate: trialExpiresAt,
+            lastUpdated: DateTime.now(),
+          );
+
+          await _box.put(_statusKey, updatedStatus);
+          print('✅ Trial started via server');
+          return true;
+        }
+        return false;
+      } catch (e) {
+        print('⚠️ Server trial start failed, trying local: $e');
+
+        // Fallback to local trial start if server fails
+        if (status.hasTrialStarted) {
+          return false; // Already started locally
+        }
+
+        // Start trial locally as fallback
+        final now = DateTime.now();
+        final updatedStatus = status.copyWith(
+          hasTrialStarted: true,
+          trialStartDate: now,
+          trialEndDate: now.add(Duration(days: _trialDurationDays)),
+          lastUpdated: now,
+        );
+
+        await _box.put(_statusKey, updatedStatus);
+
+        // Try to sync with server in background
+        syncWithServer().catchError((e) => print('Background sync failed: $e'));
+
+        print('✅ Trial started locally (offline mode)');
+        return true;
+      }
+    } catch (e) {
+      print('❌ Error starting trial: $e');
       return false;
     }
-
-    final now = DateTime.now();
-    final updatedStatus = status.copyWith(
-      hasTrialStarted: true,
-      trialStartDate: now,
-      trialEndDate: now.add(Duration(days: _trialDurationDays)),
-      lastUpdated: now,
-    );
-
-    await _box.put(_statusKey, updatedStatus);
-    return true;
   }
 
   // check user: trial active, pruchased or promo
@@ -127,18 +171,68 @@ class UserStatusService {
   }
 
   // mark user as purchased
-  static Future<void> markAsPurchased({
+  static Future<void> markAsPurchasedWithServer({
     required String purchaseToken,
     DateTime? purchaseDate,
   }) async {
-    final status = await getUserStatus();
-    final updatedStatus = status.copyWith(
-      hasPurchased: true,
-      purchaseToken: purchaseToken,
-      purchaseDate: purchaseDate ?? DateTime.now(),
-      lastUpdated: DateTime.now(),
-    );
-    await _box.put(_statusKey, updatedStatus);
+    try {
+      final status = await getUserStatus();
+      final userHash = status.userHash;
+
+      // Update locally first for immediate response
+      final updatedStatus = status.copyWith(
+        hasPurchased: true,
+        purchaseToken: purchaseToken,
+        purchaseDate: purchaseDate ?? DateTime.now(),
+        lastUpdated: DateTime.now(),
+      );
+      await _box.put(_statusKey, updatedStatus);
+      print('✅ Purchase marked locally');
+
+      // Sync with server
+      try {
+        await ServerApiService.validatePurchase(
+          userHash: userHash,
+          purchaseToken: purchaseToken,
+          platform: Platform.isIOS ? 'apple' : 'google',
+        );
+        print('✅ Purchase validated with server');
+      } catch (e) {
+        print('⚠️ Server purchase validation failed (continuing locally): $e');
+        // Continue with local purchase - server will sync later
+      }
+    } catch (e) {
+      print('❌ Error marking as purchased: $e');
+    }
+  }
+
+  // Enhanced redeemPromoCode method with server validation
+  static Future<void> redeemPromoCodeWithServer(String promoCode) async {
+    try {
+      final status = await getUserStatus();
+      final userHash = status.userHash;
+
+      final response = await ServerApiService.redeemPromoCode(
+        userHash: userHash,
+        promoCode: promoCode,
+      );
+
+      if (response['success'] == true) {
+        // Update local status
+        final updatedStatus = status.copyWith(
+          isPromoUser: true,
+          promoCode: promoCode,
+          lastUpdated: DateTime.now(),
+        );
+        await _box.put(_statusKey, updatedStatus);
+        print('✅ Promo code redeemed successfully');
+      } else {
+        throw Exception(response['error'] ?? 'Failed to redeem promo code');
+      }
+    } catch (e) {
+      print('❌ Error redeeming promo code: $e');
+      throw Exception('Error redeeming promo code: $e');
+    }
   }
 
   // promo code
@@ -201,5 +295,57 @@ class UserStatusService {
     } catch (e) {
       return false;
     }
+  }
+
+  // Sync local data with server
+  static Future<void> syncWithServer() async {
+    try {
+      final status = await getUserStatus();
+      final userHash = status.userHash;
+
+      final serverStatus = await ServerApiService.getUserStatus(userHash);
+
+      // Update local status based on server response
+      bool needsUpdate = false;
+
+      if (serverStatus['is_purchased'] == true && !status.hasPurchased) {
+        status.hasPurchased = true;
+        status.purchaseToken = 'server_validated';
+        status.purchaseDate = DateTime.now();
+        needsUpdate = true;
+      }
+
+      if (serverStatus['trial_active'] == true &&
+          serverStatus['trial_expires_at'] != null) {
+        final trialExpiresAt = DateTime.fromMillisecondsSinceEpoch(
+          serverStatus['trial_expires_at'] * 1000,
+        );
+        final trialStartedAt = trialExpiresAt.subtract(
+          Duration(days: _trialDurationDays),
+        );
+
+        if (!status.hasTrialStarted || status.trialEndDate != trialExpiresAt) {
+          status.hasTrialStarted = true;
+          status.trialStartDate = trialStartedAt;
+          status.trialEndDate = trialExpiresAt;
+          needsUpdate = true;
+        }
+      }
+
+      if (needsUpdate) {
+        status.lastUpdated = DateTime.now();
+        await _box.put(_statusKey, status);
+        print('✅ Synced with server');
+      }
+    } catch (e) {
+      print('⚠️ Server sync failed (continuing offline): $e');
+      // Continue with local data - offline support
+    }
+  }
+
+  // Initialize with server sync
+  static Future<void> initializeWithServer() async {
+    await init(); // Call existing init first
+    await syncWithServer(); // Then sync with server
   }
 }

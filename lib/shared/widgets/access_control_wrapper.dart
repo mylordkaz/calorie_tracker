@@ -34,6 +34,8 @@ class _AccessControlWrapperState extends State<AccessControlWrapper> {
     });
 
     try {
+      await UserStatusService.syncWithServer();
+
       // Check if user is new
       final isNewUser = await UserStatusService.isNewUser();
 

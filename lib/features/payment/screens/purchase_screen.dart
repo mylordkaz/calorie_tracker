@@ -52,7 +52,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     });
 
     try {
-      final started = await UserStatusService.startTrial();
+      final started = await UserStatusService.startTrialWithServer();
       if (started) {
         setState(() {
           _isLoading = false;
@@ -94,7 +94,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       // TODO: Implement actual purchase logic with platform stores
       await Future.delayed(Duration(seconds: 2));
 
-      await UserStatusService.markAsPurchased(
+      await UserStatusService.markAsPurchasedWithServer(
         purchaseToken: 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
       );
 
@@ -119,7 +119,9 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       // TODO: Implement actual promo code validation with server
       await Future.delayed(Duration(seconds: 1));
 
-      await UserStatusService.redeemPromoCode(_promoCodeController.text.trim());
+      await UserStatusService.redeemPromoCodeWithServer(
+        _promoCodeController.text.trim(),
+      );
       widget.onPurchaseComplete?.call();
     } catch (e) {
       _showMessage('Invalid promo code');

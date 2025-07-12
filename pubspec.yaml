@@ -47,6 +47,8 @@ dependencies:
   device_info_plus: ^9.1.0
   sign_in_with_apple: ^5.0.0
   google_sign_in: ^6.1.5
+  http: ^1.1.0
+  flutter_dotenv: ^5.1.0
 
 dev_dependencies:
   flutter_launcher_icons: ^0.13.1
@@ -75,6 +77,7 @@ flutter_launcher_icons:
 # The following section is specific to Flutter packages.
 flutter:
   assets:
+    - .env
     - assets/icon/
 
   # The following line ensures that the Material Icons font is

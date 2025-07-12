@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:nibble/data/services/server_api_service.dart';
 import 'package:nibble/shared/widgets/access_control_wrapper.dart';
 import 'core/theme/app_theme.dart';
 import 'core/constants/app_constants.dart';
@@ -15,6 +17,8 @@ import 'package:nibble/l10n/app_localizations.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
 
+  await dotenv.load(fileName: '.env');
+
   // Initialize Hive
   await Hive.initFlutter();
 
@@ -27,10 +31,12 @@ void main() async {
   }
 
   // Initialize services
+  await ServerApiService.init();
   await FoodDatabaseService.init();
   await UserSettingsService.init();
   await DailyTrackingService.init();
-  await UserStatusService.init();
+  await UserStatusService.initializeWithServer();
+  await AccessControlService.initialize();
 
   runApp(MyApp());
 }

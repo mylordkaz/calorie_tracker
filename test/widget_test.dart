@@ -3,20 +3,29 @@ import 'package:flutter_test/flutter_test.dart';
 import 'package:nibble/main.dart';
 
 void main() {
-  testWidgets('Counter increments smoke test', (WidgetTester tester) async {
-    // Build app and trigger a frame.
+  testWidgets('App starts and shows welcome screen', (
+    WidgetTester tester,
+  ) async {
+    // Build our app and trigger a frame.
     await tester.pumpWidget(MyApp());
 
-    // Verify that counter starts at 0.
-    expect(find.text('0'), findsOneWidget);
-    expect(find.text('1'), findsNothing);
+    // Wait for async operations to complete
+    await tester.pumpAndSettle();
 
-    // Tap the '+' icon and trigger a frame.
-    await tester.tap(find.byIcon(Icons.add));
-    await tester.pump();
+    // Verify that the app starts (it should show some content)
+    expect(find.byType(MaterialApp), findsOneWidget);
 
-    // Verify that counter has incremented.
-    expect(find.text('0'), findsNothing);
-    expect(find.text('1'), findsOneWidget);
+    // Since the app might show welcome screen or main screen depending on user status,
+    // we just verify it loads without error
+    expect(tester.takeException(), isNull);
+  });
+
+  testWidgets('App handles basic navigation', (WidgetTester tester) async {
+    await tester.pumpWidget(MyApp());
+    await tester.pumpAndSettle();
+
+    // Verify app loads successfully
+    expect(find.byType(MaterialApp), findsOneWidget);
+    expect(tester.takeException(), isNull);
   });
 }

@@ -51,7 +51,7 @@
 		"targetWithValue": "Target: {value}",
 		"setTarget": "Set Target",
 		"setDailyTarget": "Set Daily Calorie Target",
-"todayWithDate": "Today - {date}",
+		"todayWithDate": "Today - {date}",
 		"cal": "cal",
 		"addFoodEntry": "Add Food Entry",
 		"quickEntry": "Quick Entry",
@@ -537,6 +537,16 @@
 		"customLibsByYou": "Custom food library built by you",
 		"payOnceUseForever": "Pay once, use forever",
 		"noSubNoHiddenFee": "No subscriptions or hidden fees",
-		"getStarted": "Get Started"
+		"getStarted": "Get Started",
+		"promoCodeRedeemed": "Promo Code Redeemed!",
+		"promoCodeRedeemedDescription": "Your promo code \"{promoCode}\" has been successfully redeemed. You now have full access to Nibble!",
+		"@promoCodeRedeemedDescription": {
+			"placeholders": {
+				"promoCode": {
+					"type": "String"
+				}
+			}
+		},
+		"fullAccessActivated": "Full access activated"
 
 }

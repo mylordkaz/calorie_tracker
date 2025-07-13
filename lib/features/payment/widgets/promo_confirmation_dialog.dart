@@ -35,7 +35,7 @@ class PromoConfirmationDialog extends StatelessWidget {
           ),
           SizedBox(height: 20),
           Text(
-            'Promo Code Redeemed!',
+            l10n.promoCodeRedeemed,
             style: TextStyle(
               fontSize: 20,
               fontWeight: FontWeight.bold,
@@ -44,7 +44,7 @@ class PromoConfirmationDialog extends StatelessWidget {
           ),
           SizedBox(height: 12),
           Text(
-            'Your promo code "$promoCode" has been successfully redeemed. You now have full access to Nibble!',
+            l10n.promoCodeRedeemedDescription(promoCode),
             style: TextStyle(fontSize: 16, color: Colors.grey[600]),
             textAlign: TextAlign.center,
           ),
@@ -62,7 +62,7 @@ class PromoConfirmationDialog extends StatelessWidget {
                 SizedBox(width: 12),
                 Expanded(
                   child: Text(
-                    'Full access activated',
+                    l10n.fullAccessActivated,
                     style: TextStyle(
                       fontSize: 16,
                       fontWeight: FontWeight.w600,

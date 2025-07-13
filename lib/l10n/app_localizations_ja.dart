@@ -1035,4 +1035,15 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get getStarted => '始める';
+
+  @override
+  String get promoCodeRedeemed => 'プロモコードが適用されました！';
+
+  @override
+  String promoCodeRedeemedDescription(String promoCode) {
+    return 'プロモコード「$promoCode」が正常に適用されました。これで Nibble をフルアクセスでご利用いただけます！';
+  }
+
+  @override
+  String get fullAccessActivated => 'フルアクセスが有効になりました';
 }

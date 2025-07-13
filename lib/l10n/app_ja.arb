@@ -537,7 +537,18 @@
 		"customLibsByYou": "自分で作るカスタムフードライブラリ",
 		"payOnceUseForever": "一度の支払いでずっと使える",
 		"noSubNoHiddenFee": "サブスクリプションや隠れた料金はなし",
-		"getStarted": "始める"
+		"getStarted": "始める",
+		"promoCodeRedeemed": "プロモコードが適用されました！",
+"promoCodeRedeemedDescription": "プロモコード「{promoCode}」が正常に適用されました。これで Nibble をフルアクセスでご利用いただけます！",
+"@promoCodeRedeemedDescription": {
+  "placeholders": {
+    "promoCode": {
+      "type": "String"
+    }
+  }
+},
+"fullAccessActivated": "フルアクセスが有効になりました"
+
 
 
 

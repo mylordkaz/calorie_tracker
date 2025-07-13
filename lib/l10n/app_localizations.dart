@@ -2002,6 +2002,24 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Get Started'**
   String get getStarted;
+
+  /// No description provided for @promoCodeRedeemed.
+  ///
+  /// In en, this message translates to:
+  /// **'Promo Code Redeemed!'**
+  String get promoCodeRedeemed;
+
+  /// No description provided for @promoCodeRedeemedDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Your promo code \"{promoCode}\" has been successfully redeemed. You now have full access to Nibble!'**
+  String promoCodeRedeemedDescription(String promoCode);
+
+  /// No description provided for @fullAccessActivated.
+  ///
+  /// In en, this message translates to:
+  /// **'Full access activated'**
+  String get fullAccessActivated;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

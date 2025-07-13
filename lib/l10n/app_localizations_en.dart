@@ -1042,4 +1042,15 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get getStarted => 'Get Started';
+
+  @override
+  String get promoCodeRedeemed => 'Promo Code Redeemed!';
+
+  @override
+  String promoCodeRedeemedDescription(String promoCode) {
+    return 'Your promo code \"$promoCode\" has been successfully redeemed. You now have full access to Nibble!';
+  }
+
+  @override
+  String get fullAccessActivated => 'Full access activated';
 }

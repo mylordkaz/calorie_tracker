@@ -539,17 +539,15 @@
 		"noSubNoHiddenFee": "サブスクリプションや隠れた料金はなし",
 		"getStarted": "始める",
 		"promoCodeRedeemed": "プロモコードが適用されました！",
-"promoCodeRedeemedDescription": "プロモコード「{promoCode}」が正常に適用されました。これで Nibble をフルアクセスでご利用いただけます！",
-"@promoCodeRedeemedDescription": {
-  "placeholders": {
-    "promoCode": {
-      "type": "String"
-    }
-  }
-},
-"fullAccessActivated": "フルアクセスが有効になりました"
-
-
-
+		"promoCodeRedeemedDescription": "プロモコード「{promoCode}」が正常に適用されました。これで Nibble をフルアクセスでご利用いただけます！",
+		"@promoCodeRedeemedDescription": {
+			"placeholders": {
+				"promoCode": {
+					"type": "String"
+				}
+			}
+		},
+		"fullAccessActivated": "フルアクセスが有効になりました",
+		"invalidPromoCode": "無効なプロモコードです"
 
 }

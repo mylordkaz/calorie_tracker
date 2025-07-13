@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:nibble/core/utils/localization_helper.dart';
+import 'package:nibble/data/services/payment_service.dart';
 import 'package:nibble/features/payment/widgets/promo_confirmation_dialog.dart';
 import '../../../data/services/access_control_service.dart';
 import '../../../data/services/user_status_service.dart';
@@ -93,24 +94,26 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     });
 
     try {
-      // TODO: Implement actual purchase logic with platform stores
-      await Future.delayed(Duration(seconds: 2));
+      // Check store availability
+      if (!await PaymentService.isStoreAvailable()) {
+        throw Exception('App Store not available');
+      }
 
-      await UserStatusService.markAsPurchasedWithServer(
-        purchaseToken: 'mock_token_${DateTime.now().millisecondsSinceEpoch}',
-      );
-
-      widget.onPurchaseComplete?.call();
+      // Initiate purchase
+      final success = await PaymentService.purchaseBasic();
+      if (!success) {
+        throw Exception('Failed to initiate purchase');
+      }
     } catch (e) {
-      _showMessage(l10n.accessControlPurchaseFailed(e.toString()));
-    } finally {
       setState(() {
         _isLoading = false;
       });
+      _showMessage(l10n.accessControlPurchaseFailed(e.toString()));
     }
   }
 
   Future<void> _redeemPromoCode() async {
+    final l10n = L10n.of(context);
     if (_promoCodeController.text.trim().isEmpty) return;
 
     setState(() {
@@ -143,7 +146,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       setState(() {
         _isLoading = false;
       });
-      _showMessage('Invalid promo code');
+      _showMessage(l10n.invalidPromoCode);
     }
   }
 

@@ -547,6 +547,7 @@
 				}
 			}
 		},
-		"fullAccessActivated": "Full access activated"
+		"fullAccessActivated": "Full access activated",
+		"invalidPromoCode": "Invalid Promo Code"
 
 }

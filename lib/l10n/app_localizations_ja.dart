@@ -1046,4 +1046,7 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get fullAccessActivated => 'フルアクセスが有効になりました';
+
+  @override
+  String get invalidPromoCode => '無効なプロモコードです';
 }

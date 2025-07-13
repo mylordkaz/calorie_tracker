@@ -1053,4 +1053,7 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get fullAccessActivated => 'Full access activated';
+
+  @override
+  String get invalidPromoCode => 'Invalid Promo Code';
 }

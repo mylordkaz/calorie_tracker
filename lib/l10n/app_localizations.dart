@@ -2020,6 +2020,12 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Full access activated'**
   String get fullAccessActivated;
+
+  /// No description provided for @invalidPromoCode.
+  ///
+  /// In en, this message translates to:
+  /// **'Invalid Promo Code'**
+  String get invalidPromoCode;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

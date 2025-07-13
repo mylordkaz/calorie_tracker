@@ -234,20 +234,7 @@ class UserStatusService {
         }
       } catch (e) {
         print('⚠️ Server promo redemption failed, trying local: $e');
-
-        // Local fallback for offline users
-        // Note: This allows offline redemption but server will validate later
-        final updatedStatus = status.copyWith(
-          isPromoUser: true,
-          promoCode: promoCode,
-          lastUpdated: DateTime.now(),
-        );
-        await _box.put(_statusKey, updatedStatus);
-
-        // Try to sync with server in background
-        syncWithServer().catchError((e) => print('Background sync failed: $e'));
-
-        print('✅ Promo code redeemed locally (offline mode)');
+        rethrow;
       }
     } catch (e) {
       print('❌ Error redeeming promo code: $e');

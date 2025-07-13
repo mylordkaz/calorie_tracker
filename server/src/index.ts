@@ -2,6 +2,21 @@ export interface Env {
 	DB: D1Database;
 }
 
+interface StartTrialRequest {
+	user_hash: string;
+}
+
+interface ValidatePurchaseRequest {
+	user_hash: string;
+	purchase_token: string;
+	platform: 'apple' | 'google';
+}
+
+interface RedeemPromoRequest {
+	user_hash: string;
+	promo_code: string;
+}
+
 export default {
 	async fetch(request: Request, env: Env): Promise<Response> {
 		const url = new URL(request.url);
@@ -99,7 +114,7 @@ async function handleUserStatus(request: Request, env: Env): Promise<Response> {
 		can_start_trial: !hasUsedTrial && !isPurchased,
 		has_used_trial: hasUsedTrial,
 		is_purchased: isPurchased,
-		trial_active: !!trialActive,
+		trial_active: trialActive,
 		trial_expires_at: trialExpiresAt
 	}), {
 		headers: { 'Content-Type': 'application/json' }
@@ -112,7 +127,7 @@ async function handleStartTrial(request: Request, env: Env): Promise<Response> {
 		return new Response('Method Not Allowed', { status: 405 });
 	}
 
-	const { user_hash } = await request.json() as { user_hash: string };
+	const { user_hash }: StartTrialRequest = await request.json();
 
 	if (!user_hash) {
 		return new Response(JSON.stringify({ error: 'user_hash required' }), {
@@ -169,14 +184,17 @@ async function handleValidatePurchase(request: Request, env: Env): Promise<Respo
 		return new Response('Method Not Allowed', { status: 405 });
 	}
 
-	const { user_hash, purchase_token, platform } = await request.json() as {
-		user_hash: string;
-		purchase_token: string;
-		platform: string;
-	};
+	const { user_hash, purchase_token, platform }: ValidatePurchaseRequest = await request.json();
 
 	if (!user_hash || !purchase_token || !platform) {
 		return new Response(JSON.stringify({ error: 'Missing required fields' }), {
+			status: 400,
+			headers: { 'Content-Type': 'application/json' }
+		});
+	}
+
+	if (!['apple', 'google'].includes(platform)) {
+		return new Response(JSON.stringify({ error: 'Invalid platform' }), {
 			status: 400,
 			headers: { 'Content-Type': 'application/json' }
 		});
@@ -218,10 +236,18 @@ async function handleRedeemPromo(request: Request, env: Env): Promise<Response> 
 		return new Response('Method Not Allowed', { status: 405 });
 	}
 
-	const { user_hash, promo_code } = await request.json() as {
-		user_hash: string;
-		promo_code: string;
-	};
+	// Handle JSON parsing errors
+	let requestData: RedeemPromoRequest;
+	try {
+		requestData = await request.json() as RedeemPromoRequest;
+	} catch (error) {
+		return new Response(JSON.stringify({ error: 'Invalid JSON' }), {
+			status: 400,
+			headers: { 'Content-Type': 'application/json' }
+		});
+	}
+
+	const { user_hash, promo_code } = requestData;
 
 	if (!user_hash || !promo_code) {
 		return new Response(JSON.stringify({ error: 'Missing required fields' }), {
@@ -278,36 +304,48 @@ async function handleRedeemPromo(request: Request, env: Env): Promise<Response> 
 	}
 
 	try {
-		// Mark user as purchased
+		// Check if user exists first
 		const existingUser = await env.DB.prepare(
 			'SELECT * FROM users WHERE user_hash = ?'
 		).bind(user_hash).first();
 
+		const statements = [];
+
 		if (existingUser) {
-			await env.DB.prepare(`
-        UPDATE users
-        SET is_purchased = TRUE, updated_at = ?
-        WHERE user_hash = ?
-      `).bind(now, user_hash).run();
+			// Update existing user
+			statements.push(
+				env.DB.prepare(`
+					UPDATE users
+					SET is_purchased = TRUE, updated_at = ?
+					WHERE user_hash = ?
+				`).bind(now, user_hash)
+			);
 		} else {
-			await env.DB.prepare(`
-        INSERT INTO users (user_hash, is_purchased, created_at, updated_at)
-        VALUES (?, TRUE, ?, ?)
-      `).bind(user_hash, now, now).run();
+			// Create new user
+			statements.push(
+				env.DB.prepare(`
+					INSERT INTO users (user_hash, is_purchased, created_at, updated_at)
+					VALUES (?, TRUE, ?, ?)
+				`).bind(user_hash, now, now)
+			);
 		}
 
-		// Record redemption
-		await env.DB.prepare(`
-      INSERT INTO promo_redemptions (user_hash, promo_code, redeemed_at)
-      VALUES (?, ?, ?)
-    `).bind(user_hash, promo_code, now).run();
+		statements.push(
+			env.DB.prepare(`
+				INSERT INTO promo_redemptions (user_hash, promo_code, redeemed_at)
+				VALUES (?, ?, ?)
+			`).bind(user_hash, promo_code, now)
+		);
 
-		// Update promo code usage count
-		await env.DB.prepare(`
-      UPDATE promo_codes
-      SET used_count = used_count + 1
-      WHERE code = ?
-    `).bind(promo_code).run();
+		statements.push(
+			env.DB.prepare(`
+				UPDATE promo_codes
+				SET used_count = used_count + 1
+				WHERE code = ?
+			`).bind(promo_code)
+		);
+
+		await env.DB.batch(statements);
 
 		return new Response(JSON.stringify({
 			success: true,

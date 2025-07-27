@@ -23,35 +23,57 @@ class ChartSection extends StatelessWidget {
   Widget build(BuildContext context) {
     final l10n = L10n.of(context);
 
-    return Container(
-      height: 280,
-      child: PageView(
-        onPageChanged: onChartChanged,
-        children: [
-          _buildStatsPage(
-            context,
-            chartData,
-            'calories',
-            l10n.calories,
-            Colors.orange,
+    return Column(
+      children: [
+        Container(
+          height: 250,
+          child: PageView(
+            onPageChanged: onChartChanged,
+            children: [
+              _buildStatsPage(
+                context,
+                chartData,
+                'calories',
+                l10n.calories,
+                Colors.orange,
+              ),
+              _buildStatsPage(
+                context,
+                chartData,
+                'protein',
+                l10n.protein,
+                Colors.blue,
+              ),
+              _buildStatsPage(
+                context,
+                chartData,
+                'carbs',
+                l10n.carbs,
+                Colors.green,
+              ),
+              _buildStatsPage(context, chartData, 'fat', l10n.fat, Colors.red),
+            ],
           ),
-          _buildStatsPage(
-            context,
-            chartData,
-            'protein',
-            l10n.protein,
-            Colors.blue,
-          ),
-          _buildStatsPage(
-            context,
-            chartData,
-            'carbs',
-            l10n.carbs,
-            Colors.green,
-          ),
-          _buildStatsPage(context, chartData, 'fat', l10n.fat, Colors.red),
-        ],
-      ),
+        ),
+        SizedBox(height: 12),
+        // Fixed indicator dots outside PageView
+        Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: List.generate(4, (index) {
+            return Container(
+              margin: EdgeInsets.symmetric(horizontal: 3),
+              width: 6,
+              height: 6,
+              decoration: BoxDecoration(
+                shape: BoxShape.circle,
+                color: selectedChart == index
+                    ? _getChartColor(index)
+                    : Colors.grey[300],
+              ),
+            );
+          }),
+        ),
+      ],
     );
   }
 
@@ -112,26 +134,6 @@ class ChartSection extends StatelessWidget {
 
           // Chart with proper spacing
           Expanded(child: _buildWaveChart(context, data, macroType, color)),
-
-          SizedBox(height: 16),
-
-          // Chart indicators (dots)
-          Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: List.generate(4, (index) {
-              return Container(
-                margin: EdgeInsets.symmetric(horizontal: 3),
-                width: 6,
-                height: 6,
-                decoration: BoxDecoration(
-                  shape: BoxShape.circle,
-                  color: selectedChart == index
-                      ? _getChartColor(index)
-                      : Colors.grey[300],
-                ),
-              );
-            }),
-          ),
         ],
       ),
     );

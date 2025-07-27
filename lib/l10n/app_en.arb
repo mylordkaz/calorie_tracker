@@ -548,6 +548,29 @@
 			}
 		},
 		"fullAccessActivated": "Full access activated",
-		"invalidPromoCode": "Invalid Promo Code"
+		"invalidPromoCode": "Invalid Promo Code",
+		"exportFoodLibrary": "Export Food Library",
+		"exportMealLibrary": "Export Meal Library",
+		"exportCalendarData": "Export Calendar Data",
+		"exportFoods": "Export Foods",
+		"exportMeals": "Export Meals",
+		"exportFoodLibraryDescription": "Export all your custom foods to a CSV file?\n\nThis will include food names, nutritional information, and usage statistics.",
+		"exportMealLibraryDescription": "Export all your custom meals to a CSV file?\n\nThis will include meal recipes, ingredients, and nutritional calculations.",
+		"chooseTimePeriodToExport": "Choose the time period to export:",
+		"chooseDateRange": "Choose date range",
+		"allTime": "All time",
+		"exportFoodLibrarySuccess": "Food library exported successfully!",
+		"exportMealLibrarySuccess": "Meal library exported successfully!",
+		"exportCalendarDataSuccess": "Calendar data exported successfully!",
+		"exportFailed": "Export Failed",
+		"export": "Export",
+		"importFoods": "Import Foods",
+		"importMeals": "Import Meals",
+		"importFoodLibrary": "Import Food Library",
+		"importMealLibrary": "Import Meal Library",
+		"importFoodLibraryDescription": "Import foods from a CSV file?\n\nThis will add foods to your library. Duplicate foods will be skipped.",
+		"importMealLibraryDescription": "Import meals from a CSV file?\n\nThis will add meals to your library. Duplicate meals will be skipped.",
+		"import": "Import",
+		"importFailed": "Import Failed"
 
 }

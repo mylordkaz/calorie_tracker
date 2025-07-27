@@ -11,12 +11,16 @@ class MealLibraryScreen extends StatefulWidget {
   const MealLibraryScreen({super.key});
 
   @override
-  _MealLibraryScreenState createState() => _MealLibraryScreenState();
+  MealLibraryScreenState createState() => MealLibraryScreenState();
 }
 
-class _MealLibraryScreenState extends State<MealLibraryScreen> {
+class MealLibraryScreenState extends State<MealLibraryScreen> {
   late final MealLibraryController _controller;
   final TextEditingController _searchController = TextEditingController();
+  
+  void refreshMeals() {
+    _controller.loadMeals();
+  }
 
   @override
   void initState() {

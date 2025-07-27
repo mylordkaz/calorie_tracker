@@ -548,6 +548,29 @@
 			}
 		},
 		"fullAccessActivated": "フルアクセスが有効になりました",
-		"invalidPromoCode": "無効なプロモコードです"
+		"invalidPromoCode": "無効なプロモコードです",
+		"exportFoodLibrary": "食品ライブラリーをエクスポート",
+		"exportMealLibrary": "食事ライブラリーをエクスポート",
+		"exportCalendarData": "カレンダーデータをエクスポート",
+		"exportFoods": "食品をエクスポート",
+		"exportMeals": "食事をエクスポート",
+		"exportFoodLibraryDescription": "すべてのカスタム食品をCSVファイルにエクスポートしますか？\n\n食品名、栄養情報、使用統計が含まれます。",
+		"exportMealLibraryDescription": "すべてのカスタム食事をCSVファイルにエクスポートしますか？\n\n食事レシピ、材料、栄養計算が含まれます。",
+		"chooseTimePeriodToExport": "エクスポートする期間を選択:",
+		"chooseDateRange": "日付範囲を選択",
+		"allTime": "全期間",
+		"exportFoodLibrarySuccess": "食品ライブラリーが正常にエクスポートされました！",
+		"exportMealLibrarySuccess": "食事ライブラリーが正常にエクスポートされました！",
+		"exportCalendarDataSuccess": "カレンダーデータが正常にエクスポートされました！",
+		"exportFailed": "エクスポートに失敗しました",
+		"export": "エクスポート",
+		"importFoods": "食品をインポート",
+		"importMeals": "食事をインポート",
+		"importFoodLibrary": "食品ライブラリーをインポート",
+		"importMealLibrary": "食事ライブラリーをインポート",
+		"importFoodLibraryDescription": "CSVファイルから食品をインポートしますか？\n\nライブラリーに食品が追加されます。重複する食品はスキップされます。",
+		"importMealLibraryDescription": "CSVファイルから食事をインポートしますか？\n\nライブラリーに食事が追加されます。重複する食事はスキップされます。",
+		"import": "インポート",
+		"importFailed": "インポートに失敗しました"
 
 }

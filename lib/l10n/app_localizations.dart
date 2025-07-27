@@ -2026,6 +2026,144 @@ abstract class AppLocalizations {
   /// In en, this message translates to:
   /// **'Invalid Promo Code'**
   String get invalidPromoCode;
+
+  /// No description provided for @exportFoodLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Food Library'**
+  String get exportFoodLibrary;
+
+  /// No description provided for @exportMealLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Meal Library'**
+  String get exportMealLibrary;
+
+  /// No description provided for @exportCalendarData.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Calendar Data'**
+  String get exportCalendarData;
+
+  /// No description provided for @exportFoods.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Foods'**
+  String get exportFoods;
+
+  /// No description provided for @exportMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Meals'**
+  String get exportMeals;
+
+  /// No description provided for @exportFoodLibraryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Export all your custom foods to a CSV file?\n\nThis will include food names, nutritional information, and usage statistics.'**
+  String get exportFoodLibraryDescription;
+
+  /// No description provided for @exportMealLibraryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Export all your custom meals to a CSV file?\n\nThis will include meal recipes, ingredients, and nutritional calculations.'**
+  String get exportMealLibraryDescription;
+
+  /// No description provided for @chooseTimePeriodToExport.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose the time period to export:'**
+  String get chooseTimePeriodToExport;
+
+  /// No description provided for @chooseDateRange.
+  ///
+  /// In en, this message translates to:
+  /// **'Choose date range'**
+  String get chooseDateRange;
+
+  /// No description provided for @allTime.
+  ///
+  /// In en, this message translates to:
+  /// **'All time'**
+  String get allTime;
+
+  /// No description provided for @exportFoodLibrarySuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Food library exported successfully!'**
+  String get exportFoodLibrarySuccess;
+
+  /// No description provided for @exportMealLibrarySuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Meal library exported successfully!'**
+  String get exportMealLibrarySuccess;
+
+  /// No description provided for @exportCalendarDataSuccess.
+  ///
+  /// In en, this message translates to:
+  /// **'Calendar data exported successfully!'**
+  String get exportCalendarDataSuccess;
+
+  /// No description provided for @exportFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Export Failed'**
+  String get exportFailed;
+
+  /// No description provided for @export.
+  ///
+  /// In en, this message translates to:
+  /// **'Export'**
+  String get export;
+
+  /// No description provided for @importFoods.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Foods'**
+  String get importFoods;
+
+  /// No description provided for @importMeals.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Meals'**
+  String get importMeals;
+
+  /// No description provided for @importFoodLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Food Library'**
+  String get importFoodLibrary;
+
+  /// No description provided for @importMealLibrary.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Meal Library'**
+  String get importMealLibrary;
+
+  /// No description provided for @importFoodLibraryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Import foods from a CSV file?\n\nThis will add foods to your library. Duplicate foods will be skipped.'**
+  String get importFoodLibraryDescription;
+
+  /// No description provided for @importMealLibraryDescription.
+  ///
+  /// In en, this message translates to:
+  /// **'Import meals from a CSV file?\n\nThis will add meals to your library. Duplicate meals will be skipped.'**
+  String get importMealLibraryDescription;
+
+  /// No description provided for @import.
+  ///
+  /// In en, this message translates to:
+  /// **'Import'**
+  String get import;
+
+  /// No description provided for @importFailed.
+  ///
+  /// In en, this message translates to:
+  /// **'Import Failed'**
+  String get importFailed;
 }
 
 class _AppLocalizationsDelegate extends LocalizationsDelegate<AppLocalizations> {

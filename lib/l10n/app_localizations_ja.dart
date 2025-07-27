@@ -1049,4 +1049,73 @@ class AppLocalizationsJa extends AppLocalizations {
 
   @override
   String get invalidPromoCode => '無効なプロモコードです';
+
+  @override
+  String get exportFoodLibrary => '食品ライブラリーをエクスポート';
+
+  @override
+  String get exportMealLibrary => '食事ライブラリーをエクスポート';
+
+  @override
+  String get exportCalendarData => 'カレンダーデータをエクスポート';
+
+  @override
+  String get exportFoods => '食品をエクスポート';
+
+  @override
+  String get exportMeals => '食事をエクスポート';
+
+  @override
+  String get exportFoodLibraryDescription => 'すべてのカスタム食品をCSVファイルにエクスポートしますか？\n\n食品名、栄養情報、使用統計が含まれます。';
+
+  @override
+  String get exportMealLibraryDescription => 'すべてのカスタム食事をCSVファイルにエクスポートしますか？\n\n食事レシピ、材料、栄養計算が含まれます。';
+
+  @override
+  String get chooseTimePeriodToExport => 'エクスポートする期間を選択:';
+
+  @override
+  String get chooseDateRange => '日付範囲を選択';
+
+  @override
+  String get allTime => '全期間';
+
+  @override
+  String get exportFoodLibrarySuccess => '食品ライブラリーが正常にエクスポートされました！';
+
+  @override
+  String get exportMealLibrarySuccess => '食事ライブラリーが正常にエクスポートされました！';
+
+  @override
+  String get exportCalendarDataSuccess => 'カレンダーデータが正常にエクスポートされました！';
+
+  @override
+  String get exportFailed => 'エクスポートに失敗しました';
+
+  @override
+  String get export => 'エクスポート';
+
+  @override
+  String get importFoods => '食品をインポート';
+
+  @override
+  String get importMeals => '食事をインポート';
+
+  @override
+  String get importFoodLibrary => '食品ライブラリーをインポート';
+
+  @override
+  String get importMealLibrary => '食事ライブラリーをインポート';
+
+  @override
+  String get importFoodLibraryDescription => 'CSVファイルから食品をインポートしますか？\n\nライブラリーに食品が追加されます。重複する食品はスキップされます。';
+
+  @override
+  String get importMealLibraryDescription => 'CSVファイルから食事をインポートしますか？\n\nライブラリーに食事が追加されます。重複する食事はスキップされます。';
+
+  @override
+  String get import => 'インポート';
+
+  @override
+  String get importFailed => 'インポートに失敗しました';
 }

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 import '../../../data/repositories/repository_factory.dart';
 import '../controllers/stats_controller.dart';
 import '../widgets/chart_section.dart';
@@ -6,15 +7,16 @@ import '../widgets/calendar_section.dart';
 import '../widgets/day_details_section.dart';
 import '../screens/add_entry_for_date_screen.dart';
 import '../../../core/utils/localization_helper.dart';
+import '../../export/export.dart';
 
 class StatsScreen extends StatefulWidget {
   const StatsScreen({super.key});
 
   @override
-  _StatsScreenState createState() => _StatsScreenState();
+  StatsScreenState createState() => StatsScreenState();
 }
 
-class _StatsScreenState extends State<StatsScreen> {
+class StatsScreenState extends State<StatsScreen> {
   late final StatsController _controller;
 
   @override
@@ -37,13 +39,16 @@ class _StatsScreenState extends State<StatsScreen> {
   Widget build(BuildContext context) {
     final l10n = L10n.of(context);
 
-    return Scaffold(
+    return ChangeNotifierProvider(
+      create: (_) => ExportController(),
+      child: Scaffold(
       backgroundColor: Colors.grey[50],
       appBar: AppBar(
         title: Text(l10n.statistics),
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
+        actions: [CalendarExportButton()],
       ),
       body: ListenableBuilder(
         listenable: _controller,
@@ -90,6 +95,7 @@ class _StatsScreenState extends State<StatsScreen> {
             ),
           );
         },
+      ),
       ),
     );
   }

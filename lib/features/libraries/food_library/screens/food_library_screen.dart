@@ -11,12 +11,16 @@ class FoodLibraryScreen extends StatefulWidget {
   const FoodLibraryScreen({super.key});
 
   @override
-  _FoodLibraryScreenState createState() => _FoodLibraryScreenState();
+  FoodLibraryScreenState createState() => FoodLibraryScreenState();
 }
 
-class _FoodLibraryScreenState extends State<FoodLibraryScreen> {
+class FoodLibraryScreenState extends State<FoodLibraryScreen> {
   late final FoodLibraryController _controller;
   final TextEditingController _searchController = TextEditingController();
+  
+  void refreshFoods() {
+    _controller.loadFoods();
+  }
 
   @override
   void initState() {

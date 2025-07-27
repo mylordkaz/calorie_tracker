@@ -1056,4 +1056,73 @@ class AppLocalizationsEn extends AppLocalizations {
 
   @override
   String get invalidPromoCode => 'Invalid Promo Code';
+
+  @override
+  String get exportFoodLibrary => 'Export Food Library';
+
+  @override
+  String get exportMealLibrary => 'Export Meal Library';
+
+  @override
+  String get exportCalendarData => 'Export Calendar Data';
+
+  @override
+  String get exportFoods => 'Export Foods';
+
+  @override
+  String get exportMeals => 'Export Meals';
+
+  @override
+  String get exportFoodLibraryDescription => 'Export all your custom foods to a CSV file?\n\nThis will include food names, nutritional information, and usage statistics.';
+
+  @override
+  String get exportMealLibraryDescription => 'Export all your custom meals to a CSV file?\n\nThis will include meal recipes, ingredients, and nutritional calculations.';
+
+  @override
+  String get chooseTimePeriodToExport => 'Choose the time period to export:';
+
+  @override
+  String get chooseDateRange => 'Choose date range';
+
+  @override
+  String get allTime => 'All time';
+
+  @override
+  String get exportFoodLibrarySuccess => 'Food library exported successfully!';
+
+  @override
+  String get exportMealLibrarySuccess => 'Meal library exported successfully!';
+
+  @override
+  String get exportCalendarDataSuccess => 'Calendar data exported successfully!';
+
+  @override
+  String get exportFailed => 'Export Failed';
+
+  @override
+  String get export => 'Export';
+
+  @override
+  String get importFoods => 'Import Foods';
+
+  @override
+  String get importMeals => 'Import Meals';
+
+  @override
+  String get importFoodLibrary => 'Import Food Library';
+
+  @override
+  String get importMealLibrary => 'Import Meal Library';
+
+  @override
+  String get importFoodLibraryDescription => 'Import foods from a CSV file?\n\nThis will add foods to your library. Duplicate foods will be skipped.';
+
+  @override
+  String get importMealLibraryDescription => 'Import meals from a CSV file?\n\nThis will add meals to your library. Duplicate meals will be skipped.';
+
+  @override
+  String get import => 'Import';
+
+  @override
+  String get importFailed => 'Import Failed';
 }

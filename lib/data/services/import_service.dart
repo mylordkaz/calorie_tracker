@@ -20,8 +20,9 @@ class ImportService {
       } catch (e) {
         if (e.toString().contains('MissingPluginException')) {
           return ImportResult(
-            success: false, 
-            message: 'File picker not available. Please restart the app completely (not hot reload) and try again.',
+            success: false,
+            message:
+                'File picker not available. Please restart the app completely (not hot reload) and try again.',
           );
         }
         return ImportResult(success: false, message: 'File picker error: $e');
@@ -133,8 +134,9 @@ class ImportService {
       } catch (e) {
         if (e.toString().contains('MissingPluginException')) {
           return ImportResult(
-            success: false, 
-            message: 'File picker not available. Please restart the app completely (not hot reload) and try again.',
+            success: false,
+            message:
+                'File picker not available. Please restart the app completely (not hot reload) and try again.',
           );
         }
         return ImportResult(success: false, message: 'File picker error: $e');
@@ -208,7 +210,7 @@ class ImportService {
 
           if (ingredients.isEmpty) {
             skippedCount++;
-            continue; // Skip meals without valid ingredients
+            continue;
           }
 
           // Create meal item
@@ -220,7 +222,9 @@ class ImportService {
             createdAt: _parseDate(row[11]) ?? DateTime.now(),
             lastUsed: _parseDate(row[11]) ?? DateTime.now(),
             useCount: _parseInt(row[8]) ?? 0,
-            category: row[10]?.toString().isEmpty == true ? null : row[10]?.toString(),
+            category: row[10]?.toString().isEmpty == true
+                ? null
+                : row[10]?.toString(),
             isFavorite: row[9]?.toString().toLowerCase() == 'true',
           );
 
@@ -327,4 +331,3 @@ class ImportResult {
     this.skippedCount = 0,
   });
 }
-

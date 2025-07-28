@@ -7,18 +7,18 @@ class ExportController extends ChangeNotifier {
   bool _isExportingFoods = false;
   bool _isExportingMeals = false;
   bool _isExportingCalendar = false;
-  
+
   // Import state
   bool _isImportingFoods = false;
   bool _isImportingMeals = false;
-  
+
   String? _exportError;
   String? _lastSuccessMessage;
-  
+
   // Callbacks for refreshing UI after imports
   VoidCallback? _onFoodsUpdated;
   VoidCallback? _onMealsUpdated;
-  
+
   void setRefreshCallbacks({
     VoidCallback? onFoodsUpdated,
     VoidCallback? onMealsUpdated,
@@ -33,12 +33,12 @@ class ExportController extends ChangeNotifier {
   bool get isExportingCalendar => _isExportingCalendar;
   bool get isExporting =>
       _isExportingFoods || _isExportingMeals || _isExportingCalendar;
-  
+
   // Import getters
   bool get isImportingFoods => _isImportingFoods;
   bool get isImportingMeals => _isImportingMeals;
   bool get isImporting => _isImportingFoods || _isImportingMeals;
-  
+
   // Combined getters
   bool get isBusy => isExporting || isImporting;
   String? get exportError => _exportError;
@@ -53,7 +53,8 @@ class ExportController extends ChangeNotifier {
       notifyListeners();
 
       await ExportService.exportFoodLibrary();
-      _lastSuccessMessage = successMessage ?? 'Food library exported successfully!';
+      _lastSuccessMessage =
+          successMessage ?? 'Food library exported successfully!';
     } catch (e) {
       _exportError = e.toString();
     } finally {
@@ -71,7 +72,8 @@ class ExportController extends ChangeNotifier {
       notifyListeners();
 
       await ExportService.exportMealLibrary();
-      _lastSuccessMessage = successMessage ?? 'Meal library exported successfully!';
+      _lastSuccessMessage =
+          successMessage ?? 'Meal library exported successfully!';
     } catch (e) {
       _exportError = e.toString();
     } finally {
@@ -96,7 +98,8 @@ class ExportController extends ChangeNotifier {
         startDate: startDate,
         endDate: endDate,
       );
-      _lastSuccessMessage = successMessage ?? 'Calendar data exported successfully!';
+      _lastSuccessMessage =
+          successMessage ?? 'Calendar data exported successfully!';
     } catch (e) {
       _exportError = e.toString();
     } finally {
@@ -114,10 +117,10 @@ class ExportController extends ChangeNotifier {
       notifyListeners();
 
       final result = await ImportService.importFoodLibrary();
-      
+
       if (result.success) {
-        _lastSuccessMessage = '${successMessagePrefix ?? 'Food import completed'}: ${result.message}';
-        // Trigger refresh of food library
+        _lastSuccessMessage =
+            '${successMessagePrefix ?? 'Food import completed'}: ${result.message}';
         _onFoodsUpdated?.call();
       } else {
         _exportError = result.message;
@@ -139,10 +142,10 @@ class ExportController extends ChangeNotifier {
       notifyListeners();
 
       final result = await ImportService.importMealLibrary();
-      
+
       if (result.success) {
-        _lastSuccessMessage = '${successMessagePrefix ?? 'Meal import completed'}: ${result.message}';
-        // Trigger refresh of meal library
+        _lastSuccessMessage =
+            '${successMessagePrefix ?? 'Meal import completed'}: ${result.message}';
         _onMealsUpdated?.call();
       } else {
         _exportError = result.message;

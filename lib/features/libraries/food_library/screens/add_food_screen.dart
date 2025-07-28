@@ -4,6 +4,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:path_provider/path_provider.dart';
 import 'dart:io';
 import '../../../../data/services/food_database_service.dart';
+import '../../../../data/services/import_service.dart';
 import '../../../../data/models/food_item.dart';
 import '../../../../shared/widgets/custom_card.dart';
 import '../../../../core/utils/localization_helper.dart';
@@ -37,6 +38,7 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
   final _fatController = TextEditingController();
 
   bool get isEditing => widget.foodToEdit != null;
+  bool _isImporting = false;
 
   List<Map<String, dynamic>> _customMacros = [];
 
@@ -116,6 +118,20 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
         backgroundColor: Colors.white,
         elevation: 0,
         foregroundColor: Colors.black,
+        actions: [
+          if (!isEditing)
+            IconButton(
+              onPressed: _isImporting ? null : _importFoods,
+              icon: _isImporting
+                  ? SizedBox(
+                      width: 20,
+                      height: 20,
+                      child: CircularProgressIndicator(strokeWidth: 2),
+                    )
+                  : Icon(Icons.download),
+              tooltip: l10n.importFoods,
+            ),
+        ],
       ),
       body: Form(
         key: _formKey,
@@ -785,5 +801,81 @@ class _AddFoodScreenState extends State<AddFoodScreen> {
       _customMacros[index]['value'].dispose();
       _customMacros.removeAt(index);
     });
+  }
+
+  Future<void> _importFoods() async {
+    final l10n = L10n.of(context);
+
+    // Show confirmation dialog
+    final confirmed = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: Row(
+          children: [
+            Icon(Icons.download, size: 24),
+            SizedBox(width: 8),
+            Expanded(child: Text(l10n.importFoodLibrary)),
+          ],
+        ),
+        content: Text(l10n.importFoodLibraryDescription),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: Text(l10n.cancel),
+          ),
+          ElevatedButton.icon(
+            onPressed: () => Navigator.pop(context, true),
+            icon: Icon(Icons.download, size: 18),
+            label: Text(l10n.import),
+          ),
+        ],
+      ),
+    );
+
+    if (confirmed != true) return;
+
+    if (!mounted) return;
+
+    setState(() {
+      _isImporting = true;
+    });
+
+    try {
+      final result = await ImportService.importFoodLibrary();
+
+      if (!mounted) return;
+
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text(
+            result.success
+                ? '${l10n.import} ${l10n.foods}: ${result.message}'
+                : '${l10n.importFailed}: ${result.message}',
+          ),
+          backgroundColor: result.success ? Colors.green : Colors.red,
+          duration: Duration(seconds: result.success ? 3 : 4),
+        ),
+      );
+
+      if (result.success) {
+        // Go back to library to see imported foods
+        Navigator.pop(context);
+      }
+    } catch (e) {
+      if (!mounted) return;
+      ScaffoldMessenger.of(context).showSnackBar(
+        SnackBar(
+          content: Text('${l10n.importFailed}: $e'),
+          backgroundColor: Colors.red,
+          duration: Duration(seconds: 4),
+        ),
+      );
+    } finally {
+      if (mounted) {
+        setState(() {
+          _isImporting = false;
+        });
+      }
+    }
   }
 }

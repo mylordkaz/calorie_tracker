@@ -36,7 +36,7 @@ class LibraryExportButton extends StatelessWidget {
         });
 
         return PopupMenuButton<String>(
-          icon: controller.isBusy
+          icon: controller.isExporting
               ? SizedBox(
                   width: 20,
                   height: 20,
@@ -46,7 +46,7 @@ class LibraryExportButton extends StatelessWidget {
                   ),
                 )
               : Icon(Icons.settings),
-          enabled: !controller.isBusy,
+          enabled: !controller.isExporting,
           onSelected: (value) =>
               _handleExportAction(context, controller, value),
           itemBuilder: (context) => [
@@ -64,23 +64,6 @@ class LibraryExportButton extends StatelessWidget {
                 icon: Icons.upload,
                 label: l10n.exportMeals,
                 isLoading: controller.isExportingMeals,
-              ),
-            ),
-            PopupMenuDivider(),
-            PopupMenuItem(
-              value: 'import_foods',
-              child: _ExportMenuItem(
-                icon: Icons.download,
-                label: l10n.importFoods,
-                isLoading: controller.isImportingFoods,
-              ),
-            ),
-            PopupMenuItem(
-              value: 'import_meals',
-              child: _ExportMenuItem(
-                icon: Icons.download,
-                label: l10n.importMeals,
-                isLoading: controller.isImportingMeals,
               ),
             ),
           ],
@@ -115,24 +98,6 @@ class LibraryExportButton extends StatelessWidget {
           () => controller.exportMealLibrary(l10n.exportMealLibrarySuccess),
         );
         break;
-      case 'import_foods':
-        _showConfirmDialog(
-          context,
-          l10n.importFoodLibrary,
-          l10n.importFoodLibraryDescription,
-          Icons.download,
-          () => controller.importFoodLibrary('Import completed'),
-        );
-        break;
-      case 'import_meals':
-        _showConfirmDialog(
-          context,
-          l10n.importMealLibrary,
-          l10n.importMealLibraryDescription,
-          Icons.download,
-          () => controller.importMealLibrary('Import completed'),
-        );
-        break;
     }
   }
 
@@ -144,7 +109,6 @@ class LibraryExportButton extends StatelessWidget {
     VoidCallback onConfirm,
   ) {
     final l10n = L10n.of(context);
-    final isImport = title.toLowerCase().contains('import');
     showDialog(
       context: context,
       builder: (context) => AlertDialog(
@@ -166,8 +130,8 @@ class LibraryExportButton extends StatelessWidget {
               Navigator.pop(context);
               onConfirm();
             },
-            icon: Icon(isImport ? Icons.download : Icons.upload, size: 18),
-            label: Text(isImport ? l10n.import : l10n.export),
+            icon: Icon(Icons.upload, size: 18),
+            label: Text(l10n.export),
           ),
         ],
       ),

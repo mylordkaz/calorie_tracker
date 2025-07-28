@@ -15,7 +15,6 @@ class _ExportStatusBannerState extends State<ExportStatusBanner> {
   Widget build(BuildContext context) {
     return Consumer<ExportController>(
       builder: (context, controller, child) {
-        // Auto-close success messages after 2 seconds
         if (controller.lastSuccessMessage != null) {
           Future.delayed(Duration(seconds: 2), () {
             if (mounted && controller.lastSuccessMessage != null) {

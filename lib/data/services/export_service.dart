@@ -115,13 +115,7 @@ class ExportService {
       startDate ??= endDate.subtract(Duration(days: 30));
 
       List<List<dynamic>> csvData = [
-        [
-          'Date',
-          'Total_Calories',
-          'Total_Protein',
-          'Total_Carbs',
-          'Total_Fat',
-        ],
+        ['Date', 'Total_Calories', 'Total_Protein', 'Total_Carbs', 'Total_Fat'],
       ];
 
       // Get all dates in range
@@ -210,10 +204,8 @@ class ExportService {
       // Write CSV file
       await file.writeAsString(csvString);
 
-      // Share only the CSV file (no text message)
-      await Share.shareXFiles([
-        XFile(file.path),
-      ]);
+      // Share only the CSV file
+      await Share.shareXFiles([XFile(file.path)]);
 
       // Clean up temporary file after sharing
       Future.delayed(Duration(seconds: 5), () {
